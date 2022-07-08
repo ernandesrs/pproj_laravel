@@ -48,7 +48,7 @@ Route::post('/reset-password', [ResetController::class, "updatePassword"])->midd
  *
  */
 Route::get('/', function () {
-    return view('welcome');
+    return view('front.home', ["pageTitle" => "Página inicial"]);
 })->name("front.home");
 
 /**

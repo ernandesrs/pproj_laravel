@@ -9,7 +9,7 @@
 
     <title>{{ config('app.name') }} Membro - {{ $pageTitle }}</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/member/styles.css') }}">
     @yield('styles')
 </head>
 
@@ -23,14 +23,11 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    </script>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/boostrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/scripts.min.js') }}"></script>
+    <script src="{{ asset('assets/js/member/scripts.js') }}"></script>
+
     @yield('scripts')
 </body>
 
