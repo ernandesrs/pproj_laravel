@@ -70,9 +70,7 @@ Route::group([
     'middleware' => 'member',
 ], function () {
 
-    Route::get("/", function () {
-        echo "Membro";
-    })->name("member.home");
+    Route::get("/", [\App\Http\Controllers\Member\HomeController::class, "home"])->name("member.home");
 });
 
 /**
@@ -85,7 +83,5 @@ Route::group([
     'middleware' => 'admin'
 ], function () {
 
-    Route::get("/", function () {
-        echo "Admin";
-    })->name("admin.home");
+    Route::get("/", [\App\Http\Controllers\Admin\HomeController::class, "home"])->name("admin.home");
 });
