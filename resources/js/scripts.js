@@ -6,4 +6,8 @@ $(function () {
         }
     });
 
+    $(".jsFormSubmit").on("submit", function (e) {
+        $(this).submited(e);
+    });
+
 });
