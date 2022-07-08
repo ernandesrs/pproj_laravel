@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Message\Message;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,14 +35,20 @@ class LoginController extends Controller
         if ($errors = $validator->errors()->messages()) {
             return response()->json([
                 "success" => false,
-                "message" => implode(", ", array_map(function ($item) {
+                "message" => (new Message())->warning("Erro ao validar os dados informados")->render(),
+                "errors" => array_map(function ($item) {
                     return $item[0];
-                }, $errors))
+                }, $errors)
             ]);
         }
 
         if (Auth::attempt($validator->validated())) {
             $request->session()->regenerate();
+
+            $name = auth()->user()->first_name;
+
+            (new Message())->default("Pronto {$name}, agora você está logado! Muito bem vindo!")->time(10)->flash();
+
             return response()->json([
                 "success" => true,
                 "redirect" => route("front.home")
@@ -50,7 +57,7 @@ class LoginController extends Controller
 
         return response()->json([
             "success" => false,
-            "message" => "The provided credentials do not match our records."
+            "message" => (new Message())->warning(__("auth.failed"))->render()
         ]);
     }
 

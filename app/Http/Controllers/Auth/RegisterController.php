@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Message\Message;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -36,9 +37,10 @@ class RegisterController extends Controller
         if ($errors = $validator->errors()->messages()) {
             return response()->json([
                 "success" => false,
-                "message" => implode(", ", array_map(function ($item) {
+                "message" => (new Message())->warning("Erro ao validar os dados informados")->render(),
+                "errors" => array_map(function ($item) {
                     return $item[0];
-                }, $errors))
+                }, $errors)
             ]);
         }
 
@@ -54,17 +56,14 @@ class RegisterController extends Controller
         if (!$user->save()) {
             return response()->json([
                 "success" => false,
-                "message" => "Houve um erro ao criar sua conta"
+                "message" => (new Message())->warning("Houve um erro ao criar sua conta")->render()
             ]);
         }
 
         // SEND VERIFICATION E-MAIL
         event(new Registered($user));
 
-        session()->flash("flash_message", [
-            "type" => "success",
-            "message" => "Conta registrada com sucesso!",
-        ]);
+        (new Message())->success("Sua conta foi registrada com sucesso!")->time(10)->flash();
         return response()->json([
             "success" => true,
             "redirect" => route("auth.login")
