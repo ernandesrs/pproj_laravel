@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="col-10 col-md-8 col-lg-6 col-xl-4">
-        <form action="{{ route('auth.authenticate') }}" method="POST">
+        <form class="jsFormSubmit" action="{{ route('auth.authenticate') }}" method="POST">
             @csrf
 
             @include('includes.message')
@@ -26,4 +26,3 @@
         </form>
     </div>
 @endsection
-
