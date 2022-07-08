@@ -65,9 +65,14 @@ Route::get('/', function () {
  * MEMBER ROUTES
  *
  */
-Route::prefix('member')->group(function () {
+Route::group([
+    'prefix' => 'member',
+    'middleware' => 'member',
+], function () {
 
-    Route::get("/", [])->name("member.home");
+    Route::get("/", function () {
+        echo "Membro";
+    })->name("member.home");
 });
 
 /**
@@ -75,7 +80,12 @@ Route::prefix('member')->group(function () {
  * ADMIN ROUTES
  *
  */
-Route::prefix('admin')->group(function () {
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => 'admin'
+], function () {
 
-    Route::get("/", [])->name("admin.home");
+    Route::get("/", function () {
+        echo "Admin";
+    })->name("admin.home");
 });
