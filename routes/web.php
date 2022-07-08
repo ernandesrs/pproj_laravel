@@ -1,22 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\ForgotController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Member\MemberController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 /**
  *
@@ -70,7 +61,7 @@ Route::group([
     'middleware' => 'member',
 ], function () {
 
-    Route::get("/", [\App\Http\Controllers\Member\HomeController::class, "home"])->name("member.home");
+    Route::get("/", [MemberController::class, "home"])->name("member.home");
 });
 
 /**
@@ -83,5 +74,5 @@ Route::group([
     'middleware' => 'admin'
 ], function () {
 
-    Route::get("/", [\App\Http\Controllers\Admin\HomeController::class, "home"])->name("admin.home");
+    Route::get("/", [AdminController::class, "home"])->name("admin.home");
 });
