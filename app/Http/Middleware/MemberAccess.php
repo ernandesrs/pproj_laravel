@@ -19,6 +19,9 @@ class MemberAccess
         if ($request->user()->level < 5)
             return redirect()->route("front.home");
 
+        if (!$request->user()->email_verified_at)
+            return redirect()->route("verification.notice");
+
         return $next($request);
     }
 }
