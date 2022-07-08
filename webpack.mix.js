@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,7 +11,51 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+mix
+
+    /**
+     * js
+     */
+    // js global
+    .scripts([
+        "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+    ], "public/assets/js/boostrap.min.js")
+    .scripts([
+        "node_modules/jquery/dist/jquery.js",
+        "node_modules/jquery-ui-dist/jquery-ui.js"
+    ], "public/assets/js/jquery.min.js")
+
+    // js admin
+    .scripts(["resources/js/admin/scripts.js"], "public/assets/js/admin/scripts.js")
+
+    // js member
+    .scripts(["resources/js/member/scripts.js"], "public/assets/js/member/scripts.js")
+
+    // js front
+    .scripts(["resources/js/front/scripts.js"], "public/assets/js/front/scripts.js")
+
+    // js auth
+    .scripts(["resources/js/auth/scripts.js"], "public/assets/js/auth/scripts.js")
+
+    /**
+     * SASS
+     */
+
+    // sass global
+
+    // sass admin
+    .sass("resources/scss/admin/styles.scss", "public/assets/css/admin/styles.css")
+
+    // sass member
+    .sass("resources/scss/member/styles.scss", "public/assets/css/member/styles.css")
+
+    // sass front
+    .sass("resources/scss/front/styles.scss", "public/assets/css/front/styles.css")
+
+    // sass auth
+    .sass("resources/scss/auth/styles.scss", "public/assets/css/auth/styles.css")
+    ;
+
+
+    // js("resources/js/app.js", "public/js")
+    // .postCss("resources/css/app.css", "public/css", []);
