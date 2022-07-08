@@ -6,7 +6,7 @@ $(function () {
         }
     });
 
-    $(".jsFormSubmit").on("submit", function (e) {
+    $(document).on("submit", ".jsFormSubmit", function (e) {
         $(this).submited(e);
     });
 
