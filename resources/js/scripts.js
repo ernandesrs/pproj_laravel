@@ -12,6 +12,31 @@ $(function () {
         $(this).submited(e);
     });
 
+    let modal = $(".jsModalConfirmation");
+
+    $(".jsButtonConfirmation").on("click", function (e) {
+        e.preventDefault();
+        let button = $(this);
+
+        modal.find(".jsFormSubmit").attr("action", button.attr("data-action"));
+        modal.find(".confirmation-message")
+            .addClass(`text-${button.attr("data-type")}`)
+            .html(button.attr("data-message"));
+        modal.find(".confirmation-btn")
+            .addClass(`btn-${button.attr("data-type")}`);
+
+        modal.modal();
+    });
+
+    $(modal).on("hidden.bs.modal", function (e) {
+        modal.find(".jsFormSubmit").attr("action", "");
+        modal.find(".confirmation-message")
+            .removeClass(`text-danger text-success text-info text-warning text-secondary`)
+            .html("");
+        modal.find(".confirmation-btn")
+            .removeClass(`btn-danger btn-success btn-info btn-warning btn-secondary`);
+    });
+
 });
 
 /**
