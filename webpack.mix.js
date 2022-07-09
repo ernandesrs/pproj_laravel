@@ -55,7 +55,11 @@ mix
 
     // sass auth
     .sass("resources/scss/auth/styles.scss", "public/assets/css/auth/styles.css")
-    ;
+
+    /**
+     * CSS
+     */
+    .css("node_modules/boxicons/css/boxicons.css", "public/assets/css/boxicons.min.css");
 
 
     // js("resources/js/app.js", "public/js")

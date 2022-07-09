@@ -9261,3 +9261,36 @@ h3 {
     border-color: #dee2e6;
   }
 }
+body {
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Roboto", sans-serif;
+}
+
+.header {
+  height: 60px;
+}
+.header .btn-menu-toggler {
+  background-color: transparent;
+  font-size: 2rem;
+  border: 0;
+}
+
+.wrapp {
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+.wrapp .sidebar {
+  background-color: #f8f9fa;
+  width: 100%;
+  max-width: 225px;
+  min-height: calc(100vh - 120px);
+}
+@media (min-width: 992px) {
+  .header .left {
+    width: 225px;
+  }
+  .header .btn-menu-toggler {
+    margin-right: -25px;
+  }
+}

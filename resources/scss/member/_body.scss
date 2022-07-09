@@ -1,0 +1,29 @@
+body {
+    height: 100vh;
+    overflow: hidden;
+    font-family: "Roboto", sans-serif;
+}
+
+.header {
+    height: $header-height;
+
+    .btn-menu-toggler {
+        background-color: transparent;
+        font-size: 2rem;
+        border: 0;
+    }
+}
+
+.wrapp {
+    height: calc(100vh - $header-height);
+    overflow-y: auto;
+
+    .sidebar {
+        background-color: $light;
+        width: 100%;
+        max-width: $sidebar-width;
+        min-height: calc(100vh - ($header-height * 2));
+    }
+
+    .main {}
+}
