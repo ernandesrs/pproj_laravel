@@ -38,7 +38,7 @@ class MemberController extends Controller
     public function profile(): View
     {
         return view("member.profile", [
-            "pageTitle" => "",
+            "pageTitle" => "Meu perfil",
             "profile" => auth()->user()
         ]);
     }

@@ -43,30 +43,6 @@ return [
             ],
         ],
         [
-            "icon" => "bi bi-app",
-            "text" => "Example 2",
-            "title" => "",
-            "activeIn" => [],
-            "items" => [
-                [
-                    "icon" => "bi bi-app-indicator",
-                    "text" => "Account Information",
-                    "title" => "",
-                    "route" => "",
-                    "target" => "_self",
-                    "activeIn" => [],
-                ],
-                [
-                    "icon" => "bi bi-app-indicator",
-                    "text" => "Direct Refferals",
-                    "title" => "",
-                    "route" => "",
-                    "target" => "_self",
-                    "activeIn" => [],
-                ]
-            ],
-        ],
-        [
             "icon" => "bi bi-person-lines-fill",
             "text" => "Profile",
             "title" => "",

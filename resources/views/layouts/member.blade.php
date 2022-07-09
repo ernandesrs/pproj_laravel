@@ -20,7 +20,7 @@
         <div class="container-fluid">
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center left">
-                    <h1 class="mb-0 d-none d-lg-block logo">LOGO</h1>
+                    <h1 class="mb-0 d-none d-lg-block logo">{{ strtoupper(config('app.name')) }}</h1>
                     <button class="ml-auto d-lg-none bi bi-list btn-menu-toggler" data-active-icon="bi bi-list"
                         data-alt-icon="bi bi-x-lg"></button>
                 </div>
@@ -34,7 +34,7 @@
         </div>
     </header>
 
-    <div class="wrapp d-flex py-3">
+    <div class="d-flex wrapp">
         <aside class="sidebar accordion d-none d-lg-flex" id="sidebar">
             <div class="container-fluid d-flex flex-column py-3">
                 @php
@@ -72,21 +72,17 @@
             </div>
         </aside>
 
-        <div class="d-flex flex-column w-100">
-            <main class="main h-100 pb-5">
-                <div class="container-fluid">
-                    @include('includes.message')
+        <div class="container-fluid d-flex flex-column w-100">
+            <main class="main h-100">
+                @include('includes.message')
 
-                    @yield('content')
-                </div>
+                @yield('content')
             </main>
 
             <footer class="footer">
-                <div class="container-fluid">
-                    <p class="mb-0 text-center">
-                        <small>{{ config('app.name') }} com <i class='bx bxs-heart'></i> para você</small>
-                    </p>
-                </div>
+                <p class="mb-0 text-center">
+                    <small>{{ config('app.name') }} com <i class='bi bi-heart-fill'></i> para você</small>
+                </p>
             </footer>
         </div>
     </div>
