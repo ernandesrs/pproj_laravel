@@ -10,7 +10,7 @@
                     @php
                         $hash = md5(strtolower(trim($profile->email)));
 
-                        $avatar = $profile->photo ? $profile->photo : 'https://www.gravatar.com/avatar/' . $hash . '?s=175&d=robohash';
+                        $avatar = $profile->photo ? Storage::url($profile->photo) : 'https://www.gravatar.com/avatar/' . $hash . '?s=175&d=robohash';
                     @endphp
                     <img class="avatar img-fluid rounded-circle img-thumbnail" src="{{ $avatar }}"
                         alt="{{ $profile->name }}">
@@ -21,7 +21,10 @@
                 <div class="card card-body">
                     <h5 class="mb-0">Atualizar dados</h5>
                     <hr>
-                    <form class="jsFormSubmit" action="{{ route('member.profileUpdate') }}" method="post">
+                    <form class="jsFormSubmit" action="{{ route('member.profileUpdate') }}" method="post"
+                        enctype="multipart/form-data">
+                        @csrf
+
                         <div class="form-row">
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
