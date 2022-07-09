@@ -24,12 +24,26 @@
                         <td>
                             <a class="btn btn-sm btn-info bi bi-pencil-square"
                                 href="{{ route('admin.users.edit', ['user' => $user->id]) }}"></a>
-                            <a class="btn btn-sm btn-outline-danger bi bi-trash3-fill"
-                                href="{{ route('admin.users.destroy', ['user' => $user->id]) }}"></a>
+
+                            @include('includes.button-confirmation', [
+                                'btnAction' => route('admin.users.destroy', ['user' => $user->id]),
+                                'btnClass' => 'btn-outline-danger',
+                                'btnIcon' => 'bi bi-trash3-fill',
+                                'btnType' => 'danger',
+                                'btnMessage' =>
+                                    'Você está excluindo <strong>"' .
+                                    $user->email .
+                                    '"</strong> permanentemente e isso não pode ser desfeito, confirme para continuar.',
+                                'btnText' => '',
+                            ])
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+@endsection
+
+@section('modals')
+    @include('includes.modal-confirmation')
 @endsection
