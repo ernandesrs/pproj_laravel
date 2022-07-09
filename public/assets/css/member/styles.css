@@ -9326,6 +9326,14 @@ body .h5 {
 .wrapp .sidebar .nav .subnav .nav-link {
   font-size: 1rem;
 }
+.wrapp .main .profile .avatar {
+  width: 175px;
+  height: 175px;
+}
+.wrapp .main .profile .profile-info {
+  margin-top: -50px;
+}
+
 @media (min-width: 768px) {
   body h1,
 body .h1 {

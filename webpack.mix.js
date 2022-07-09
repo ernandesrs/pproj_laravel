@@ -59,7 +59,8 @@ mix
     /**
      * CSS
      */
-    .css("node_modules/boxicons/css/boxicons.css", "public/assets/css/boxicons.min.css");
+    .css("node_modules/boxicons/css/boxicons.css", "public/assets/css/boxicons.min.css")
+    .css("node_modules/bootstrap-icons/font/bootstrap-icons.css", "public/assets/css/bootstrap-icons.min.css");
 
 
     // js("resources/js/app.js", "public/js")

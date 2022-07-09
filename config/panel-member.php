@@ -3,7 +3,7 @@
 return [
     "sidebar" => [
         [
-            "icon" => "bx bxs-dashboard",
+            "icon" => "bi bi-grid-fill",
             "text" => "Dashboard",
             "title" => "",
             "route" => "member.home",
@@ -11,13 +11,13 @@ return [
             "activeIn" => ["member.home"],
         ],
         [
-            "icon" => "bx bxs-network-chart",
+            "icon" => "bi bi-diagram-3-fill",
             "text" => "Example",
             "title" => "",
             "activeIn" => ['member.example', 'member.exampleTwo'],
             "items" => [
                 [
-                    "icon" => "bx bxs-square-rounded",
+                    "icon" => "bi bi-app-indicator",
                     "text" => "Account Information",
                     "title" => "",
                     "route" => "member.example",
@@ -25,7 +25,7 @@ return [
                     "activeIn" => ['member.example'],
                 ],
                 [
-                    "icon" => "bx bxs-square-rounded",
+                    "icon" => "bi bi-app-indicator",
                     "text" => "Direct Refferals",
                     "title" => "",
                     "route" => "member.exampleTwo",
@@ -33,7 +33,7 @@ return [
                     "activeIn" => ['member.exampleTwo'],
                 ],
                 [
-                    "icon" => "bx bxs-square-rounded",
+                    "icon" => "bi bi-app-indicator",
                     "text" => "Binary Log",
                     "title" => "",
                     "route" => "member.example",
@@ -43,13 +43,13 @@ return [
             ],
         ],
         [
-            "icon" => "bx bxs-square-rounded",
+            "icon" => "bi bi-app",
             "text" => "Example 2",
             "title" => "",
             "activeIn" => [],
             "items" => [
                 [
-                    "icon" => "bx bx-square-rounded",
+                    "icon" => "bi bi-app-indicator",
                     "text" => "Account Information",
                     "title" => "",
                     "route" => "",
@@ -57,7 +57,7 @@ return [
                     "activeIn" => [],
                 ],
                 [
-                    "icon" => "bx bx-square-rounded",
+                    "icon" => "bi bi-app-indicator",
                     "text" => "Direct Refferals",
                     "title" => "",
                     "route" => "",
@@ -67,7 +67,7 @@ return [
             ],
         ],
         [
-            "icon" => "bx bxs-user-detail",
+            "icon" => "bi bi-person-lines-fill",
             "text" => "Profile",
             "title" => "",
             "route" => "member.profile",
@@ -75,7 +75,7 @@ return [
             "activeIn" => ["member.profile"],
         ],
         [
-            "icon" => "bx bx-log-out",
+            "icon" => "bi bi-box-arrow-left",
             "text" => "Logout",
             "title" => "",
             "route" => "auth.logout",

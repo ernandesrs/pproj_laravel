@@ -10,7 +10,7 @@
     <title>{{ config('app.name') }} Membro - {{ $pageTitle }}</title>
 
     <link rel="stylesheet" href="{{ asset('assets/css/member/styles.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/boxicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-icons.min.css') }}">
     @yield('styles')
 </head>
 
@@ -21,13 +21,13 @@
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center left">
                     <h1 class="mb-0 d-none d-lg-block logo">LOGO</h1>
-                    <button class="ml-auto d-lg-none bx bx-menu btn-menu-toggler" data-active-icon="bx bx-menu"
-                        data-alt-icon="bx bx-x"></button>
+                    <button class="ml-auto d-lg-none bi bi-list btn-menu-toggler" data-active-icon="bi bi-list"
+                        data-alt-icon="bi bi-x-lg"></button>
                 </div>
 
                 <nav class="nav ml-auto">
                     <a class="text-danger" href="{{ route('auth.logout') }}">
-                        <i class='bx bx-log-out'></i> Sair
+                        <i class='bi bi-box-arrow-left'></i> Sair
                     </a>
                 </nav>
             </div>

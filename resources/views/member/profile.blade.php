@@ -12,11 +12,12 @@
 
                         $avatar = $profile->photo ? $profile->photo : 'https://www.gravatar.com/avatar/' . $hash . '?s=175&d=robohash';
                     @endphp
-                    <img class="img-fluid rounded-circle img-thumbnail" src="{{ $avatar }}" alt="{{ $profile->name }}">
+                    <img class="avatar img-fluid rounded-circle img-thumbnail" src="{{ $avatar }}"
+                        alt="{{ $profile->name }}">
                 </div>
             </div>
 
-            <div class="col-11 col-md-9 col-lg-9 col-xl-7" style="margin-top: -50px;">
+            <div class="profile-info col-11 col-md-9 col-lg-9 col-xl-8">
                 <div class="card card-body">
                     <h5 class="mb-0">Atualizar dados</h5>
                     <hr>
@@ -74,7 +75,8 @@
 
                             <div class="col-12">
                                 <div class="form-group text-right">
-                                    <button class="btn btn-primary">
+                                    <button class="btn btn-primary bi bi-check-lg" data-active-icon="bi bi-check-lg"
+                                        data-alt-icon="bbi bi-arrow-clockwise">
                                         Atualizar
                                     </button>
                                 </div>

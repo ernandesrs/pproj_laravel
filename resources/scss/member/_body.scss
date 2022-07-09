@@ -81,5 +81,18 @@ body {
         }
     }
 
-    .main {}
+    .main {
+
+        .profile {
+            .avatar {
+                width: 175px;
+                height: 175px;
+            }
+
+            .profile-info {
+                margin-top: -50px;
+            }
+        }
+
+    }
 }
