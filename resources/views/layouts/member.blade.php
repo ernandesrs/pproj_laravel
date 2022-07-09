@@ -33,15 +33,40 @@
     </header>
 
     <div class="wrapp d-flex py-3">
-        <aside class="sidebar d-none d-lg-flex">
-            <div class="container-fluid py-3">
-                <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga et tenetur consectetur dolorem
-                    quibusdam.
-                    Doloremque obcaecati optio aspernatur. Aperiam voluptatum at iure itaque commodi! Voluptatum atque
-                    labore
-                    laudantium temporibus molestiae!
-                </p>
+        <aside class="sidebar accordion d-none d-lg-flex" id="sidebar">
+            <div class="container-fluid d-flex flex-column py-3">
+                @php
+                    $items = config('panel-member')['sidebar'];
+                    $croute = Route::currentRouteName();
+                @endphp
+
+                <nav class="nav flex-column">
+                    @foreach ($items as $key => $item)
+                        @if ($item['items'] ?? null)
+                            @php
+                                $active = in_array($croute, $item['activeIn']) ? 'active' : null;
+                            @endphp
+                            <a class="nav-link {{ $active }}" href="#" data-toggle="collapse"
+                                data-target="#item{{ $key }}">
+                                <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
+                            </a>
+                            <div class="subnav collapse pl-2 {{ $active ? 'show' : null }}"
+                                id="item{{ $key }}" data-parent="#sidebar">
+                                @foreach ($item['items'] as $i)
+                                    <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
+                                        href="{{ $i['route'] ?? null ? route($i['route']) : null }}">
+                                        <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        @else
+                            <a class="nav-link {{ in_array($croute, $item['activeIn']) ? 'active' : null }}"
+                                href="{{ $item['route'] ?? null ? route($item['route']) : null }}">
+                                <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
+                            </a>
+                        @endif
+                    @endforeach
+                </nav>
             </div>
         </aside>
 

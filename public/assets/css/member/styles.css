@@ -9283,12 +9283,29 @@ body {
 .wrapp .sidebar {
   background-color: #f8f9fa;
   width: 100%;
-  max-width: 225px;
+  max-width: 275px;
   min-height: calc(100vh - 120px);
+}
+.wrapp .sidebar .nav .nav-link {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+}
+.wrapp .sidebar .nav .nav-link .icon {
+  font-size: 1.5rem;
+  line-height: 0;
+  margin-right: 0.4rem;
+}
+.wrapp .sidebar .nav .nav-link.active {
+  color: #343a40;
+}
+.wrapp .sidebar .nav .subnav .nav-link {
+  font-size: 1rem;
 }
 @media (min-width: 992px) {
   .header .left {
-    width: 225px;
+    width: 275px;
   }
   .header .btn-menu-toggler {
     margin-right: -25px;

@@ -23,6 +23,31 @@ body {
         width: 100%;
         max-width: $sidebar-width;
         min-height: calc(100vh - ($header-height * 2));
+
+        .nav {
+            .nav-link {
+                display: flex;
+                align-items: center;
+                font-size: 1.2rem;
+                margin-bottom: 2px;
+
+                .icon {
+                    font-size: 1.5rem;
+                    line-height: 0;
+                    margin-right: $spacer / 2.5;
+                }
+
+                &.active {
+                    color: $dark;
+                }
+            }
+
+            .subnav {
+                .nav-link {
+                    font-size: 1rem;
+                }
+            }
+        }
     }
 
     .main {}
