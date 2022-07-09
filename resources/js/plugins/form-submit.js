@@ -1,15 +1,12 @@
 (function ($) {
-    let messageArea = $(".message-area");
 
-    $.fn.submited = function (e) {
+    $.fn.submited = function (e, success = null) {
         e.preventDefault();
 
         let form = $(this);
         let data = new FormData(form[0]);
         let action = form.attr("action");
         let submitter = $(e.originalEvent.submitter);
-
-        messageArea = form.find(".message-area").length ? form.find(".message-area") : messageArea;
 
         $.ajax({
             type: "POST",
@@ -35,11 +32,9 @@
                     return;
                 }
 
-                if (response.message) {
-                    messageArea.html(response.message);
-                }
-
                 addFormErrors(form, response.errors);
+
+                if (success) success(response);
             },
 
             complete: function () {

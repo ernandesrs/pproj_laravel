@@ -1,6 +1,8 @@
 let timeoutHandler = null;
 
 $(function () {
+    let messageArea = $(".message-area");
+    let modal = $(".jsModalConfirmation");
 
     $.ajaxSetup({
         headers: {
@@ -9,10 +11,13 @@ $(function () {
     });
 
     $(document).on("submit", ".jsFormSubmit", function (e) {
-        $(this).submited(e);
-    });
+        messageArea = $(this).find(".message-area").length ? $(this).find(".message-area") : messageArea;
 
-    let modal = $(".jsModalConfirmation");
+        $(this).submited(e, function (response) {
+            if (response.message)
+                addAlert($(response.message), messageArea);
+        });
+    });
 
     $(".jsButtonConfirmation").on("click", function (e) {
         e.preventDefault();
@@ -29,6 +34,7 @@ $(function () {
     });
 
     $(modal).on("hidden.bs.modal", function (e) {
+        modal.find(".message-area").html("");
         modal.find(".jsFormSubmit").attr("action", "");
         modal.find(".confirmation-message")
             .removeClass(`text-danger text-success text-info text-warning text-secondary`)
