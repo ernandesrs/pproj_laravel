@@ -14,7 +14,7 @@ return [
             "icon" => "bi bi-people-fill",
             "text" => "Gerenciar membros",
             "title" => "",
-            "activeIn" => [],
+            "activeIn" => ["admin.users.index", "admin.users.create", "admin.users.edit"],
             "target" => "_self",
             "items" => [
                 [
@@ -32,6 +32,15 @@ return [
                     "route" => "admin.users.create",
                     "target" => "_self",
                     "activeIn" => ["admin.users.create"]
+                ],
+                [
+                    "icon" => "bi bi-pencil-square",
+                    "text" => "Editar usuário",
+                    "title" => "",
+                    "route" => "",
+                    "target" => "_self",
+                    "activeIn" => ["admin.users.edit"],
+                    "visibleIn" => ["admin.users.edit"]
                 ]
             ]
         ],

@@ -55,11 +55,21 @@
                             <div class="subnav collapse pl-2 {{ $active ? 'show' : null }}"
                                 id="item{{ $key }}" data-parent="#sidebar">
                                 @foreach ($item['items'] as $i)
-                                    <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
-                                        href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
-                                        target="{{ $item['target'] }}">
-                                        <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
-                                    </a>
+                                    @if ($i['visibleIn'] ?? null)
+                                        @if (in_array(Route::currentRouteName(), $i['visibleIn'] ?? []))
+                                            <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
+                                                href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
+                                                target="{{ $item['target'] }}">
+                                                <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
+                                            </a>
+                                        @endif
+                                    @else
+                                        <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
+                                            href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
+                                            target="{{ $item['target'] }}">
+                                            <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
+                                        </a>
+                                    @endif
                                 @endforeach
                             </div>
                         @else
