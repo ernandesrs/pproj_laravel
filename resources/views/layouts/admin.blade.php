@@ -9,7 +9,7 @@
 
     <title>{{ config('app.name') }} Admin - {{ $pageTitle }}</title>
 
-    <link rel="stylesheet" href="{{ asset('assets/css/member/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-icons.min.css') }}">
     @yield('styles')
 </head>
