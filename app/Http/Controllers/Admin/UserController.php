@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Message\Message;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -89,6 +91,22 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        if ($user->id === auth()->user()->id) {
+            return response()->json([
+                "success" => false,
+                "message" => (new Message())->warning("Você não pode excluir sua própria conta!")->fixed()->render()
+            ]);
+        }
+
+        if ($user->photo)
+            Storage::unlink($user->photo);
+
+        $user->delete();
+
+        (new Message())->success("O usuário foi excluído com sucesso!")->float()->flash();
+        return response()->json([
+            "success" => true,
+            "reload" => true
+        ]);
     }
 }
