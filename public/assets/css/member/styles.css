@@ -9300,7 +9300,7 @@ body .h5 {
 }
 
 .wrapp {
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
   overflow-y: auto;
 }
 .wrapp .sidebar {

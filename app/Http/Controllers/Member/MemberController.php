@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -23,5 +24,16 @@ class MemberController extends Controller
     public function exampleTwo()
     {
         return view("member.home", ["pageTitle" => "Example Two"]);
+    }
+
+    /**
+     * @return View
+     */
+    public function profile(): View
+    {
+        return view("member.profile", [
+            "pageTitle" => "",
+            "profile" => auth()->user()
+        ]);
     }
 }
