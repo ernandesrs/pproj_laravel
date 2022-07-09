@@ -11,6 +11,31 @@ return [
             "activeIn" => ["admin.home"],
         ],
         [
+            "icon" => "bi bi-people-fill",
+            "text" => "Gerenciar membros",
+            "title" => "",
+            "activeIn" => [],
+            "target" => "_self",
+            "items" => [
+                [
+                    "icon" => "bi bi-list",
+                    "text" => "Listar membros",
+                    "title" => "",
+                    "route" => "admin.users.index",
+                    "target" => "_self",
+                    "activeIn" => ["admin.users.index"]
+                ],
+                [
+                    "icon" => "bi bi-person-plus-fill",
+                    "text" => "Novo",
+                    "title" => "",
+                    "route" => "admin.users.create",
+                    "target" => "_self",
+                    "activeIn" => ["admin.users.create"]
+                ]
+            ]
+        ],
+        [
             "icon" => "bi bi-box-arrow-up-right",
             "text" => "Abrir o site",
             "title" => "",

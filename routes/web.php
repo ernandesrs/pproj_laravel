@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\ForgotController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -80,4 +81,15 @@ Route::group([
 ], function () {
 
     Route::get("/", [AdminController::class, "home"])->name("admin.home");
+
+    Route::get("/usuarios/lista", [UserController::class, "index"])->name("admin.users.index");
+    Route::get("/usuarios/novo", [UserController::class, "create"])->name("admin.users.create");
+    Route::post("/usuarios/salvar", [UserController::class, "store"])->name("admin.users.store");
+    Route::get("/usuarios/ver/{user}", [UserController::class, "show"])->name("admin.users.show");
+    Route::get("/usuarios/editar/{user}", [UserController::class, "edit"])->name("admin.users.edit");
+    Route::post("/usuarios/atualizar/{user}", [UserController::class, "update"])->name("admin.users.update");
+
+    Route::post("/usuarios/excluir/{user}", [UserController::class, "destroy"])->name("admin.users.destroy");
+
+    //
 });
