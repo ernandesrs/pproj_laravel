@@ -62,6 +62,8 @@ Route::group([
 ], function () {
 
     Route::get("/", [MemberController::class, "home"])->name("member.home");
+    Route::get("/example-1", [MemberController::class, "example"])->name("member.example");
+    Route::get("/example-2", [MemberController::class, "exampleTwo"])->name("member.exampleTwo");
 });
 
 /**

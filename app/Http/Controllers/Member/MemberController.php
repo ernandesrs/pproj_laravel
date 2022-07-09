@@ -14,4 +14,14 @@ class MemberController extends Controller
             "pageTitle" => "Dashboard"
         ]);
     }
+
+    public function example()
+    {
+        return view("member.home", ["pageTitle" => "Example"]);
+    }
+
+    public function exampleTwo()
+    {
+        return view("member.home", ["pageTitle" => "Example Two"]);
+    }
 }
