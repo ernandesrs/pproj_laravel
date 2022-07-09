@@ -75,6 +75,8 @@
         <div class="d-flex flex-column w-100">
             <main class="main h-100 pb-5">
                 <div class="container-fluid">
+                    @include('includes.message')
+
                     @yield('content')
                 </div>
             </main>
