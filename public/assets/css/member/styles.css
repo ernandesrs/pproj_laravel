@@ -9263,12 +9263,35 @@ h3 {
 }
 body {
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
   font-family: "Roboto", sans-serif;
+}
+body h1,
+body .h1 {
+  font-size: 1.6rem;
+}
+body h2,
+body .h2 {
+  font-size: 1.4rem;
+}
+body h3,
+body .h3 {
+  font-size: 1.2rem;
+}
+body h4,
+body .h4 {
+  font-size: 1.1rem;
+}
+body h5,
+body .h5 {
+  font-size: 1rem;
 }
 
 .header {
   height: 60px;
+}
+.header .left .logo {
+  font-size: 1.2rem;
 }
 .header .btn-menu-toggler {
   background-color: transparent;
@@ -9283,7 +9306,7 @@ body {
 .wrapp .sidebar {
   background-color: #f8f9fa;
   width: 100%;
-  max-width: 275px;
+  max-width: 250px;
   min-height: calc(100vh - 120px);
 }
 .wrapp .sidebar .nav .nav-link {
@@ -9303,11 +9326,75 @@ body {
 .wrapp .sidebar .nav .subnav .nav-link {
   font-size: 1rem;
 }
+@media (min-width: 768px) {
+  body h1,
+body .h1 {
+    font-size: 1.8rem;
+  }
+  body h2,
+body .h2 {
+    font-size: 1.6rem;
+  }
+  body h3,
+body .h3 {
+    font-size: 1.4rem;
+  }
+  body h4,
+body .h4 {
+    font-size: 1.2rem;
+  }
+  body h5,
+body .h5 {
+    font-size: 1.1rem;
+  }
+}
 @media (min-width: 992px) {
+  body h1,
+body .h1 {
+    font-size: 2rem;
+  }
+  body h2,
+body .h2 {
+    font-size: 1.8rem;
+  }
+  body h3,
+body .h3 {
+    font-size: 1.6rem;
+  }
+  body h4,
+body .h4 {
+    font-size: 1.4rem;
+  }
+  body h5,
+body .h5 {
+    font-size: 1.2rem;
+  }
   .header .left {
-    width: 275px;
+    width: 250px;
   }
   .header .btn-menu-toggler {
     margin-right: -25px;
+  }
+}
+@media (min-width: 1200px) {
+  body h1,
+body .h1 {
+    font-size: 2.2rem;
+  }
+  body h2,
+body .h2 {
+    font-size: 2rem;
+  }
+  body h3,
+body .h3 {
+    font-size: 1.8rem;
+  }
+  body h4,
+body .h4 {
+    font-size: 1.6rem;
+  }
+  body h5,
+body .h5 {
+    font-size: 1.4rem;
   }
 }

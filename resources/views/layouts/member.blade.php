@@ -19,10 +19,12 @@
     <header class="header d-flex align-items-center">
         <div class="container-fluid">
             <div class="d-flex align-items-center">
-                <div class="d-flex left">
-                    <h1 class="mb-0 d-none d-lg-block">Logo</h1>
-                    <button class="ml-auto bx bx-menu btn-menu-toggler"></button>
+                <div class="d-flex align-items-center left">
+                    <h1 class="mb-0 d-none d-lg-block logo">LOGO</h1>
+                    <button class="ml-auto d-lg-none bx bx-menu btn-menu-toggler" data-active-icon="bx bx-menu"
+                        data-alt-icon="bx bx-x"></button>
                 </div>
+
                 <nav class="nav ml-auto">
                     <a class="text-danger" href="{{ route('auth.logout') }}">
                         <i class='bx bx-log-out'></i> Sair
@@ -70,11 +72,21 @@
             </div>
         </aside>
 
-        <main class="main">
-            <div class="container-fluid">
-                @yield('content')
-            </div>
-        </main>
+        <div class="d-flex flex-column w-100">
+            <main class="main h-100">
+                <div class="container-fluid">
+                    @yield('content')
+                </div>
+            </main>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <p class="mb-0 text-center">
+                        <small>{{ config('app.name') }} com <i class='bx bxs-heart'></i> para você</small>
+                    </p>
+                </div>
+            </footer>
+        </div>
     </div>
 
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
