@@ -51,6 +51,14 @@ return [
             "activeIn" => ["member.profile"],
         ],
         [
+            "icon" => "bi bi-box-arrow-up-right",
+            "text" => "Abrir o site",
+            "title" => "",
+            "route" => "front.home",
+            "target" => "_blank",
+            "activeIn" => [],
+        ],
+        [
             "icon" => "bi bi-box-arrow-left",
             "text" => "Logout",
             "title" => "",

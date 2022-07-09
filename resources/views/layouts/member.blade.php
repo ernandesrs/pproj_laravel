@@ -56,14 +56,16 @@
                                 id="item{{ $key }}" data-parent="#sidebar">
                                 @foreach ($item['items'] as $i)
                                     <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
-                                        href="{{ $i['route'] ?? null ? route($i['route']) : null }}">
+                                        href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
+                                        target="{{ $i['target'] }}">
                                         <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
                                     </a>
                                 @endforeach
                             </div>
                         @else
                             <a class="nav-link {{ in_array($croute, $item['activeIn']) ? 'active' : null }}"
-                                href="{{ $item['route'] ?? null ? route($item['route']) : null }}">
+                                href="{{ $item['route'] ?? null ? route($item['route']) : null }}"
+                                target="{{ $item['target'] }}">
                                 <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
                             </a>
                         @endif
