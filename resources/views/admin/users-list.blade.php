@@ -2,6 +2,17 @@
     'mainBar' => [
         'title' => $pageTitle,
         'filterFormAction' => route('admin.users.index'),
+        'filterFormFields' => [
+            [
+                'name' => 'status',
+                'label' => 'Status',
+                'type' => 'select',
+                'options' => [
+                    'verified' => 'Verificado',
+                    'unverified' => 'Não verificado',
+                ],
+            ],
+        ],
     ],
 ])
 
@@ -31,7 +42,7 @@
 
                             @include('includes.button-confirmation', [
                                 'btnAction' => route('admin.users.destroy', ['user' => $user->id]),
-                                'btnClass' => 'btn-outline-danger',
+                                'btnClass' => 'btn-sm btn-outline-danger',
                                 'btnIcon' => 'bi bi-trash3-fill',
                                 'btnType' => 'danger',
                                 'btnMessage' =>

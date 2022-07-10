@@ -93,20 +93,75 @@
                     @php
                         $mainBar = (object) $mainBar;
                     @endphp
-                    <div class="d-flex align-items-center py-3">
-                        <h1 class="mb-0 h4">{{ $mainBar->title }}</h1>
+                    <div class="row justify-content-center align-items-center py-3">
+                        {{-- MAIN TITLE --}}
+                        <div class="col-12 col-md-4 col-xl-7">
+                            <h1 class="h4 pb-2 pb-md-0">{{ $mainBar->title }}</h1>
+                        </div>
 
+                        {{-- MAIN FILTER --}}
                         @if ($mainBar->filterFormAction ?? false)
-                            <div class="form-filter mb-0 ml-auto">
+                            <div class="filter col-12 col-md-8 col-xl-5">
                                 <form class="jsFormSubmit" action="{{ $mainBar->filterFormAction }}" method="post">
-                                    <div class="d-flex align-items-center">
-                                        <div class="form-group mb-0 mr-1">
-                                            <label class="sr-only" for="search">Buscar por</label>
-                                            <input class="form-control text-center border-0" type="search"
-                                                name="search" id="search" placeholder="Pesquisar por...">
+                                    {{-- EXTRAS INPUT FILTERS --}}
+                                    <div class="collapse" id="moreFilters">
+                                        <div class="card card-body bg-transparent p-0 border-0">
+                                            <div class="row justify-content-start">
+                                                @if ($mainBar->filterFormFields ?? false)
+                                                    @foreach ($mainBar->filterFormFields as $field)
+                                                        <div class="col-12 col-sm-6 col-md-4 mb-3 mb-0">
+                                                            @php
+                                                                $field = (object) $field;
+                                                            @endphp
+                                                            <label class="sr-only"
+                                                                for="{{ $field->name }}">{{ $field->label }}:</label>
+                                                            @if ($field->type == 'input')
+                                                                <input class="form-control text-center" type="text"
+                                                                    name="{{ $field->name }}"
+                                                                    id="{{ $field->name }}"
+                                                                    placeholder="{{ $field->placeholder ?? $field->label }}">
+                                                            @elseif($field->type == 'select')
+                                                                <select class="form-control text-center"
+                                                                    name="{{ $field->name }}"
+                                                                    id="{{ $field->name }}">
+                                                                    <option value="none">{{ $field->label }}
+                                                                    </option>
+                                                                    @foreach ($field->options as $keyOpt => $valueOpt)
+                                                                        <option value="{{ $keyOpt }}">
+                                                                            {{ $valueOpt }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="col-12">
+                                                        <p class="mb-0 text-center">Não há mais filtros</p>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
-                                        <button class="btn bg-light bi bi-filter" data-active-icon="bi bi-filter"
-                                            data-alt-icon="bi bi-arrow-clockwise"></button>
+                                    </div>
+
+                                    {{-- DEFAULT INPUT --}}
+                                    <div class="mt-2 mt-md-0">
+                                        <div class="form-group mb-0 d-flex">
+                                            <label class="sr-only" for="search">Buscar por:</label>
+                                            <input class="form-control text-center" type="text" name="search"
+                                                id="search" placeholder="Buscar por...">
+
+                                            <button
+                                                class="btn bg-transparent bi bi-caret-down-fill ml-2 jsShowMoreFilters"
+                                                type="button" data-active-icon="bi bi-caret-down-fill"
+                                                data-alt-icon="bi bi-caret-up-fill" data-toggle="collapse"
+                                                data-target="#moreFilters">
+                                            </button>
+
+                                            <button class="btn bg-light bi bi-filter ml-1" type="submit"
+                                                data-active-icon="bi bi-filter"
+                                                data-alt-icon="bi bi-arrow-clockwise"></button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
