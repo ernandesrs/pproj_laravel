@@ -88,6 +88,32 @@
             <main class="main h-100">
                 @include('includes.message')
 
+                {{-- MAIN BAR --}}
+                @if ($mainBar ?? false)
+                    @php
+                        $mainBar = (object) $mainBar;
+                    @endphp
+                    <div class="d-flex align-items-center py-3">
+                        <h1 class="mb-0 h4">{{ $mainBar->title }}</h1>
+
+                        @if ($mainBar->filterFormAction ?? false)
+                            <div class="form-filter mb-0 ml-auto">
+                                <form class="jsFormSubmit" action="{{ $mainBar->filterFormAction }}" method="post">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-group mb-0 mr-1">
+                                            <label class="sr-only" for="search">Buscar por</label>
+                                            <input class="form-control text-center border-0" type="search"
+                                                name="search" id="search" placeholder="Pesquisar por...">
+                                        </div>
+                                        <button class="btn bg-light bi bi-filter" data-active-icon="bi bi-filter"
+                                            data-alt-icon="bi bi-arrow-clockwise"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        @endif
+                    </div>
+                @endif
+
                 @yield('content')
             </main>
 

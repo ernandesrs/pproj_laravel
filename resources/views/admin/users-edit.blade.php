@@ -1,8 +1,10 @@
-@extends('layouts.admin')
+@extends('layouts.admin', [
+    'mainBar' => [
+        'title' => $pageTitle,
+    ],
+])
 
 @section('content')
-    <h1>{{ $pageTitle }}</h1>
-
     <div class="row justify-content-center py-4">
         <div class="col-8 col-sm-6 col-md-5 col-lg-4 mb-4 mb-md-0 text-center">
             @php

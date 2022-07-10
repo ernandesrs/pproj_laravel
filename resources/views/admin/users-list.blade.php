@@ -1,7 +1,11 @@
-@extends('layouts.admin')
+@extends('layouts.admin', [
+    'mainBar' => [
+        'title' => $pageTitle,
+        'filterFormAction' => route('admin.users.index'),
+    ],
+])
 
 @section('content')
-    <h1>{{ $pageTitle }}</h1>
     <div class="table-responsive">
         <table class="table table-hover table-striped table-sm">
             <thead>

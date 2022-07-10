@@ -1,8 +1,10 @@
-@extends('layouts.admin')
+@extends('layouts.admin', [
+    'mainBar' => [
+        'title' => $pageTitle,
+    ],
+])
 
 @section('content')
-    <h1>{{ $pageTitle }}</h1>
-
     <div class="row justify-content-center py-4">
         <div class="col-12 col-md-10 col-lg-8">
             <div class="card card-body">
