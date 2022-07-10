@@ -11,7 +11,7 @@ function input_value($data, $key)
         return null;
     }
     $data = is_array($data) ? (object) $data : $data;
-    return $data->$key;
+    return $data->$key ?? null;
 }
 
 

@@ -19,12 +19,36 @@ class UserController extends Controller
     /**
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         return view("admin.users-list", [
             "pageTitle" => "Listagem de membros",
-            "users" => User::all()
+            "users" => $this->filter($request)
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return []
+     */
+    private function filter(Request $request)
+    {
+        $users = User::whereNotNull("id");
+
+        if ($request->get("filter")) {
+            if ($search = $request->get("search"))
+                $users->whereRaw("MATCH(first_name, last_name, name, email) AGAINST('{$search}')");
+
+            if ($status = $request->get("status")) {
+                $status = $status == "verified" ? true : ($status == "unverified" ? false : null);
+                if ($status === true)
+                    $users->whereNotNull("email_verified_at");
+                else if ($status === false)
+                    $users->whereNull("email_verified_at");
+            }
+        }
+
+        return $users->get();
     }
 
     /**

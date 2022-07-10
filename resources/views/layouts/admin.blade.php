@@ -102,7 +102,7 @@
                         {{-- MAIN FILTER --}}
                         @if ($mainBar->filterFormAction ?? false)
                             <div class="filter col-12 col-md-8 col-xl-5">
-                                <form class="jsFormSubmit" action="{{ $mainBar->filterFormAction }}" method="post">
+                                <form action="{{ $mainBar->filterFormAction }}" method="get">
                                     {{-- EXTRAS INPUT FILTERS --}}
                                     <div class="collapse" id="moreFilters">
                                         <div class="card card-body bg-transparent p-0 border-0">
@@ -119,7 +119,8 @@
                                                                 <input class="form-control text-center" type="text"
                                                                     name="{{ $field->name }}"
                                                                     id="{{ $field->name }}"
-                                                                    placeholder="{{ $field->placeholder ?? $field->label }}">
+                                                                    placeholder="{{ $field->placeholder ?? $field->label }}"
+                                                                    value="{{ input_value($_GET ?? null, $field->name) }}">
                                                             @elseif($field->type == 'select')
                                                                 <select class="form-control text-center"
                                                                     name="{{ $field->name }}"
@@ -127,7 +128,8 @@
                                                                     <option value="none">{{ $field->label }}
                                                                     </option>
                                                                     @foreach ($field->options as $keyOpt => $valueOpt)
-                                                                        <option value="{{ $keyOpt }}">
+                                                                        <option value="{{ $keyOpt }}"
+                                                                            {{ input_value($_GET ?? null, $field->name) == $keyOpt ? 'selected' : null }}>
                                                                             {{ $valueOpt }}
                                                                         </option>
                                                                     @endforeach
@@ -149,7 +151,10 @@
                                         <div class="form-group mb-0 d-flex">
                                             <label class="sr-only" for="search">Buscar por:</label>
                                             <input class="form-control text-center" type="text" name="search"
-                                                id="search" placeholder="Buscar por...">
+                                                id="search" placeholder="Buscar por..."
+                                                value="{{ input_value($_GET ?? null, 'search') }}">
+
+                                            <input type="hidden" name="filter" id="filter" value="1">
 
                                             <button
                                                 class="btn bg-transparent bi bi-caret-down-fill ml-2 jsShowMoreFilters"
