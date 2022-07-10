@@ -93,7 +93,7 @@
                     @php
                         $mainBar = (object) $mainBar;
                     @endphp
-                    <div class="row justify-content-center align-items-center py-3">
+                    <div class="row justify-content-start align-items-center py-3">
                         {{-- MAIN TITLE --}}
                         <div class="col-12 col-md-4 col-xl-7">
                             <h1 class="h4 pb-2 pb-md-0">{{ $mainBar->title }}</h1>

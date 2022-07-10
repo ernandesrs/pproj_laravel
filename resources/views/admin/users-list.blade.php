@@ -18,25 +18,34 @@
 
 @section('content')
     <div class="table-responsive">
-        <table class="table table-hover table-striped table-sm">
-            <thead>
-                <tr>
-                    <th class="text-center">#ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th class="d-none d-lg-block">Data de registro</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-
+        <table class="table table-hover table-borderless">
             <tbody>
                 @foreach ($users as $user)
                     <tr>
-                        <td class="text-center">{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td class="d-none d-lg-block">{{ $user->created_at->format('d/m/Y H:i:s') }}</td>
-                        <td>
+                        <td class="align-middle">
+                            <div class="d-flex">
+                                @php
+                                    $hash = md5(strtolower(trim($user->email)));
+
+                                    $avatar = $user->photo ? Storage::url($user->photo) : 'https://www.gravatar.com/avatar/' . $hash . '?s=75&d=robohash';
+                                @endphp
+                                <img class="img-fluid img-thumbnail rounded-circle mr-2" src="{{ $avatar }}"
+                                    alt="{{ $user->name }}" style="width: 75px; height: 75px;">
+                                <div class="d-flex flex-column">
+                                    <span>{{ $user->name }}</span>
+                                    <span><small>{{ $user->email }}</small></span>
+                                    <div class="d-flex">
+                                        <span
+                                            class="badge badge-secondary">{{ ucfirst(__('terms.user_level.' . $user->level)) }}</span>
+                                        <span class="mx-1"></span>
+                                        <span
+                                            class="badge badge-{{ $user->email_verified_at ? 'info' : 'light-dark' }}">{{ $user->email_verified_at ? 'Verificado' : 'Não verificado' }}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                        <td class="align-middle text-right">
                             <a class="btn btn-sm btn-info bi bi-pencil-square"
                                 href="{{ route('admin.users.edit', ['user' => $user->id]) }}"></a>
 
