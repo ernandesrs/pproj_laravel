@@ -43,10 +43,11 @@ function input_value($data, $key)
                 $levels = [1 => 'Usuário', 5 => 'Membro'];
             @endphp
             <select class="form-control" name="level" id="level"
-                {{ input_value($user ?? null, 'level') == 9 ? 'disabled' : null }}>
+                {{ $user ?? null ? ($user->id == auth()->user()->id ? 'disabled' : null) : null }}>
                 @foreach ($levels as $key => $level)
                     <option value="{{ $key }}"
-                        {{ input_value($user ?? null, 'level') == $level ? 'selected' : null }}>{{ $level }}
+                        {{ input_value($user ?? null, 'level') == $key ? 'selected' : null }}>
+                        {{ $level }}
                     </option>
                 @endforeach
                 @if (($user ?? null) && $user->level == 9)

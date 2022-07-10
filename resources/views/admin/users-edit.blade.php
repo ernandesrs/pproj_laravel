@@ -15,7 +15,7 @@
 
         <div class="col-12 col-md-7 col-lg-8">
             <div class="card card-body">
-                <form class="jsFormSubmit" action="{{ route('admin.users.edit', ['user' => $user->id]) }}" method="post"
+                <form class="jsFormSubmit" action="{{ route('admin.users.update', ['user' => $user->id]) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
 

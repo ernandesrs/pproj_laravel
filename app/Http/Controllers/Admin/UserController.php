@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -112,6 +113,54 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user): JsonResponse
     {
+        $validator = $this->userValidate($request, $user);
+
+        if ($errors = $validator->errors()->messages()) {
+            return response()->json([
+                "success" => false,
+                "message" => (new Message())->warning("Erro ao validar os dados informados")->float()->render(),
+                "errors" => array_map(function ($item) {
+                    return $item[0];
+                }, $errors)
+            ]);
+        }
+
+        $validated = $validator->validated();
+
+        // PHOTO UPLOAD
+        if ($validated["photo"] ?? null) {
+            $photo = $validated["photo"];
+            $newPhotoPath = $photo->store("public/avatars");
+
+            // REMOÇÃO DE FOTO ANTIGA
+            if ($user->photo)
+                Storage::delete($user->photo);
+
+            $user->photo = $newPhotoPath;
+        }
+
+        $user->name = $validated["first_name"] . " " . $validated["last_name"];
+        $user->first_name = $validated["first_name"];
+        $user->last_name = $validated["last_name"];
+
+        // VALIDA E ATUALIZA NÍVEL APENAS SE
+        if ($user->id != auth()->user()->id)
+            $user->level = $validated["level"] !== 9 ? $validated["level"] : 1;
+
+        // ATUALIZAR SENHA SE
+        if ($validated["password"] ?? null)
+            $user->password = Hash::make($validated["password"]);
+
+        if (!$user->save()) {
+            if ($newPhotoPath)
+                Storage::delete($newPhotoPath);
+
+            return response()->json([
+                "success" => false,
+                "message" => (new Message())->warning("Houve um erro ao registrar usuário.")->float()->render()
+            ]);
+        }
+
         (new Message())->success("O usuário foi atualizado com sucesso!")->float()->flash();
         return response()->json([
             "success" => true,
@@ -151,24 +200,24 @@ class UserController extends Controller
      */
     private function userValidate(Request $request, ?User $user = null): \Illuminate\Contracts\Validation\Validator
     {
-        $only = ["first_name", "last_name", "photo", "password", "password_confirmation"];
+        $only = ["first_name", "last_name", "level", "photo", "password", "password_confirmation"];
         $rules = [
             "first_name" => ["required"],
             "last_name" => ["required"],
+            "level" => ["numeric", Rule::in([1, 5, 9])],
             "photo" => ["mimes:jpg,png", "max:2048"]
         ];
 
         if (!$user) {
-            $only = array_merge($only, ["email", "level"]);
+            $only = array_merge($only, ["email"]);
             $rules += [
                 "email" => ["required", "unique:App\Models\User"],
-                "level" => ["numeric"],
                 "password" => ["required", "confirmed", "min:6", "max:18"],
                 "password_confirmation" => ["required"],
             ];
         }
 
-        if ($user && !empty($data["password"])) {
+        if ($user && !empty($request->get("password"))) {
             $rules += [
                 "password" => ["required", "min:6", "max:18", "confirmed"],
             ];
