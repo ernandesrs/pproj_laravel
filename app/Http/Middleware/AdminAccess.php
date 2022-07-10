@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,11 @@ class AdminAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->level !== 9)
+        $user = $request->user();
+        if (!$user)
+            return redirect()->route("auth.login");
+
+        if ($user->level !== User::LEVEL_9)
             return redirect()->route("front.home");
 
         return $next($request);

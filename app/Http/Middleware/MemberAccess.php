@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,11 @@ class MemberAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->level < 5)
+        $user = $request->user();
+        if (!$user)
+            return redirect()->route("auth.login");
+
+        if ($request->user()->level < User::LEVEL_5)
             return redirect()->route("front.home");
 
         if (!$request->user()->email_verified_at)
