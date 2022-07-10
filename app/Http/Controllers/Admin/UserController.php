@@ -71,7 +71,8 @@ class UserController extends Controller
         $user->first_name = $validated["first_name"];
         $user->last_name = $validated["last_name"];
         $user->email = $validated["email"];
-        $user->level = $validated["level"] !== 9 ? $validated["level"] : 1;
+        $user->level = $validated["level"] !== User::LEVEL_9 ? $validated["level"] : User::LEVEL_1;
+        $user->gender = $validated["gender"];
         $user->password = Hash::make($validated["password"]);
 
         if (!$user->save()) {
@@ -142,10 +143,11 @@ class UserController extends Controller
         $user->name = $validated["first_name"] . " " . $validated["last_name"];
         $user->first_name = $validated["first_name"];
         $user->last_name = $validated["last_name"];
+        $user->gender = $validated["gender"];
 
         // VALIDA E ATUALIZA NÍVEL APENAS SE
         if ($user->id != auth()->user()->id)
-            $user->level = $validated["level"] !== 9 ? $validated["level"] : 1;
+            $user->level = $validated["level"] !== User::LEVEL_9 ? $validated["level"] : User::LEVEL_1;
 
         // ATUALIZAR SENHA SE
         if ($validated["password"] ?? null)
@@ -200,11 +202,12 @@ class UserController extends Controller
      */
     private function userValidate(Request $request, ?User $user = null): \Illuminate\Contracts\Validation\Validator
     {
-        $only = ["first_name", "last_name", "level", "photo", "password", "password_confirmation"];
+        $only = ["first_name", "last_name", "level", "gender", "photo", "password", "password_confirmation"];
         $rules = [
             "first_name" => ["required"],
             "last_name" => ["required"],
-            "level" => ["numeric", Rule::in([1, 5, 9])],
+            "level" => ["numeric", Rule::in(User::LEVELS)],
+            "gender" => ["required", Rule::in(User::GENDERS)],
             "photo" => ["mimes:jpg,png", "max:2048"]
         ];
 

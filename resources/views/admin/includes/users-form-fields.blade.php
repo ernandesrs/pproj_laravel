@@ -28,7 +28,7 @@ function input_value($data, $key)
         </div>
     </div>
 
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6 col-lg-12 col-xl-6">
         <div class="form-group">
             <label for="email">Email:</label>
             <input class="form-control" type="text" name="email" id="email"
@@ -36,23 +36,37 @@ function input_value($data, $key)
         </div>
     </div>
 
-    <div class="col-12 col-md-6">
+    <div class="col-6 col-md-3 col-lg-6 col-xl-3">
         <div class="form-group">
-            <label for="level">Tipo de usuário</label>
+            <label for="level">Tipo de usuário:</label>
             @php
-                $levels = [1 => 'Usuário', 5 => 'Membro'];
+                $levels = \App\Models\User::LEVELS;
             @endphp
             <select class="form-control" name="level" id="level"
                 {{ $user ?? null ? ($user->id == auth()->user()->id ? 'disabled' : null) : null }}>
-                @foreach ($levels as $key => $level)
-                    <option value="{{ $key }}"
-                        {{ input_value($user ?? null, 'level') == $key ? 'selected' : null }}>
-                        {{ $level }}
+                @foreach ($levels as $level)
+                    <option value="{{ $level }}"
+                        {{ input_value($user ?? null, 'level') == $level ? 'selected' : null }}>
+                        {{ ucfirst(__('terms.user_level.' . $level)) }}
                     </option>
                 @endforeach
-                @if (($user ?? null) && $user->level == 9)
-                    <option value="9" selected>Administrador</option>
-                @endif
+            </select>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+        <div class="form-group">
+            <label for="gender">Gênero:</label>
+            @php
+                $genders = \App\Models\User::GENDERS;
+            @endphp
+            <select class="form-control" name="gender" id="gender">
+                @foreach ($genders as $gender)
+                    <option value="{{ $gender }}"
+                        {{ input_value($user ?? null, 'gender') == $gender ? 'selected' : null }}>
+                        {{ ucfirst(__('terms.user_gender.' . $gender)) }}
+                    </option>
+                @endforeach
             </select>
         </div>
     </div>

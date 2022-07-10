@@ -13,6 +13,28 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public const LEVEL_1 = 1;
+    public const LEVEL_5 = 5;
+    public const LEVEL_9 = 9;
+
+    public const GENDER_MALE = "m";
+    public const GENDER_FEMALE = "f";
+    public const GENDER_NONE = "n";
+
+    /**
+     * Allowed levels
+     *
+     * @var array<int>
+     */
+    public const LEVELS = [self::LEVEL_1, self::LEVEL_5, self::LEVEL_9];
+
+    /**
+     * Allowed genders
+     *
+     * @var array<string>
+     */
+    public const GENDERS = [self::GENDER_NONE, self::GENDER_FEMALE, self::GENDER_MALE];
+
     /**
      * The attributes that are mass assignable.
      *
