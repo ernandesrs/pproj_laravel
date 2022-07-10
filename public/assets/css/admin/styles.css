@@ -10439,6 +10439,12 @@ body .h5 {
 .wrapp .sidebar .nav .subnav .nav-link {
   font-size: 1rem;
 }
+.wrapp .main .cards-list .cards-list-item .icon {
+  font-size: 2.5rem;
+}
+.wrapp .main .cards-list .cards-list-item .card-item-content {
+  margin-left: 14px;
+}
 .wrapp .main .profile .avatar {
   width: 175px;
   height: 175px;
