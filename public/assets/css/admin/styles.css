@@ -4115,6 +4115,18 @@ input[type=button].btn-block {
 .custom-file-input:lang(en) ~ .custom-file-label::after {
   content: "Browse";
 }
+.custom-file-input:lang(es) ~ .custom-file-label::after {
+  content: "Elegir";
+}
+.custom-file-input:lang(pt-BR) ~ .custom-file-label::after {
+  content: "Escolher";
+}
+.custom-file-input:lang(pt_BR) ~ .custom-file-label::after {
+  content: "Escolher";
+}
+.custom-file-input:lang(pt-br) ~ .custom-file-label::after {
+  content: "Escolher";
+}
 .custom-file-input ~ .custom-file-label[data-browse]::after {
   content: attr(data-browse);
 }
