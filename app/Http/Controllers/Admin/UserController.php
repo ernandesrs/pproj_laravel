@@ -171,7 +171,7 @@ class UserController extends Controller
 
         // VALIDA E ATUALIZA NÍVEL APENAS SE
         if ($user->id != auth()->user()->id)
-            $user->level = $validated["level"] !== User::LEVEL_9 ? $validated["level"] : User::LEVEL_1;
+            $user->level = $validated["level"] != User::LEVEL_9 ? $validated["level"] : User::LEVEL_1;
 
         // ATUALIZAR SENHA SE
         if ($validated["password"] ?? null)
