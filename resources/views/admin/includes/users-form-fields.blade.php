@@ -1,17 +1,4 @@
-@php
-
-function input_value($data, $key)
-{
-    if (!$data) {
-        return null;
-    }
-    $data = is_array($data) ? (object) $data : $data;
-    return $data->$key;
-}
-
-@endphp
 <div class="form-row">
-
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="first_name">Nome:</label>
@@ -40,7 +27,7 @@ function input_value($data, $key)
         <div class="form-group">
             <label for="level">Tipo de usuário:</label>
             @php
-                $levels = \App\Models\User::LEVELS;
+                $levels = m_user_levels();
             @endphp
             <select class="form-control" name="level" id="level"
                 {{ $user ?? null ? ($user->id == auth()->user()->id ? 'disabled' : null) : null }}>
@@ -58,7 +45,7 @@ function input_value($data, $key)
         <div class="form-group">
             <label for="gender">Gênero:</label>
             @php
-                $genders = \App\Models\User::GENDERS;
+                $genders = m_user_genders();
             @endphp
             <select class="form-control" name="gender" id="gender">
                 @foreach ($genders as $gender)

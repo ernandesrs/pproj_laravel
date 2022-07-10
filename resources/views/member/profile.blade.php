@@ -52,6 +52,23 @@
 
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
+                                    <label for="gender">Gênero:</label>
+                                    @php
+                                        $genders = m_user_genders();
+                                    @endphp
+                                    <select class="form-control" name="gender" id="gender">
+                                        @foreach ($genders as $gender)
+                                            <option value="{{ $gender }}"
+                                                {{ input_value($profile ?? null, 'gender') == $gender ? 'selected' : null }}>
+                                                {{ ucfirst(__('terms.user_gender.' . $gender)) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
                                     <label for="photo">Foto:</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="photo" id="photo">
