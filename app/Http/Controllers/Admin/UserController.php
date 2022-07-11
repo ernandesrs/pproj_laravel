@@ -208,6 +208,26 @@ class UserController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function photoRemove(Request $request, User $user): JsonResponse
+    {
+        if ($user->photo)
+            Storage::delete($user->photo);
+
+        $user->photo = null;
+        $user->save();
+
+        (new Message())->success("Foto removida com sucesso.")->float()->flash();
+        return response()->json([
+            "success" => true,
+            "reload" => true,
+        ]);
+    }
+
+    /**
      * @param User $user
      * @return JsonResponse
      */

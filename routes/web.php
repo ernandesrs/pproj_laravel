@@ -88,6 +88,7 @@ Route::group([
     Route::get("/usuarios/ver/{user}", [UserController::class, "show"])->name("admin.users.show");
     Route::get("/usuarios/editar/{user}", [UserController::class, "edit"])->name("admin.users.edit");
     Route::post("/usuarios/atualizar/{user}", [UserController::class, "update"])->name("admin.users.update");
+    Route::post("/usuarios/excluir-foto/{user}", [UserController::class, "photoRemove"])->name("admin.users.photoRemove");
 
     Route::post("/usuarios/excluir/{user}", [UserController::class, "destroy"])->name("admin.users.destroy");
 

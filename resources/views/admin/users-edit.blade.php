@@ -13,12 +13,36 @@
                 $avatar = $user->photo ? Storage::url($user->photo) : 'https://www.gravatar.com/avatar/' . $hash . '?s=250&d=robohash';
             @endphp
             <img class="avatar img-fluid rounded-circle img-thumbnail" src="{{ $avatar }}" alt="{{ $user->name }}">
+            <div class="py-2">
+                @if ($user->photo)
+                    <div class="card card-body">
+                        <form class="jsFormSubmit" action="{{ route('admin.users.photoRemove', ['user' => $user->id]) }}">
+                            @include('includes.message')
+                            @csrf
+                            <button class="btn btn-link text-danger">Excluir foto</button>
+                        </form>
+                    </div>
+                    <hr>
+                @endif
+                <small>
+                    <p class="mb-0">
+                        Registrado em: {{ $user->created_at->format('d/m/Y H:i') }}
+                    </p>
+                    <p class="mb-0">
+                        @if ($user->email_verified_at)
+                            Verificado em: {{ $user->email_verified_at->format('d/m/Y H:i') }}
+                        @else
+                            Aguardando verificação
+                        @endif
+                    </p>
+                </small>
+            </div>
         </div>
 
         <div class="col-12 col-md-7 col-lg-8">
             <div class="card card-body">
-                <form class="jsFormSubmit" action="{{ route('admin.users.update', ['user' => $user->id]) }}" method="post"
-                    enctype="multipart/form-data">
+                <form class="jsFormSubmit" action="{{ route('admin.users.update', ['user' => $user->id]) }}"
+                    method="post" enctype="multipart/form-data">
                     @csrf
 
                     @include('admin.includes.users-form-fields')
