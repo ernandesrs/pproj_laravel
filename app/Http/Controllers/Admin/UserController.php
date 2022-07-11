@@ -33,6 +33,7 @@ class UserController extends Controller
      */
     private function filter(Request $request)
     {
+        /** @var User $users */
         $users = User::whereNotNull("id");
 
         if ($request->get("filter")) {
@@ -48,7 +49,7 @@ class UserController extends Controller
             }
         }
 
-        return $users->get();
+        return $users->paginate(12)->withQueryString();
     }
 
     /**

@@ -69,6 +69,10 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="d-flex justify-content-end align-items-center py-2">
+            {{ $users->onEachSide(2)->links() }}
+        </div>
     </div>
 @endsection
 
