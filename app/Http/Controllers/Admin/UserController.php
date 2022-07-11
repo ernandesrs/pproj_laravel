@@ -246,8 +246,10 @@ class UserController extends Controller
             ]);
         }
 
-        if ($user->photo)
+        if ($user->photo) {
+            Thumbnail::src(Storage::path($user->photo))->delete();
             Storage::delete($user->photo);
+        }
 
         $user->delete();
 
