@@ -12,7 +12,8 @@
 
                 $avatar = $user->photo ? Storage::url($user->photo) : 'https://www.gravatar.com/avatar/' . $hash . '?s=250&d=robohash';
             @endphp
-            <img class="avatar img-fluid rounded-circle img-thumbnail" src="{{ $avatar }}" alt="{{ $user->name }}">
+            <img class="avatar img-fluid rounded-circle img-thumbnail" src="{{ m_user_photo_thumb($user, 'normal') }}"
+                alt="{{ $user->name }}">
             <div class="py-2">
                 @if ($user->photo)
                     <div class="card card-body">

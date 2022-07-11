@@ -7,12 +7,7 @@
                 <div class="jumbotron text-center pb-5">
                     <h2 class="display-4">Olá, {{ $profile->first_name }}!</h2>
                     <p class="lead">Bem vindo ao seu perfil!</p>
-                    @php
-                        $hash = md5(strtolower(trim($profile->email)));
-
-                        $avatar = $profile->photo ? Storage::url($profile->photo) : 'https://www.gravatar.com/avatar/' . $hash . '?s=175&d=robohash';
-                    @endphp
-                    <img class="avatar img-fluid rounded-circle img-thumbnail" src="{{ $avatar }}"
+                    <img class="avatar img-fluid rounded-circle img-thumbnail" src="{{ m_user_photo_thumb($profile, 'normal') }}"
                         alt="{{ $profile->name }}">
                 </div>
             </div>

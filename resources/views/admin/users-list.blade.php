@@ -37,13 +37,9 @@ foreach ($keys as $key => $value) {
                     <tr>
                         <td class="align-middle">
                             <div class="d-flex">
-                                @php
-                                    $hash = md5(strtolower(trim($user->email)));
-
-                                    $avatar = $user->photo ? Storage::url($user->photo) : 'https://www.gravatar.com/avatar/' . $hash . '?s=75&d=robohash';
-                                @endphp
-                                <img class="img-fluid img-thumbnail rounded-circle mr-2" src="{{ $avatar }}"
-                                    alt="{{ $user->name }}" style="width: 75px; height: 75px;">
+                                <img class="img-fluid img-thumbnail rounded-circle mr-2"
+                                    src="{{ m_user_photo_thumb($user, 'small') }}" alt="{{ $user->name }}"
+                                    style="width: 75px; height: 75px;">
                                 <div class="d-flex flex-column">
                                     <span>{{ $user->name }}</span>
                                     <span class="pb-1"><small>{{ $user->email }}</small></span>
