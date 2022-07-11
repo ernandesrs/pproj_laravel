@@ -10,7 +10,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -23,7 +22,7 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        return view("admin.users-list", [
+        return view("admin.users.users-list", [
             "pageTitle" => "Listagem de membros",
             "users" => $this->filter($request)
         ]);
@@ -71,7 +70,7 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view("admin.users-novo", [
+        return view("admin.users.users-novo", [
             "pageTitle" => "Novo usuário"
         ]);
     }
@@ -140,7 +139,7 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
-        return view("admin.users-edit", [
+        return view("admin.users.users-edit", [
             "pageTitle" => "Editar usuário",
             "user" => $user
         ]);

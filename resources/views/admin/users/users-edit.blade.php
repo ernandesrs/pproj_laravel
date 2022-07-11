@@ -41,7 +41,7 @@
                     method="post" enctype="multipart/form-data">
                     @csrf
 
-                    @include('admin.includes.users-form-fields')
+                    @include('admin.users.includes.users-form-fields')
 
                     <button class="btn btn-primary {{ icon_class('checkLg') }}"
                         data-active-icon="{{ icon_class('checkLg') }}" data-alt-icon="{{ icon_class('loading') }}"

@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Storage;
+use Rolandstarke\Thumbnail\Facades\Thumbnail;
 
 /**
  * Obtém valor de $data
@@ -40,56 +40,13 @@ function icon_elem(string $name, ?string $alt = null): string
 }
 
 /**
- * @param \App\Models\User $user
- * @param string|array $size pode ser 'small', 'normal', 'medium', 'large', ou array com as dimensões desejadas, exemplo: [100, 100]
- * @return string
+ * @param string|null $path
+ * @param integer $width
+ * @param integer|null $height
+ * @return null|string
  */
-function m_user_photo_thumb(\App\Models\User $user, $size = "normal"): string
+function thumb(?string $path, int $width, ?int $height = null): ?string
 {
-    $predefinedDimensions = [
-        "small" => [75, 75],
-        "normal" => [250, 250],
-        "medium" => [500, 500],
-        "large" => [720, 720],
-    ];
-
-    $dimensions = is_array($size) ? $size : $predefinedDimensions[$size] ?? $predefinedDimensions["normal"];
-
-    $width = $dimensions[0];
-    $height = $dimensions[1];
-
-    if ($user->photo && file_exists(Storage::path($user->photo))) {
-        $photo = Storage::path($user->photo);
-        $thumb = \Rolandstarke\Thumbnail\Facades\Thumbnail::src($photo)->crop($width, $height);
-        return $thumb->url();
-    }
-
-    $hash = md5(strtolower(trim($user->email)));
-
-    return "https://www.gravatar.com/avatar/{$hash}?s={$width}&d=robohash";
-}
-
-/**
- *
- * Funções helpers para o modelo User
- * MODELS
- *
- */
-
-/**
- * Obtém array de gêneros do modelo User
- * @return array
- */
-function m_user_genders(): array
-{
-    return \App\Models\User::GENDERS;
-}
-
-/**
- * Obtém array de níveis de usuário do modelo User
- * @return array
- */
-function m_user_levels(): array
-{
-    return \App\Models\User::LEVELS;
+    if (!$path) return null;
+    return Thumbnail::src($path)->crop($width, $height ?? $width)->url();
 }
