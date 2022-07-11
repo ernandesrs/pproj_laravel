@@ -69,7 +69,7 @@
     function addBackdrop(id, position, container, effect) {
         let cntnr = container ?? $("body");
         let efct = effect ?? "fade";
-        let bkdrop = $(`<div class="mback" id="${id}"></div>`).css({
+        let bkdrop = $(`<div class="mbackdrop loading rounded" id="${id}"></div>`).css({
             "background-color": "rgb(0, 0, 0, 0.125)",
             width: "100%",
             height: "100%",

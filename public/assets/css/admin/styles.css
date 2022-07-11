@@ -4115,18 +4115,6 @@ input[type=button].btn-block {
 .custom-file-input:lang(en) ~ .custom-file-label::after {
   content: "Browse";
 }
-.custom-file-input:lang(es) ~ .custom-file-label::after {
-  content: "Elegir";
-}
-.custom-file-input:lang(pt-BR) ~ .custom-file-label::after {
-  content: "Escolher";
-}
-.custom-file-input:lang(pt_BR) ~ .custom-file-label::after {
-  content: "Escolher";
-}
-.custom-file-input:lang(pt-br) ~ .custom-file-label::after {
-  content: "Escolher";
-}
 .custom-file-input ~ .custom-file-label[data-browse]::after {
   content: attr(data-browse);
 }
@@ -10369,6 +10357,60 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.loading::before {
+  -webkit-animation-name: loadAnimation;
+          animation-name: loadAnimation;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+@-webkit-keyframes loadAnimation {
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+@keyframes loadAnimation {
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.mbackdrop.loading {
+  -webkit-animation-name: bakdropLoadAnimation;
+          animation-name: bakdropLoadAnimation;
+  -webkit-animation-duration: 1.5s;
+          animation-duration: 1.5s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+@-webkit-keyframes bakdropLoadAnimation {
+  0% {
+    background-color: rgba(253, 253, 253, 0.75);
+  }
+  50% {
+    background-color: rgba(227, 227, 227, 0.5);
+  }
+  100% {
+    background-color: rgba(253, 253, 253, 0.75);
+  }
+}
+@keyframes bakdropLoadAnimation {
+  0% {
+    background-color: rgba(253, 253, 253, 0.75);
+  }
+  50% {
+    background-color: rgba(227, 227, 227, 0.5);
+  }
+  100% {
+    background-color: rgba(253, 253, 253, 0.75);
+  }
+}
+
 .alert {
   display: none;
   border-left-width: 8px;

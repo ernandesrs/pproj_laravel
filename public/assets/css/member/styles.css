@@ -1,5 +1,60 @@
 @import url(https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap);
-@charset "UTF-8"; /*!
+@charset "UTF-8";
+.loading::before {
+  -webkit-animation-name: loadAnimation;
+          animation-name: loadAnimation;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+@-webkit-keyframes loadAnimation {
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+@keyframes loadAnimation {
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.mbackdrop.loading {
+  -webkit-animation-name: bakdropLoadAnimation;
+          animation-name: bakdropLoadAnimation;
+  -webkit-animation-duration: 1.5s;
+          animation-duration: 1.5s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+@-webkit-keyframes bakdropLoadAnimation {
+  0% {
+    background-color: rgba(253, 253, 253, 0.75);
+  }
+  50% {
+    background-color: rgba(227, 227, 227, 0.5);
+  }
+  100% {
+    background-color: rgba(253, 253, 253, 0.75);
+  }
+}
+@keyframes bakdropLoadAnimation {
+  0% {
+    background-color: rgba(253, 253, 253, 0.75);
+  }
+  50% {
+    background-color: rgba(227, 227, 227, 0.5);
+  }
+  100% {
+    background-color: rgba(253, 253, 253, 0.75);
+  }
+}
+
+/*!
  * Bootstrap v4.6.1 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
  * Copyright 2011-2021 Twitter, Inc.
