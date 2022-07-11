@@ -83,14 +83,13 @@ Route::group([
     Route::get("/", [AdminController::class, "home"])->name("admin.home");
 
     Route::get("/usuarios/lista", [UserController::class, "index"])->name("admin.users.index");
-    Route::get("/usuarios/novo", [UserController::class, "create"])->name("admin.users.create");
-    Route::post("/usuarios/salvar", [UserController::class, "store"])->name("admin.users.store");
-    Route::get("/usuarios/ver/{user}", [UserController::class, "show"])->name("admin.users.show");
-    Route::get("/usuarios/editar/{user}", [UserController::class, "edit"])->name("admin.users.edit");
-    Route::post("/usuarios/atualizar/{user}", [UserController::class, "update"])->name("admin.users.update");
-    Route::post("/usuarios/excluir-foto/{user}", [UserController::class, "photoRemove"])->name("admin.users.photoRemove");
-
-    Route::post("/usuarios/excluir/{user}", [UserController::class, "destroy"])->name("admin.users.destroy");
+    Route::get("/usuario/novo", [UserController::class, "create"])->name("admin.users.create");
+    Route::post("/usuario/salvar", [UserController::class, "store"])->name("admin.users.store");
+    Route::get("/usuario/ver/{user}", [UserController::class, "show"])->name("admin.users.show");
+    Route::get("/usuario/editar/{user}", [UserController::class, "edit"])->name("admin.users.edit");
+    Route::post("/usuario/atualizar/{user}", [UserController::class, "update"])->name("admin.users.update");
+    Route::post("/usuario/excluir-foto/{user}", [UserController::class, "photoRemove"])->name("admin.users.photoRemove");
+    Route::post("/usuario/excluir/{user}", [UserController::class, "destroy"])->name("admin.users.destroy");
 
     //
 });
