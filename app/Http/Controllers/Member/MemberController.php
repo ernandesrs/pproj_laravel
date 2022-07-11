@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Rolandstarke\Thumbnail\Facades\Thumbnail;
 
 class MemberController extends Controller
 {
@@ -83,8 +84,10 @@ class MemberController extends Controller
             $photo = $validated["photo"];
             $path = $photo->store("public/avatars");
 
-            if ($user->photo)
+            if ($user->photo) {
+                Thumbnail::src(Storage::path($user->photo))->delete();
                 Storage::delete($user->photo);
+            }
 
             $user->photo = $path;
         }

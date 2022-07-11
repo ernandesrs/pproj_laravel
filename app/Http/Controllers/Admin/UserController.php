@@ -10,9 +10,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Rolandstarke\Thumbnail\Facades\Thumbnail;
 
 class UserController extends Controller
 {
@@ -171,8 +173,10 @@ class UserController extends Controller
             $newPhotoPath = $photo->store("public/avatars");
 
             // REMOÇÃO DE FOTO ANTIGA
-            if ($user->photo)
+            if ($user->photo) {
+                Thumbnail::src(Storage::path($user->photo))->delete();
                 Storage::delete($user->photo);
+            }
 
             $user->photo = $newPhotoPath;
         }
@@ -214,8 +218,10 @@ class UserController extends Controller
      */
     public function photoRemove(Request $request, User $user): JsonResponse
     {
-        if ($user->photo)
+        if ($user->photo) {
+            Thumbnail::src(Storage::path($user->photo))->delete();
             Storage::delete($user->photo);
+        }
 
         $user->photo = null;
         $user->save();
