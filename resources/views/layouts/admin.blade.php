@@ -52,7 +52,7 @@
                                 data-target="#item{{ $key }}">
                                 <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
                             </a>
-                            <div class="subnav collapse pl-2 {{ $active ? 'show' : null }}"
+                            <div class="subnav collapse {{ $active ? 'show' : null }}"
                                 id="item{{ $key }}" data-parent="#sidebar">
                                 @foreach ($item['items'] as $i)
                                     @if ($i['visibleIn'] ?? null)
@@ -96,7 +96,7 @@
                     <div class="row justify-content-start align-items-center py-3">
                         {{-- MAIN TITLE --}}
                         <div class="col-12 col-md-4 col-xl-7">
-                            <h1 class="h4 pb-2 pb-md-0">{{ $mainBar->title }}</h1>
+                            <h1 class="h5 pb-2 pb-md-0">{{ $mainBar->title }}</h1>
                         </div>
 
                         {{-- MAIN FILTER --}}

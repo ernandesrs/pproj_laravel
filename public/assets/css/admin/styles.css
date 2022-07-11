@@ -10471,14 +10471,17 @@ body .h5 {
   min-height: calc(100vh - 60px);
   overflow-y: auto;
 }
+.wrapp .sidebar,
+.wrapp .main {
+  margin-top: 0.6666666667rem;
+}
 .wrapp .sidebar {
   background-color: rgb(252, 252, 252);
   width: 100%;
   max-width: 250px;
   min-height: calc(100vh - (120px + 0.5rem));
   border-radius: 1rem;
-  box-shadow: 0 0 14px 2px rgba(53, 53, 53, 0.125);
-  margin-top: 0.5rem;
+  box-shadow: 0 0 24px -2px rgba(53, 53, 53, 0.25);
 }
 .wrapp .sidebar .nav .nav-link {
   display: flex;
@@ -10494,6 +10497,9 @@ body .h5 {
 .wrapp .sidebar .nav .nav-link.active {
   border-left: 2px solid #1e9ed0;
 }
+.wrapp .sidebar .nav .subnav {
+  padding-left: 1rem;
+}
 .wrapp .sidebar .nav .subnav .nav-link {
   font-size: 1rem;
 }
@@ -10503,11 +10509,11 @@ body .h5 {
 .wrapp .main .cards-list .cards-list-item .card-item-content {
   margin-left: 14px;
 }
-.wrapp .main .profile .avatar {
+.wrapp .main .section-user-edit .avatar {
   width: 175px;
   height: 175px;
 }
-.wrapp .main .profile .profile-info {
+.wrapp .main .section-user-edit .profile-info {
   margin-top: -50px;
 }
 

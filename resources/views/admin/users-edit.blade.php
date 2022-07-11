@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="row justify-content-center py-4">
+    <div class="row justify-content-center py-4 section-user-edit">
         <div class="col-8 col-sm-6 col-md-5 col-lg-4 mb-4 mb-md-0 text-center">
             <img class="avatar img-fluid rounded-circle img-thumbnail" src="{{ m_user_photo_thumb($user, 'normal') }}"
                 alt="{{ $user->name }}">
