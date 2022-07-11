@@ -1,6 +1,8 @@
 body {
     background: $light-light;
     background: linear-gradient(265deg, $light-light 24%, $light 51%);
+    background-image: url("./../../img/body-bg.svg");
+    background-repeat: repeat;
     height: 100vh;
     overflow-x: hidden;
     font-family: "Roboto", sans-serif;
@@ -55,8 +57,10 @@ body {
         background-color: $light-light;
         width: 100%;
         max-width: $sidebar-sm-width;
-        min-height: calc(100vh - ($header-height * 2));
+        min-height: calc(100vh - (($header-height * 2) + ($spacer / 2)));
         border-radius: $spacer;
+        box-shadow: 0 0 14px 2px rgb($dark-light, 0.125);
+        margin-top: $spacer / 2;
 
         .nav {
             .nav-link {

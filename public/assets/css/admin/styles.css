@@ -10386,6 +10386,8 @@ h3 {
 body {
   background: rgb(252, 252, 252);
   background: linear-gradient(265deg, rgb(252, 252, 252) 24%, rgb(241, 241, 241) 51%);
+  background-image: url(/images/body-bg.svg?a0f64f801b089932b2e779da5bffdc27);
+  background-repeat: repeat;
   height: 100vh;
   overflow-x: hidden;
   font-family: "Roboto", sans-serif;
@@ -10431,8 +10433,10 @@ body .h5 {
   background-color: rgb(252, 252, 252);
   width: 100%;
   max-width: 250px;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - (120px + 0.5rem));
   border-radius: 1rem;
+  box-shadow: 0 0 14px 2px rgba(53, 53, 53, 0.125);
+  margin-top: 0.5rem;
 }
 .wrapp .sidebar .nav .nav-link {
   display: flex;
