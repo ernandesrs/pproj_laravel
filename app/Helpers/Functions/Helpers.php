@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Message\Message;
 use Rolandstarke\Thumbnail\Facades\Thumbnail;
 
 /**
@@ -49,4 +50,12 @@ function thumb(?string $path, int $width, ?int $height = null): ?string
 {
     if (!$path) return null;
     return Thumbnail::src($path)->crop($width, $height ?? $width)->url();
+}
+
+/**
+ * @return Message
+ */
+function message(): Message
+{
+    return (new Message());
 }
