@@ -1,12 +1,12 @@
 (function ($) {
 
-    $.fn.submited = function (e, success = null) {
-        e.preventDefault();
+    $.fn.submited = function (event, before = null, success = null, complete = null, error = null) {
+        event.preventDefault();
 
         let form = $(this);
         let data = new FormData(form[0]);
         let action = form.attr("action");
-        let submitter = $(e.originalEvent.submitter);
+        let submitter = $(event.originalEvent.submitter);
 
         $.ajax({
             type: "POST",
@@ -15,10 +15,13 @@
             dataType: "json",
             contentType: false,
             processData: false,
+            timeout: 20000,
 
             beforeSend: function () {
                 addLoadingMode(submitter);
                 addBackdrop("formSubmitBkdp", "absolute", form.parent());
+
+                if (before) before();
             },
 
             success: function (response) {
@@ -37,9 +40,15 @@
                 if (success) success(response);
             },
 
-            complete: function () {
+            complete: function (response) {
                 removeLoadingMode(submitter);
                 removeBackdrop("formSubmitBkdp");
+
+                if (complete) complete(response);
+            },
+
+            error: function (response) {
+                if (error) error(response);
             }
         });
     };

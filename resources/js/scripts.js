@@ -13,9 +13,15 @@ $(function () {
     $(document).on("submit", ".jsFormSubmit", function (e) {
         messageArea = $(this).find(".message-area").length ? $(this).find(".message-area") : messageArea;
 
-        $(this).submited(e, function (response) {
+        $(this).submited(e, null, function (response) {
+            // success
             if (response.message)
                 addAlert($(response.message), messageArea);
+        }, function (response) {
+            // complete
+        }, function () {
+            // error
+            addAlert($(`<div class="alert alert-danger text-center"><small>Sem resposta do servidor. Verifique sua coenxão ou se isso persistir entre em contato.</small></div>`), messageArea);
         });
     });
 
