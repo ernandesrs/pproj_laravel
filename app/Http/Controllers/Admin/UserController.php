@@ -47,6 +47,11 @@ class UserController extends Controller
                 else if ($status === false)
                     $users->whereNull("email_verified_at");
             }
+
+            if ($level = $request->get("level")) {
+                if (in_array($level, User::LEVELS))
+                    $users->where("level", $level);
+            }
         }
 
         return $users->paginate(12)->withQueryString();

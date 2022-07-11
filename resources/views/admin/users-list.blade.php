@@ -1,3 +1,10 @@
+@php
+$keys = array_fill_keys(m_user_levels(), null);
+foreach ($keys as $key => $value) {
+    $keys[$key] = ucfirst(__('terms.user_level.' . $key));
+}
+@endphp
+
 @extends('layouts.admin', [
     'mainBar' => [
         'title' => $pageTitle,
@@ -11,6 +18,12 @@
                     'verified' => 'Verificado',
                     'unverified' => 'Não verificado',
                 ],
+            ],
+            [
+                'name' => 'level',
+                'label' => 'Nível',
+                'type' => 'select',
+                'options' => $keys,
             ],
         ],
     ],
