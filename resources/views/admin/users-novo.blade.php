@@ -14,8 +14,9 @@
 
                     @include('admin.includes.users-form-fields')
 
-                    <button class="btn btn-primary bi bi-check-lg" data-active-icon="bi bi-check-lg"
-                        data-alt-icon="bi bi-arrow-clockwise" type="submit">
+                    <button class="btn btn-primary {{ icon_class('checkLg') }}"
+                        data-active-icon="{{ icon_class('checkLg') }}" data-alt-icon="{{ icon_class('loading') }}"
+                        type="submit">
                         Registrar
                     </button>
                 </form>

@@ -3,7 +3,7 @@
 return [
     "sidebar" => [
         [
-            "icon" => "bi bi-grid-fill",
+            "icon" => icon_class("grid"),
             "text" => "Dashboard",
             "title" => "",
             "route" => "admin.home",
@@ -11,14 +11,14 @@ return [
             "activeIn" => ["admin.home"],
         ],
         [
-            "icon" => "bi bi-people-fill",
+            "icon" => icon_class("users"),
             "text" => "Gerenciar membros",
             "title" => "",
             "activeIn" => ["admin.users.index", "admin.users.create", "admin.users.edit"],
             "target" => "_self",
             "items" => [
                 [
-                    "icon" => "bi bi-list",
+                    "icon" => icon_class("list"),
                     "text" => "Listar membros",
                     "title" => "",
                     "route" => "admin.users.index",
@@ -26,7 +26,7 @@ return [
                     "activeIn" => ["admin.users.index"]
                 ],
                 [
-                    "icon" => "bi bi-person-plus-fill",
+                    "icon" => icon_class("userPlus"),
                     "text" => "Novo",
                     "title" => "",
                     "route" => "admin.users.create",
@@ -34,7 +34,7 @@ return [
                     "activeIn" => ["admin.users.create"]
                 ],
                 [
-                    "icon" => "bi bi-pencil-square",
+                    "icon" => icon_class("pencilSquare"),
                     "text" => "Editar usuário",
                     "title" => "",
                     "route" => "",
@@ -45,7 +45,7 @@ return [
             ]
         ],
         [
-            "icon" => "bi bi-box-arrow-up-right",
+            "icon" => icon_class("linkExternalRight"),
             "text" => "Abrir o site",
             "title" => "",
             "route" => "front.home",
@@ -53,7 +53,7 @@ return [
             "activeIn" => [],
         ],
         [
-            "icon" => "bi bi-box-arrow-left",
+            "icon" => icon_class("logout"),
             "text" => "Logout",
             "title" => "",
             "route" => "auth.logout",

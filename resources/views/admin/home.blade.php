@@ -5,7 +5,7 @@
     <div class="row justify-content-center cards-list">
         <div class="col-12 col-sm-6 col-md-4 col-lg-6 col-xl-4 mb-4">
             <div class="card card-body d-flex flex-row align-items-center cards-list-item">
-                <i class="icon bi bi-people-fill"></i>
+                {{ icon_elem('users') }}
                 <div class="card-item-content">
                     <h5 class="h3 mb-0">Usuários</h5>
                     <div>
@@ -23,7 +23,7 @@
 
         <div class="col-12 col-sm-6 col-md-4 col-lg-6 col-xl-4 mb-4">
             <div class="card card-body d-flex flex-row align-items-center cards-list-item">
-                <i class="icon bi bi-app-indicator"></i>
+                {{ icon_elem('appIndicator') }}
                 <div class="card-item-content">
                     <h5 class="h3 mb-0">Example</h5>
                     <div>

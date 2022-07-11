@@ -21,13 +21,13 @@
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center left">
                     <h1 class="mb-0 d-none d-lg-block logo">{{ strtoupper(config('app.name')) }}</h1>
-                    <button class="ml-auto d-lg-none bi bi-list btn-menu-toggler" data-active-icon="bi bi-list"
-                        data-alt-icon="bi bi-x-lg"></button>
+                    <button class="ml-auto d-lg-none {{ icon_class('list') }} btn-menu-toggler"
+                        data-active-icon="{{ icon_class('list') }}" data-alt-icon="{{ icon_class('x') }}"></button>
                 </div>
 
                 <nav class="nav ml-auto">
-                    <a class="text-danger" href="{{ route('auth.logout') }}">
-                        <i class='bi bi-box-arrow-left'></i> Sair
+                    <a class="text-danger {{ icon_class('logout') }}" href="{{ route('auth.logout') }}">
+                        Sair
                     </a>
                 </nav>
             </div>
@@ -157,15 +157,15 @@
                                             <input type="hidden" name="filter" id="filter" value="1">
 
                                             <button
-                                                class="btn bg-transparent bi bi-caret-down-fill ml-2 jsShowMoreFilters"
-                                                type="button" data-active-icon="bi bi-caret-down-fill"
-                                                data-alt-icon="bi bi-caret-up-fill" data-toggle="collapse"
-                                                data-target="#moreFilters">
+                                                class="btn bg-transparent {{ icon_class('caretDownFill') }} ml-2 jsShowMoreFilters"
+                                                type="button" data-active-icon="{{ icon_class('caretDownFill') }}"
+                                                data-alt-icon="{{ icon_class('caretUpFill') }}"
+                                                data-toggle="collapse" data-target="#moreFilters">
                                             </button>
 
-                                            <button class="btn bg-light bi bi-filter ml-1" type="submit"
-                                                data-active-icon="bi bi-filter"
-                                                data-alt-icon="bi bi-arrow-clockwise"></button>
+                                            <button class="btn bg-light {{ icon_class('filter') }} ml-1"
+                                                type="submit" data-active-icon="{{ icon_class('filter') }}"
+                                                data-alt-icon="{{ icon_class('loading') }}"></button>
                                         </div>
                                     </div>
                                 </form>
@@ -179,7 +179,7 @@
 
             <footer class="footer">
                 <p class="mb-0 text-center">
-                    <small>{{ config('app.name') }} com <i class='bi bi-heart-fill'></i> para você</small>
+                    <small>{{ config('app.name') }} com {{ icon_elem('heartFill') }} para você</small>
                 </p>
             </footer>
         </div>

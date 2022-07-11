@@ -33,26 +33,30 @@
                                     alt="{{ $user->name }}" style="width: 75px; height: 75px;">
                                 <div class="d-flex flex-column">
                                     <span>{{ $user->name }}</span>
-                                    <span><small>{{ $user->email }}</small></span>
+                                    <span class="pb-1"><small>{{ $user->email }}</small></span>
                                     <div class="d-flex">
                                         <span
-                                            class="badge badge-secondary">{{ ucfirst(__('terms.user_level.' . $user->level)) }}</span>
+                                            class="badge badge-secondary {{ $user->level == \App\Models\User::LEVEL_9 ? icon_class('shieldFill') : icon_class('userFill') }}"><span
+                                                class="ml-1">{{ ucfirst(__('terms.user_level.' . $user->level)) }}</span></span>
                                         <span class="mx-1"></span>
                                         <span
-                                            class="badge badge-{{ $user->email_verified_at ? 'info' : 'light-dark' }}">{{ $user->email_verified_at ? 'Verificado' : 'Não verificado' }}</span>
+                                            class="badge badge-{{ $user->email_verified_at ? 'info ' . icon_class('checkCircleFill') : 'light-dark ' . icon_class('xCircleFill') }}">
+                                            <span
+                                                class="ml-1">{{ $user->email_verified_at ? 'Verificado' : 'Não verificado' }}</span>
+                                        </span>
                                     </div>
                                 </div>
 
                             </div>
                         </td>
                         <td class="align-middle text-right">
-                            <a class="btn btn-sm btn-info bi bi-pencil-square"
+                            <a class="btn btn-sm btn-info {{ icon_class('pencilSquare') }}"
                                 href="{{ route('admin.users.edit', ['user' => $user->id]) }}"></a>
 
                             @include('includes.button-confirmation', [
                                 'btnAction' => route('admin.users.destroy', ['user' => $user->id]),
                                 'btnClass' => 'btn-sm btn-outline-danger',
-                                'btnIcon' => 'bi bi-trash3-fill',
+                                'btnIcon' => icon_class('trash'),
                                 'btnType' => 'danger',
                                 'btnMessage' =>
                                     'Você está excluindo <strong>"' .

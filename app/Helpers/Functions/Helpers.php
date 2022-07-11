@@ -15,6 +15,19 @@ function input_value($data, $key)
     return $data->$key ?? null;
 }
 
+function icon_class(string $name): string
+{
+    return "icon " . config("app-icons." . $name);
+}
+
+function icon_elem(string $name, ?string $alt = null): string
+{
+    $activeIcon = icon_class($name);
+    $altIcon = $alt ? "data-active-icon='{$activeIcon}' data-alt-icon='" . icon_class($alt) . "'" : null;
+    echo "<span class='{$activeIcon}' {$altIcon}></span>";
+    return "";
+}
+
 /**
  *
  * Funções helpers para o modelo User
