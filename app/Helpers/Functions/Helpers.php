@@ -15,11 +15,20 @@ function input_value($data, $key)
     return $data->$key ?? null;
 }
 
+/**
+ * @param string $name
+ * @return string
+ */
 function icon_class(string $name): string
 {
     return "icon " . config("app-icons." . $name);
 }
 
+/**
+ * @param string $name
+ * @param string|null $alt
+ * @return string
+ */
 function icon_elem(string $name, ?string $alt = null): string
 {
     $activeIcon = icon_class($name);
