@@ -33,24 +33,31 @@ class UserController extends Controller
      */
     private function filter(Request $request)
     {
+        $filtered = [
+            "filter" => filter_var($request->get("filter"), FILTER_VALIDATE_BOOLEAN),
+            "search" => filter_var($request->get("search")),
+            "status" => filter_var($request->get("status")),
+            "level" => filter_var($request->get("level"), FILTER_VALIDATE_INT),
+        ];
+
         /** @var User $users */
         $users = User::whereNotNull("id");
 
-        if ($request->get("filter")) {
-            if ($search = $request->get("search"))
-                $users->whereRaw("MATCH(first_name, last_name, name, email) AGAINST('{$search}')");
+        if ($filtered["filter"]) {
+            if ($filtered["search"])
+                $users->whereRaw("MATCH(first_name, last_name, name, email) AGAINST('{$filtered["search"]}')");
 
-            if ($status = $request->get("status")) {
-                $status = $status == "verified" ? true : ($status == "unverified" ? false : null);
+            if ($filtered["status"] && in_array($filtered["status"], ["verified", "unverified"])) {
+                $status = $filtered["status"] == "verified" ? true : false;
                 if ($status === true)
                     $users->whereNotNull("email_verified_at");
                 else if ($status === false)
                     $users->whereNull("email_verified_at");
             }
 
-            if ($level = $request->get("level")) {
-                if (in_array($level, User::LEVELS))
-                    $users->where("level", $level);
+            if ($filtered["level"]) {
+                if (in_array($filtered["level"], User::LEVELS))
+                    $users->where("level", $filtered["level"]);
             }
         }
 
