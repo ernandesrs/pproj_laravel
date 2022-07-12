@@ -33,6 +33,11 @@ return [
     'login' => 'bi bi-box-arrow-in-right',
     'logout' => 'bi bi-box-arrow-left',
 
+    'page' => 'bi bi-file',
+    'pageEarmark' => 'bi bi-file-earmark',
+    'pageEarmarkText' => 'bi bi-file-earmark-text',
+    'pagePlus' => 'bi bi-file-earmark-plus',
+    'pageText' => 'bi bi-file-text',
     'pencilSquare' => 'bi bi-pencil-square',
 
     'shield' => 'bi bi-shield',

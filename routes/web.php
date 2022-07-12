@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PageController as AdminPageController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Auth\ForgotController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -82,14 +83,22 @@ Route::group([
 
     Route::get("/", [AdminController::class, "home"])->name("admin.home");
 
-    Route::get("/usuarios/lista", [UserController::class, "index"])->name("admin.users.index");
-    Route::get("/usuario/novo", [UserController::class, "create"])->name("admin.users.create");
-    Route::post("/usuario/salvar", [UserController::class, "store"])->name("admin.users.store");
-    Route::get("/usuario/ver/{user}", [UserController::class, "show"])->name("admin.users.show");
-    Route::get("/usuario/editar/{user}", [UserController::class, "edit"])->name("admin.users.edit");
-    Route::post("/usuario/atualizar/{user}", [UserController::class, "update"])->name("admin.users.update");
-    Route::post("/usuario/excluir-foto/{user}", [UserController::class, "photoRemove"])->name("admin.users.photoRemove");
-    Route::post("/usuario/excluir/{user}", [UserController::class, "destroy"])->name("admin.users.destroy");
+    // USUÁRIOS
+    Route::get("/usuarios/lista", [AdminUserController::class, "index"])->name("admin.users.index");
+    Route::get("/usuario/novo", [AdminUserController::class, "create"])->name("admin.users.create");
+    Route::post("/usuario/salvar", [AdminUserController::class, "store"])->name("admin.users.store");
+    Route::get("/usuario/ver/{user}", [AdminUserController::class, "show"])->name("admin.users.show");
+    Route::get("/usuario/editar/{user}", [AdminUserController::class, "edit"])->name("admin.users.edit");
+    Route::post("/usuario/atualizar/{user}", [AdminUserController::class, "update"])->name("admin.users.update");
+    Route::post("/usuario/excluir-foto/{user}", [AdminUserController::class, "photoRemove"])->name("admin.users.photoRemove");
+    Route::post("/usuario/excluir/{user}", [AdminUserController::class, "destroy"])->name("admin.users.destroy");
 
-    //
+    // PÁGINAS
+    Route::get("/paginas/list", [AdminPageController::class, "index"])->name("admin.pages.index");
+    Route::get("/pagina/novo", [AdminPageController::class, "create"])->name("admin.pages.create");
+    Route::post("/pagina/salvar", [AdminPageController::class, "store"])->name("admin.pages.store");
+    Route::get("/pagina/editar/{page}", [AdminPageController::class, "edit"])->name("admin.pages.edit");
+    Route::post("/pagina/update/{page}", [AdminPageController::class, "update"])->name("admin.pages.update");
+    Route::post("/pagina/excluir/{page}", [AdminPageController::class, "destroy"])->name("admin.pages.destroy");
+    Route::post("/pagina/excluir-capa/{page}", [AdminPageController::class, "coverRemove"])->name("admin.pages.coverRemove");
 });

@@ -45,6 +45,40 @@ return [
             ]
         ],
         [
+            "icon" => icon_class("pageEarmarkText"),
+            "text" => "Páginas",
+            "title" => "",
+            "activeIn" => ["admin.pages.index", "admin.pages.create", "admin.pages.edit"],
+            "target" => "_self",
+            "items" => [
+                [
+                    "icon" => icon_class("list"),
+                    "text" => "Listar páginas",
+                    "title" => "",
+                    "route" => "admin.pages.index",
+                    "target" => "_self",
+                    "activeIn" => ["admin.pages.index"]
+                ],
+                [
+                    "icon" => icon_class("pagePlus"),
+                    "text" => "Nova página",
+                    "title" => "",
+                    "route" => "admin.pages.create",
+                    "target" => "_self",
+                    "activeIn" => ["admin.pages.create"]
+                ],
+                [
+                    "icon" => icon_class("pencilSquare"),
+                    "text" => "Editar usuário",
+                    "title" => "",
+                    "route" => "",
+                    "target" => "_self",
+                    "activeIn" => ["admin.users.edit"],
+                    "visibleIn" => ["admin.users.edit"]
+                ]
+            ],
+        ],
+        [
             "icon" => icon_class("linkExternalRight"),
             "text" => "Abrir o site",
             "title" => "",
