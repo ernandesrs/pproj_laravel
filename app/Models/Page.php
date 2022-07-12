@@ -35,6 +35,8 @@ class Page extends Model
 
     public $errors;
 
+    public $newCover;
+
     /**
      * @param array $data
      * @param null|User $author
@@ -53,7 +55,8 @@ class Page extends Model
             $this->lang = $filtered["lang"] ?? config("app.locale");
 
             // COVER
-            $this->cover = $filtered["cover"] ?? null;
+            if ($filtered["cover"] ?? null)
+                $this->newCover = $filtered["cover"];
 
             $this->content_type = $filtered["content_type"];
             if ($this->content_type == self::CONTENT_TYPE_VIEW) {
@@ -65,6 +68,7 @@ class Page extends Model
             }
 
             $this->status = $filtered["status"];
+
             if (empty($this->id))
                 $this->author = $author->id;
 
@@ -92,23 +96,23 @@ class Page extends Model
         if (empty($this->id))
             $slugs = new Slug();
         else
-            $slugs = (new Slug())->find("id", $this->slug)->first();
+            $slugs = $this->slugs();
 
         $slugs->set(\Illuminate\Support\Str::slug($this->title, "-"), $this->lang);
+
         if (!$slugs->save()) {
             $this->errors["slug"] = "Houve um erro ao salvar o slug";
             return false;
         }
 
         $this->slug = $slugs->id;
-
-        if ($this->cover) {
-            if ($this->original["cover"] ?? null) {
-                Thumbnail::src(Storage::path($this->original["cover"]))->delete();
-                Storage::delete($this->original["cover"]);
+        if ($this->newCover) {
+            if ($this->cover ?? null) {
+                Thumbnail::src(Storage::path($this->cover))->delete();
+                Storage::delete($this->cover);
             }
 
-            $path = $this->cover->store("public/pages/covers");
+            $path = $this->newCover->store("public/pages/covers");
             $this->cover = $path;
         }
 
@@ -150,8 +154,7 @@ class Page extends Model
             "content_type" => ["required", Rule::in(self::CONTENT_TYPES)],
             "content" => [],
             "status" => ["required", Rule::in(self::STATUS)],
-            "published_at" => ["date"],
-            "scheduled_to" => ["required_if:status," . self::STATUS_SCHEDULED, "date"],
+            "scheduled_to" => ["required_if:status," . self::STATUS_SCHEDULED],
         ];
         return Validator::make($data, $rules);
     }

@@ -18,7 +18,7 @@ class Slug extends Model
     {
         $slugs = [];
         if (!empty($this->id))
-            $slugs = json_decode($this->slugs);
+            $slugs = (array) json_decode($this->slugs);
 
         $slugs[$lang] = $slug;
 
@@ -35,8 +35,8 @@ class Slug extends Model
     {
         if (empty($this->id)) return null;
 
-        $slugs = json_decode($this->slugs);
+        $slugs = (array) json_decode($this->slugs);
 
-        return $slugs->$lang ?? null;
+        return $slugs[$lang] ?? null;
     }
 }

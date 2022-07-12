@@ -98,7 +98,7 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        return view("admin.pages.pages-new", [
+        return view("admin.pages.pages-edit", [
             "pageTitle" => "Editar página",
             "page" => $page
         ]);
@@ -113,7 +113,40 @@ class PageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
-        //
+        $page = $page->set(
+            $request->only([
+                "title",
+                "description",
+                "cover",
+                "lang",
+                "content_type",
+                "content",
+                "status",
+                "published_at",
+                "scheduled_to"
+            ])
+        );
+
+        if ($errors = $page->errors) {
+            return response()->json([
+                "success" => false,
+                "message" => message()->warning("Erro ao validar os dados da página.")->float()->render(),
+                "errors" => $errors
+            ]);
+        }
+
+        if (!$page->save()) {
+            return response()->json([
+                "success" => false,
+                "message" => message()->warning("Erro ao atualizar os dados da página.")->float()->render()
+            ]);
+        }
+
+        message()->success("A página foi atualizada com sucesso!")->float()->flash();
+        return response()->json([
+            "success" => true,
+            "redirect" => route("admin.pages.edit", ["page" => $page->id])
+        ]);
     }
 
     /**
