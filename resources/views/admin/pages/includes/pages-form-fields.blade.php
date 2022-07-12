@@ -16,6 +16,11 @@
                 <div class="form-group">
                     <label for="content_type">Tipo de conteúdo:</label>
                     <select class="form-control" name="content_type" id="content_type">
+                        @foreach (m_page_content_types() as $content_type)
+                            <option value="{{ $content_type }}">
+                                {{ ucfirst(__('terms.page_content_types.' . $content_type)) }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -24,6 +29,11 @@
                 <div class="form-group">
                     <label for="status">Salvar como:</label>
                     <select class="form-control" name="status" id="status">
+                        @foreach (m_page_status() as $status)
+                            <option value="{{ $status }}">
+                                {{ ucfirst(__('terms.page_status.' . $status)) }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             </div>

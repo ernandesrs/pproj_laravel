@@ -11,4 +11,14 @@ return [
         '5' => 'membro',
         '9' => 'administrador',
     ],
+
+    "page_content_types" => [
+        'text' => 'texto',
+        'view' => 'página customizada',
+    ],
+    "page_status" => [
+        'draft' => 'rascunho',
+        'published' => 'publicado',
+        'scheduled' => 'agendado',
+    ],
 ];
