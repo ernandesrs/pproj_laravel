@@ -30,7 +30,7 @@ Route::get('/email/verify', [VerificationController::class, "notice"])->middlewa
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, "verify"])->middleware(['auth', 'signed'])->name('verification.verify');
 
 // REENVIA O LINK DE VERIFICAÇÃO
-Route::post('/email/verification-notification', [VerificationController::class, "VerificationController@sendLink"])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::post('/email/verification-notification', [VerificationController::class, "sendLink"])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // VIEW DE ESQUECI A SENHA
 Route::get('/forgot-password', [ForgotController::class, "forgotForm"])->middleware('guest')->name('password.request');
