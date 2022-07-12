@@ -26,4 +26,17 @@ class Slug extends Model
 
         return $this;
     }
+
+    /**
+     * @param string $lang
+     * @return string|null
+     */
+    public function slug(string $lang): ?string
+    {
+        if (empty($this->id)) return null;
+
+        $slugs = json_decode($this->slugs);
+
+        return $slugs->$lang ?? null;
+    }
 }

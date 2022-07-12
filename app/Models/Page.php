@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -117,6 +118,22 @@ class Page extends Model
         }
 
         return true;
+    }
+
+    /**
+     * @return Slug|null
+     */
+    public function slugs(): ?Slug
+    {
+        return $this->hasOne(Slug::class, "id", "slug")->get()->first();
+    }
+
+    /**
+     * @return User|null
+     */
+    public function author(): ?User
+    {
+        return $this->hasOne(User::class, "id", "author")->get()->first();
     }
 
     /**
