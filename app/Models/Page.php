@@ -49,13 +49,20 @@ class Page extends Model
         $this->content_type = $validated["content_type"] ?? $this->content_type;
 
         if ($this->content_type == Page::CONTENT_TYPE_VIEW) {
-            $this->content = json_encode([
-                "view_path" => $validated["view_path"] ?? $this->view_path
-            ]);
-        } else $this->content = $validated["content"] ?? $this->content;
+            $content = (array) json_decode($this->content);
+            if (!$content)
+                $content = ["view_path" => null];
 
-        if ($validated["follow"] ?? null) $this->follow = true;
-        else $this->follow = false;
+            $content["view_path"] = $validated["view_path"] ?? $content["view_path"];
+
+            $this->content = json_encode($content);
+        } else
+            $this->content = $validated["content"] ?? $this->content;
+
+        if ($validated["follow"] ?? null)
+            $this->follow = true;
+        else
+            $this->follow = false;
 
         $this->status = $validated["status"] ?? $this->status;
 
