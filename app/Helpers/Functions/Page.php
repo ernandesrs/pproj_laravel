@@ -12,9 +12,9 @@ function m_page_cover_thumb(Page $page, $size = "normal"): string
 {
     $predefinedDimensions = [
         "small" => [125, 75],
-        "normal" => [375, 125],
-        "medium" => [600, 200],
-        "large" => [1200, 600],
+        "normal" => [375, 200],
+        "medium" => [600, 400],
+        "large" => [1200, 800],
     ];
 
     $dimensions = is_array($size) ? $size : $predefinedDimensions[$size] ?? $predefinedDimensions["normal"];
