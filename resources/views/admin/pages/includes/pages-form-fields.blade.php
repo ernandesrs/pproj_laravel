@@ -77,6 +77,18 @@
                         {{ input_value($page ?? null, 'protection') == \App\Models\Page::PROTECTION_SYSTEM ? 'disabled' : null }}>
                 </div>
             </div>
+
+            <div class="col-12">
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="follow" name="follow"
+                            {{ input_value($page ?? null, 'follow') ? 'checked' : null }}>
+                        <label class="custom-control-label" for="follow">
+                            Permitir que buscadores encontre esta página
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

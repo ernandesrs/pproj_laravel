@@ -11,6 +11,8 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Member\MemberController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Front\FrontController;
+
 /**
  *
  * AUTH ROUTES
@@ -49,9 +51,7 @@ Route::post('/reset-password', [ResetController::class, "updatePassword"])->midd
  * FRONT ROUTES
  *
  */
-Route::get('/', function () {
-    return view('front.home', ["pageTitle" => "Página inicial"]);
-})->name("front.home");
+Route::get('/', [FrontController::class, "index"])->name("front.home");
 
 /**
  *

@@ -54,6 +54,9 @@ class Page extends Model
             ]);
         } else $this->content = $validated["content"] ?? $this->content;
 
+        if ($validated["follow"] ?? null) $this->follow = true;
+        else $this->follow = false;
+
         $this->status = $validated["status"] ?? $this->status;
 
         if ($this->status == Page::STATUS_SCHEDULED) {

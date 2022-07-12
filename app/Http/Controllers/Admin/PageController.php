@@ -189,7 +189,6 @@ class PageController extends Controller
             ]);
             return;
         }
-        die;
 
         $slugs = $page->slugs();
 
@@ -217,7 +216,7 @@ class PageController extends Controller
      */
     public function validatePage(Request $request, ?Page $page = null): \Illuminate\Contracts\Validation\Validator
     {
-        $only = ["title", "description", "cover", "lang", "content_type", "content", "view_path", "status", "scheduled_to"];
+        $only = ["title", "description", "cover", "lang", "content_type", "content", "follow", "view_path", "status", "scheduled_to"];
         $rules = [
             "title" => ["required", "max:255"]
         ];
@@ -233,6 +232,7 @@ class PageController extends Controller
             "lang" => [Rule::in(config("app.locales"))],
             "content_type" => ["required", Rule::in(Page::CONTENT_TYPES)],
             "content" => [],
+            "follow" => ["string"],
             "view_path" => ["required_if:content_type," . Page::CONTENT_TYPE_VIEW],
             "status" => ["required", Rule::in(Page::STATUS)],
             "scheduled_to" => ["required_if:status," . Page::STATUS_SCHEDULED],
