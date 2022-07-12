@@ -24,6 +24,7 @@ class CreatePagesTable extends Migration
             $table->string("content_type")->nullable(false)->default("text");
             $table->string("content")->nullable(true);
             $table->integer("protection")->nullable(false)->default(Page::PROTECTION_AUTHOR);
+            $table->boolean("follow")->nullable(false)->default(true);
 
             $table->string("status")->nullable(false)->default("draft");
             $table->timestamp("published_at")->nullable(true);
