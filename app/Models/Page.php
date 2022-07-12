@@ -35,6 +35,42 @@ class Page extends Model
     public const PROTECTIONS = [self::PROTECTION_NONE, self::PROTECTION_AUTHOR, self::PROTECTION_SYSTEM];
 
     /**
+     * @param array $validated
+     * @param User|null $user
+     * @return Page
+     */
+    public function set(array $validated, ?User $user = null): Page
+    {
+        if ($user) $this->author = $user->id;
+
+        $this->title = $validated["title"];
+        $this->description = $validated["description"];
+        $this->lang = $validated["lang"] ?? config("app.locale");
+        $this->content_type = $validated["content_type"] ?? $this->content_type;
+
+        if ($this->content_type == Page::CONTENT_TYPE_VIEW) {
+            $this->content = json_encode([
+                "view_path" => $validated["view_path"] ?? $this->view_path
+            ]);
+        } else $this->content = $validated["content"] ?? $this->content;
+
+        $this->status = $validated["status"] ?? $this->status;
+
+        if ($this->status == Page::STATUS_SCHEDULED) {
+            $this->published_at = null;
+            $this->scheduled_to = date("Y-m-d H:i:s");
+        } elseif ($this->status == Page::STATUS_PUBLISHED) {
+            $this->published_at = date("Y-m-d H:i:s");
+            $this->scheduled_to = null;
+        } else {
+            $this->published_at = null;
+            $this->scheduled_to = null;
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Slug|null
      */
     public function slugs(): ?Slug

@@ -62,25 +62,7 @@ class PageController extends Controller
         $validated = $validator->validated();
 
         // DADOS DA PÁGINA
-        $page = new Page();
-        $page->author = $request->user()->id;
-        $page->title = $validated["title"];
-        $page->description = $validated["description"];
-        $page->lang = $validated["lang"] ?? config("app.locale");
-        $page->content_type = $validated["content_type"];
-
-        if ($page->content_type == Page::CONTENT_TYPE_VIEW) {
-            $page->content = json_encode([
-                "view_path" => $validated["view_path"]
-            ]);
-        } else $page->content = $validated["content"] ?? null;
-
-        $page->status = $validated["status"];
-
-        if ($page->status == Page::STATUS_SCHEDULED)
-            $page->scheduled_to = date("Y-m-d H:i:s");
-        elseif ($page->status == Page::STATUS_PUBLISHED)
-            $page->published_at = date("Y-m-d H:i:s");
+        $page = (new Page())->set($validated, $request->user());
 
         // DADOS DO SLUG
         $slug = new Slug();
@@ -154,8 +136,36 @@ class PageController extends Controller
 
         // DADOS VALIDADOS
         $validated = $validator->validated();
-        var_dump($validated);
-        die;
+
+        // INSERE DADOS VALIDADOS
+        $page->set($validated);
+
+        // SLUGS
+        if ($page->protection != Page::PROTECTION_SYSTEM) {
+            $slugs = $page->slugs();
+            $slugs->set(Str::slug($page->title), $page->lang);
+            $slugs->save();
+        }
+
+        // UPLOAD DE CAPA
+        if ($cover = $validated["cover"] ?? null) {
+            if ($page->cover) {
+                Thumbnail::src(Storage::path($page->cover))->delete();
+                Storage::delete($page->cover);
+            }
+
+            $page->cover = $cover->store("public/pages/covers");
+        }
+
+        if (!$page->save()) {
+
+            Storage::delete($page->cover);
+
+            return response()->json([
+                "success" => false,
+                "message" => message()->warning("Erro ao validar dados, verifique e tente de novo.")->float()->render()
+            ]);
+        }
 
         message()->success("A página foi atualizada com sucesso!")->float()->flash();
         return response()->json([
@@ -227,6 +237,15 @@ class PageController extends Controller
             "status" => ["required", Rule::in(Page::STATUS)],
             "scheduled_to" => ["required_if:status," . Page::STATUS_SCHEDULED],
         ];
+
+        if ($page && $page->protection == Page::PROTECTION_SYSTEM) {
+            unset(
+                $only["content_type"],
+                $only["status"],
+                $rules["content_type"],
+                $rules["status"]
+            );
+        }
 
         return Validator::make($request->only($only), $rules);
     }
