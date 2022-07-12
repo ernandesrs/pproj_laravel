@@ -40,8 +40,8 @@
 
             <div class="col-12 d-none jsScheduleField">
                 <div class="form-group">
-                    <label for="schedule">Agendar para:</label>
-                    <input class="form-control" type="date" name="schedule" id="schedule">
+                    <label for="scheduled_to">Agendar para:</label>
+                    <input class="form-control" type="date" name="scheduled_to" id="scheduled_to">
                 </div>
             </div>
         </div>
@@ -90,3 +90,20 @@
         </div>
     </div>
 </div>
+
+@section('scripts')
+    <script>
+        $("#status").on("change", function() {
+
+            if ($(this).val() != "scheduled" && !$(".jsScheduleField").hasClass("d-none")) {
+                $(".jsScheduleField").hide("blind", function() {
+                    $(this).addClass("d-none");
+                });
+                return;
+            }
+
+            $(".jsScheduleField").removeClass("d-none").hide().show("blind");
+
+        });
+    </script>
+@endsection

@@ -72,7 +72,7 @@ class Page extends Model
                 $this->scheduled_to = null;
             } elseif ($this->status == self::STATUS_SCHEDULED) {
                 $this->published_at = null;
-                $this->scheduled_to = $filtered["schedule"];
+                $this->scheduled_to = $filtered["scheduled_to"];
             } else {
                 $this->published_at = null;
                 $this->scheduled_to = null;
