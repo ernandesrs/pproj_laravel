@@ -21,6 +21,10 @@ class Page extends Model
     public const STATUS_SCHEDULED = "scheduled";
     public const STATUS_PUBLISHED = "published";
 
+    public const PROTECTION_NONE = 1;
+    public const PROTECTION_AUTHOR = 2;
+    public const PROTECTION_SYSTEM = 9;
+
     /**
      * Allowed content types
      * @param array<string>
@@ -32,6 +36,8 @@ class Page extends Model
      * @param array<string>
      */
     public const STATUS = [self::STATUS_DRAFT, self::STATUS_SCHEDULED, self::STATUS_PUBLISHED];
+
+    public const PROTECTIONS = [self::PROTECTION_NONE, self::PROTECTION_AUTHOR, self::PROTECTION_SYSTEM];
 
     public $errors;
 

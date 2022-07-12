@@ -21,4 +21,9 @@ return [
         'published' => 'publicado',
         'scheduled' => 'agendado',
     ],
+    "page_protections" => [
+        1 => "nenhuma",
+        2 => "autor",
+        9 => "sistema"
+    ],
 ];

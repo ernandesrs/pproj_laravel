@@ -47,3 +47,12 @@ function m_page_status(): array
 {
     return Page::STATUS;
 }
+
+/**
+ * Obtém array de tipos de proteção
+ * @return array
+ */
+function m_page_protections(): array
+{
+    return Page::PROTECTIONS;
+}
