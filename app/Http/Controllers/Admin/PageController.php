@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Author;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Rolandstarke\Thumbnail\Facades\Thumbnail;
 
 class PageController extends Controller
 {
@@ -157,6 +159,23 @@ class PageController extends Controller
      */
     public function destroy(Page $page)
     {
-        //
+
+        $slugs = $page->slugs();
+
+        if ($page->cover) {
+            Thumbnail::src(Storage::path($page->cover))->delete();
+            Storage::delete($page->cover);
+        }
+
+        $page->delete();
+
+        if ($slugs && !$slugs->hasPages())
+            $slugs->delete();
+
+        message()->success("A página foi excluída com sucesso!")->float()->flash();
+        return response()->json([
+            "success" => true,
+            "reload" => true
+        ]);
     }
 }

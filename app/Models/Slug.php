@@ -39,4 +39,12 @@ class Slug extends Model
 
         return $slugs[$lang] ?? null;
     }
+
+    /**
+     * @return integer|null
+     */
+    public function hasPages(): ?int
+    {
+        return Page::where("slug", $this->id)->count();
+    }
 }
