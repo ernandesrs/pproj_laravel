@@ -25,7 +25,8 @@
             <div class="col-12 col-sm-6 col-md-12 col-xl-6">
                 <div class="form-group">
                     <label for="content_type">Tipo de conteúdo:</label>
-                    <select class="form-control" name="content_type" id="content_type">
+                    <select class="form-control" name="content_type" id="content_type"
+                        {{ input_value($page ?? null, 'protection') == \App\Models\Page::PROTECTION_SYSTEM ? 'disabled' : null }}>
                         @foreach (m_page_content_types() as $content_type)
                             <option value="{{ $content_type }}"
                                 {{ input_value($page ?? null, 'content_type') == $content_type ? 'selected' : null }}>
@@ -39,7 +40,8 @@
             <div class="col-12 col-sm-6 col-md-12 col-xl-6">
                 <div class="form-group">
                     <label for="status">Salvar como:</label>
-                    <select class="form-control" name="status" id="status">
+                    <select class="form-control" name="status" id="status"
+                        {{ input_value($page ?? null, 'protection') == \App\Models\Page::PROTECTION_SYSTEM ? 'disabled' : null }}>
                         @foreach (m_page_status() as $status)
                             <option value="{{ $status }}"
                                 {{ input_value($page ?? null, 'status') == $status ? 'selected' : null }}>
@@ -59,6 +61,20 @@
                     @endphp
                     <input class="form-control" type="date" name="scheduled_to" id="scheduled_to"
                         value="{{ $scheduledTo ? date('Y-m-d', strtotime($scheduledTo)) : null }}">
+                </div>
+            </div>
+
+            {{-- view path if exists --}}
+            <div
+                class="col-12 {{ $page ?? null ? ($page->content_type !== \App\Models\Page::CONTENT_TYPE_VIEW ? 'd-none' : null) : 'd-none' }} jsViewPathField">
+                <div class="form-group">
+                    <label for="view_path">Caminho para a página customizada:</label>
+                    @php
+                        $content = json_decode($page->content ?? '');
+                    @endphp
+                    <input class="form-control" type="text" name="view_path" id="view_path"
+                        value="{{ $content && ($content->view_path ?? null) ? $content->view_path : null }}"
+                        {{ input_value($page ?? null, 'protection') == \App\Models\Page::PROTECTION_SYSTEM ? 'disabled' : null }}>
                 </div>
             </div>
         </div>
@@ -118,16 +134,28 @@
 
 @section('scripts')
     <script>
+        $("#content_type").on("change", function() {
+
+            if ($(this).val() == "view") {
+                $(".jsViewPathField").removeClass("d-none").hide().show("blind");
+            } else if (!$(".jsViewPathField").hasClass("d-none")) {
+                $(".jsViewPathField").hide("blind", function() {
+                    $(this).addClass("d-none");
+                });
+            }
+
+        });
+
+
         $("#status").on("change", function() {
 
-            if ($(this).val() != "scheduled" && !$(".jsScheduleField").hasClass("d-none")) {
+            if ($(this).val() == "scheduled") {
+                $(".jsScheduleField").removeClass("d-none").hide().show("blind");
+            } else if (!$(".jsScheduleField").hasClass("d-none")) {
                 $(".jsScheduleField").hide("blind", function() {
                     $(this).addClass("d-none");
                 });
-                return;
             }
-
-            $(".jsScheduleField").removeClass("d-none").hide().show("blind");
 
         });
     </script>
