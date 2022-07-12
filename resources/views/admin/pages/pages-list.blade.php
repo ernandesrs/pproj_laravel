@@ -31,10 +31,9 @@ foreach ($keys as $key => $value) {
                 @foreach ($pages as $page)
                     <tr>
                         <td class="align-middle">
-                            <div class="d-flex">
-                                <img class="img-fluid img-thumbnail rounded-circle mr-2"
-                                    src="{{ m_user_photo_thumb($page, 'small') }}" alt="{{ $page->name }}"
-                                    style="width: 125px; height: 75px;">
+                            <div class="d-flex align-items-center">
+                                <img class="img-fluid img-thumbnail mr-2" src="{{ m_page_cover_thumb($page, 'small') }}"
+                                    alt="{{ $page->name }}" style="width: 125px; height: 75px;">
                                 <div class="d-flex flex-column">
                                     <span>{{ $page->title }}</span>
                                     <span class="pb-1"><small>{{ substr($page->description, 0, 75) }}...</small></span>

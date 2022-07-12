@@ -184,6 +184,7 @@ class UserController extends Controller
         $user->first_name = $validated["first_name"];
         $user->last_name = $validated["last_name"];
         $user->gender = $validated["gender"];
+        var_dump($user);die;
 
         // VALIDA E ATUALIZA NÍVEL APENAS SE
         if ($user->id != auth()->user()->id)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Author;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,41 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $page = (new Page())->set(
+            $request->only([
+                "title",
+                "description",
+                "cover",
+                "lang",
+                "content_type",
+                "content",
+                "status",
+                "published_at",
+                "scheduled_to"
+            ]),
+            $request->user()
+        );
+
+        if ($errors = $page->errors) {
+            return response()->json([
+                "success" => false,
+                "message" => message()->warning("Erro ao validar os dados da página.")->float()->render(),
+                "errors" => $errors
+            ]);
+        }
+
+        if (!$page->save()) {
+            return response()->json([
+                "success" => false,
+                "message" => message()->warning("Erro ao salvar os dados da página.")->float()->render()
+            ]);
+        }
+
+        message()->success("Nova página cadastrada com sucesso!")->float()->flash();
+        return response()->json([
+            "success" => true,
+            "redirect" => route("admin.pages.index")
+        ]);
     }
 
     /**
