@@ -24,7 +24,7 @@ class PageController extends Controller
     {
         return view("admin.pages.pages-list", [
             "pageTitle" => "Listando páginas",
-            "pages" => Page::whereNotNull("id")->paginate(12)->withQueryString()
+            "pages" => Page::whereNotNull("id")->orderBy("protection", "DESC")->orderBy("created_at", "ASC")->paginate(12)->withQueryString()
         ]);
     }
 
