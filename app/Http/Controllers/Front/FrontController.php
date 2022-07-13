@@ -49,7 +49,7 @@ class FrontController extends Controller
     public function dinamicPage(string $slug)
     {
         $page = Page::findBySlug($slug, config("app.locale"));
-        if (!$page) {
+        if (!$page || $page->status != Page::STATUS_PUBLISHED) {
             message()->default("Página não encontrada!", "Erro!")->time(10)->flash();
             return redirect()->route("front.home");
         }
