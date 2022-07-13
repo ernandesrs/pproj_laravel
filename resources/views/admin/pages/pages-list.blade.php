@@ -63,20 +63,28 @@ foreach ($keys as $key => $value) {
                                             {{ substr($page->description, 0, 75) }}...
                                         </small>
                                     </span>
-                                    <div class="d-flex">
+                                    <div class="d-flex flex-wrap">
                                         <span class="badge badge-dark-light">
-                                            Autor: {{ $author ? substr($author->first_name, 0, 28) : null }}...
+                                            {{ icon_elem('user') }}
+                                            {{ $author ? substr($author->first_name, 0, 28) : null }}...
                                         </span>
                                         <span class="mx-1"></span>
-                                        <span class="badge badge-light-dark">
-                                            {{ ucfirst(__('terms.page_status.' . $page->status)) }}:
+                                        <span class="badge badge-light-dark" data-toggle="tooltip" data-placement="top"
+                                            title="{{ ucfirst(__('terms.page_status.' . $page->status)) }}">
                                             @if ($page->scheduled_to)
+                                                {{ icon_elem('calendarEvent') }}
                                                 {{ date('d/m/Y H:i', strtotime($page->scheduled_to)) }}
                                             @elseif($page->published_at)
+                                                {{ icon_elem('calendarCheck') }}
                                                 {{ date('d/m/Y H:i', strtotime($page->published_at)) }}
                                             @else
+                                                {{ icon_elem('calendarX') }}
                                                 {{ date('d/m/Y H:i', strtotime($page->created_at)) }}
                                             @endif
+                                        </span>
+                                        <span class="mx-1"></span>
+                                        <span class="badge badge-light">
+                                            {{ $page->content_type == \App\Models\Page::CONTENT_TYPE_VIEW ? 'Página customizada' : 'Texto' }}
                                         </span>
                                     </div>
                                 </div>

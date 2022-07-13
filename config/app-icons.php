@@ -4,6 +4,11 @@ return [
     'app' => 'bi bi-app',
     'appIndicator' => 'bi bi-app-indicator',
 
+    'calendar' => 'bi bi-calendar',
+    'calendarCheck' => 'bi bi-calendar-check',
+    'calendarEvent' => 'bi bi-calendar-event',
+    'calendarX' => 'bi bi-calendar-x',
+
     'caretDownFill' => 'bi bi-caret-down-fill',
     'caretUpFill' => 'bi bi-caret-up-fill',
 
