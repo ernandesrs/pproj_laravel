@@ -35,6 +35,23 @@ class Page extends Model
     public const PROTECTIONS = [self::PROTECTION_NONE, self::PROTECTION_AUTHOR, self::PROTECTION_SYSTEM];
 
     /**
+     * @param string $slug
+     * @param string $lang
+     * @return Page|null
+     */
+    public static function findBySlug(string $slug, string $lang): ?Page
+    {
+        $slug = Slug::where($lang, $slug)->first();
+        if (!$slug) return null;
+
+        $page = Page::where("slug", $slug->id)->where("lang", $lang)->first();
+        if ($page->content_type == self::CONTENT_TYPE_VIEW)
+            $page->content = json_decode($page->content);
+
+        return $page;
+    }
+
+    /**
      * @param array $validated
      * @param User|null $user
      * @return Page

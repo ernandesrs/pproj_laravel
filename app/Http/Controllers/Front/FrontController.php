@@ -14,10 +14,9 @@ class FrontController extends Controller
      */
     public function index(): View
     {
-        $page = Page::where("id", "=", 11)->first();
-        $content = json_decode($page->content);
+        $page = Page::findBySlug("home", config("app.locale"));
 
-        return view($content->view_path ?? "front.home", [
+        return view($page->content->view_path ?? "front.home", [
             "pageTitle" => $page->title ?? "Home",
             "pageDescription" => $page->description ?? "",
             "pageFollow" => $page->follow,
@@ -31,10 +30,9 @@ class FrontController extends Controller
      */
     public function termsAndConditions(): View
     {
-        $page = Page::where("id", 14)->first();
-        $content = json_decode($page->content);
+        $page = Page::findBySlug("termos-e-condicoes", config("app.locale"));
 
-        return view($content->view_path ?? "front.terms-and-conditions", [
+        return view($page->content->view_path ?? "front.terms-and-conditions", [
             "pageTitle" => $page->title ?? "Terms & Conditions",
             "pageDescription" => $page->description ?? "",
             "pageFollow" => $page->follow,
