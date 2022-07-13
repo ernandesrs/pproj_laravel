@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -26,12 +27,13 @@ class RegisterController extends Controller
      */
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        $validator = Validator::make($request->only(["first_name", "last_name", "email", "password", "password_confirmation"]), [
+        $validator = Validator::make($request->only(["first_name", "last_name", "email", "g-recaptcha-response", "password", "password_confirmation"]), [
             "first_name" => ["required"],
             "last_name" => ["required"],
             "email" => ["required", "unique:App\Models\User"],
             "password" => ["required", "confirmed"],
             "password_confirmation" => ["required"],
+            "g-recaptcha-response" => ["required"]
         ]);
 
         if ($errors = $validator->errors()->messages()) {
@@ -44,7 +46,23 @@ class RegisterController extends Controller
             ]);
         }
 
-        $validated = (object) $validator->validated();
+        $validated = $validator->validated();
+
+        // RECAPTCHA
+        $response = Http::get("https://www.google.com/recaptcha/api/siteverify", [
+            'secret' => env("APP_GOOGLE_RECAPTCHAV2_PRIVATE_KEY"),
+            'response' => $validated["g-recaptcha-response"]
+        ]);
+
+        if ($response->json()["success"] == false) {
+            return response()->json([
+                "success" => false,
+                "errors" => ["g-recaptcha-response" => "Falha no desafio"],
+                "message" => message()->warning("Falha ao validar desafio do recaptcha")->time(10)->render()
+            ]);
+        }
+
+        $validated = (object) $validated;
 
         $user = new User();
         $user->name = $validated->first_name . " " . $validated->last_name;
