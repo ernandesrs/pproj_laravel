@@ -42,7 +42,7 @@ class UserController extends Controller
         ];
 
         /** @var User $users */
-        $users = User::whereNotNull("id")->orderBy("level", "DESC")->orderBy("created_at", "ASC");
+        $users = User::whereNotNull("id")->orderBy("level", "DESC")->orderBy("created_at", "DESC");
 
         if ($filtered["filter"]) {
             if ($filtered["search"])
