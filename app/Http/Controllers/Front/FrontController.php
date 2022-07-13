@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -43,11 +44,27 @@ class FrontController extends Controller
 
     /**
      * @param string $slug
-     * @return View
+     * @return View|RedirectResponse
      */
-    public function dinamicPage(string $slug): View
+    public function dinamicPage(string $slug)
     {
+        $page = Page::findBySlug($slug, config("app.locale"));
+        if (!$page) {
+            message()->default("Página não encontrada!", "Erro!")->time(10)->flash();
+            return redirect()->route("front.home");
+        }
+
+        $view = "front.page";
+        if ($page->content_type == Page::CONTENT_TYPE_VIEW)
+            $view = $page->content->view_path;
+
         // IMPLEMENTAR
-        return view("front.home");
+        return view($view, [
+            "pageTitle" => $page->title ?? "Page",
+            "pageDescription" => $page->description ?? "",
+            "pageFollow" => $page->follow,
+            "pageCover" => m_page_cover_thumb($page, [800, 600]),
+            "pageUrl" => route("front.home"),
+        ]);
     }
 }

@@ -52,6 +52,9 @@ Route::post('/reset-password', [ResetController::class, "updatePassword"])->midd
  *
  */
 Route::get("/", [FrontController::class, "index"])->name("front.home");
+Route::get("/home", function () {
+    return redirect()->route("front.home");
+});
 Route::get("/termos-e-condicoes", [FrontController::class, "termsAndConditions"])->name("front.termsAndConditions");
 Route::get("/p/{slug}", [FrontController::class, "dinamicPage"])->name("front.dinamicPage");
 

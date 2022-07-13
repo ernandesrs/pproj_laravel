@@ -48,7 +48,15 @@ foreach ($keys as $key => $value) {
                                     alt="{{ $page->name }}" style="width: 125px; height: 75px;">
                                 <div class="d-flex flex-column">
                                     <span>
-                                        {{ $page->title }}
+                                        @if ($page->protection == \App\Models\Page::PROTECTION_SYSTEM)
+                                            <a href="{{ route('front.home') }}/{{ $slug }}" target="_blank">
+                                                {{ $page->title }}
+                                            </a>
+                                        @else
+                                            <a href="{{ route('front.dinamicPage', ['slug' => $slug]) }}" target="_blank">
+                                                {{ $page->title }}
+                                            </a>
+                                        @endif
                                     </span>
                                     <span class="pb-1">
                                         <small>
