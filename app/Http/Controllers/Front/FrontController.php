@@ -20,8 +20,8 @@ class FrontController extends Controller
         return view($page->content->view_path ?? "front.home", [
             "pageTitle" => $page->title ?? "Home",
             "pageDescription" => $page->description ?? "",
-            "pageFollow" => $page->follow,
-            "pageCover" => m_page_cover_thumb($page, [800, 600]),
+            "pageFollow" => $page->follow ?? true,
+            "pageCover" => ($page ?? null) ? m_page_cover_thumb($page, [800, 600]) : null,
             "pageUrl" => route("front.home"),
         ]);
     }
@@ -36,8 +36,8 @@ class FrontController extends Controller
         return view($page->content->view_path ?? "front.terms-and-conditions", [
             "pageTitle" => $page->title ?? "Terms & Conditions",
             "pageDescription" => $page->description ?? "",
-            "pageFollow" => $page->follow,
-            "pageCover" => m_page_cover_thumb($page, [800, 600]),
+            "pageFollow" => $page->follow ?? true,
+            "pageCover" => ($page ?? null) ? m_page_cover_thumb($page, [800, 600]) : null,
             "pageUrl" => route("front.home"),
         ]);
     }
