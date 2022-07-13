@@ -126,7 +126,7 @@
                     $slug = $slugs->slug($page->lang);
                 @endphp
             @endif
-            <div class="col-12">
+            <div class="col-12 d-none">
                 <div class="form-group">
                     <label for="slug">Slug:</label>
                     <input class="form-control" type="text" name="slug" id="slug"
