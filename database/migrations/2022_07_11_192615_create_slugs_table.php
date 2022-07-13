@@ -16,7 +16,7 @@ class CreateSlugsTable extends Migration
         Schema::create('slugs', function (Blueprint $table) {
             $table->id();
 
-            $table->text("slugs")->nullable(false);
+            $table->string("pt_BR")->nullable(false);
 
             $table->timestamps();
         });

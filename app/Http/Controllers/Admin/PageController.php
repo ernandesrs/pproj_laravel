@@ -66,7 +66,7 @@ class PageController extends Controller
 
         // DADOS DO SLUG
         $slug = new Slug();
-        $slug = $slug->set(Str::slug($page->title), $page->lang);
+        $slug = $slug->set($page->title, $page->lang);
 
         if (!$slug->save()) {
             return response()->json([

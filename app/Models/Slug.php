@@ -10,34 +10,23 @@ class Slug extends Model
     use HasFactory;
 
     /**
-     * @param string $slug
-     * @param string $lang
+     * @param string $string
+     * @param string $lang validated language code. Ex.: pt_BR, en, en_US
      * @return Slug
      */
-    public function set(string $slug, string $lang): Slug
+    public function set(string $string, string $lang): Slug
     {
-        $slugs = [];
-        if (!empty($this->id))
-            $slugs = (array) json_decode($this->slugs);
-
-        $slugs[$lang] = $slug;
-
-        $this->slugs = json_encode($slugs);
-
+        $this->$lang = \Illuminate\Support\Str::slug($string);
         return $this;
     }
 
     /**
-     * @param string $lang
+     * @param string $lang validated language code. Ex.: pt_BR, en, en_US
      * @return string|null
      */
     public function slug(string $lang): ?string
     {
-        if (empty($this->id)) return null;
-
-        $slugs = (array) json_decode($this->slugs);
-
-        return $slugs[$lang] ?? null;
+        return $this->$lang ?? null;
     }
 
     /**
