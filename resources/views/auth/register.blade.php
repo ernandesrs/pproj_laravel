@@ -28,6 +28,13 @@
                     </div>
                 </div>
 
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="phone">Telefone:</label>
+                        <input class="form-control" type="text" name="phone" id="phone">
+                    </div>
+                </div>
+
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="password">Senha:</label>
@@ -52,4 +59,11 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('assets/js/jquery-mask.min.js') }}"></script>
+    <script>
+        $('#phone').mask('+00 (00) 0 0000-0000');
+    </script>
 @endsection
