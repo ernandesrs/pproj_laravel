@@ -63,7 +63,7 @@ foreach ($keys as $key => $value) {
                                 href="{{ route('admin.users.edit', ['user' => $user->id]) }}"></a>
 
                             @include('includes.button-confirmation', [
-                                'button' => Template::button_link_confirmation(
+                                'button' => Template::button_confirmation(
                                     'danger',
                                     'btn btn-sm btn-danger',
                                     "Você está excluindo o usuário <strong>{$user->name}</strong> permanentemente e isso não pode ser desfeito!",
