@@ -44,9 +44,9 @@
             <nav class="nav ml-auto">
                 @auth
                     @if (auth()->user()->level === 9)
-                        <a class="nav-link" href="{{ route('admin.home') }}">Administração</a>
+                        <a class="nav-link" href="{{ route('admin.index') }}">Administração</a>
                     @endif
-                    <a class="nav-link" href="{{ route('member.home') }}">Painel</a>
+                    <a class="nav-link" href="{{ route('member.index') }}">Painel</a>
                     <a class="nav-link jsLogout" href="{{ route('auth.logout') }}">Sair</a>
                 @else
                     <a class="nav-link" href="{{ route('auth.register') }}">Registro</a>

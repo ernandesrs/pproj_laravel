@@ -16,21 +16,21 @@ use Rolandstarke\Thumbnail\Facades\Thumbnail;
 class MemberController extends Controller
 {
     //
-    public function home()
+    public function index()
     {
-        return view("member.home", [
+        return view("member.index", [
             "pageTitle" => "Dashboard"
         ]);
     }
 
     public function example()
     {
-        return view("member.home", ["pageTitle" => "Example"]);
+        return view("member.index", ["pageTitle" => "Example"]);
     }
 
     public function exampleTwo()
     {
-        return view("member.home", ["pageTitle" => "Example Two"]);
+        return view("member.index", ["pageTitle" => "Example Two"]);
     }
 
     /**

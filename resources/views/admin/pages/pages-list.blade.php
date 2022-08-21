@@ -49,7 +49,7 @@ foreach ($keys as $key => $value) {
                                 <div class="d-flex flex-column">
                                     <span>
                                         @if ($page->protection == \App\Models\Page::PROTECTION_SYSTEM)
-                                            <a href="{{ route('front.home') }}/{{ $slug }}" target="_blank">
+                                            <a href="{{ route('front.index') }}/{{ $slug }}" target="_blank">
                                                 {{ $page->title }}
                                             </a>
                                         @else

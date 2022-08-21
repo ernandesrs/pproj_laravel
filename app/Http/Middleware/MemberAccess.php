@@ -22,7 +22,7 @@ class MemberAccess
             return redirect()->route("auth.login");
 
         if ($request->user()->level < User::LEVEL_5)
-            return redirect()->route("front.home");
+            return redirect()->route("front.index");
 
         if (!$request->user()->email_verified_at)
             return redirect()->route("verification.notice");

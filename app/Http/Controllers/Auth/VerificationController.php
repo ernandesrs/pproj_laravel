@@ -29,7 +29,7 @@ class VerificationController extends Controller
             "type" => "info",
             "message" => "Sua conta foi verificada! Bem vindo!"
         ]);
-        return redirect()->route("front.home");
+        return redirect()->route("front.index");
     }
 
     /**

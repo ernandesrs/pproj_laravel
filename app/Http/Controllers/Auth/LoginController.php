@@ -28,11 +28,11 @@ class LoginController extends Controller
         $validator = Validator::make($request->only(["email", "password", "g-recaptcha-response"]), [
             "email" => ["required", "email"],
             "password" => ["required"],
-            "g-recaptcha-response" => ["required"]
+            // "g-recaptcha-response" => ["required"];
         ], [
             "email.required" => "Informe um email válido",
             "password.required" => "Informe sua senha",
-            "g-recaptcha-response.required" => "Desafio obrigatório"
+            // "g-recaptcha-response.required" => "Desafio obrigatório"
         ]);
 
         if ($errors = $validator->errors()->messages()) {
@@ -72,7 +72,7 @@ class LoginController extends Controller
 
             return response()->json([
                 "success" => true,
-                "redirect" => route("front.home")
+                "redirect" => route("front.index")
             ]);
         }
 
@@ -94,6 +94,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route("front.home");
+        return redirect()->route("front.index");
     }
 }

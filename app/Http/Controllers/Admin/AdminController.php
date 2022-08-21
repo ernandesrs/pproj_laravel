@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     //
-    public function home()
+    public function index()
     {
-        return view("admin.home", [
+        return view("admin.index", [
             "pageTitle" => "Administração"
         ]);
     }

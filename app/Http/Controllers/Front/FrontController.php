@@ -17,12 +17,12 @@ class FrontController extends Controller
     {
         $page = Page::findBySlug("home", config("app.locale"));
 
-        return view($page->content->view_path ?? "front.home", [
+        return view($page->content->view_path ?? "front.index", [
             "pageTitle" => $page->title ?? "Home",
             "pageDescription" => $page->description ?? "",
             "pageFollow" => $page->follow ?? true,
             "pageCover" => ($page ?? null) ? m_page_cover_thumb($page, [800, 600]) : null,
-            "pageUrl" => route("front.home"),
+            "pageUrl" => route("front.index"),
         ]);
     }
 
@@ -38,7 +38,7 @@ class FrontController extends Controller
             "pageDescription" => $page->description ?? "",
             "pageFollow" => $page->follow ?? true,
             "pageCover" => ($page ?? null) ? m_page_cover_thumb($page, [800, 600]) : null,
-            "pageUrl" => route("front.home"),
+            "pageUrl" => route("front.index"),
         ]);
     }
 
@@ -51,7 +51,7 @@ class FrontController extends Controller
         $page = Page::findBySlug($slug, config("app.locale"));
         if (!$page || $page->status != Page::STATUS_PUBLISHED) {
             message()->default("Página não encontrada!", "Erro!")->time(10)->flash();
-            return redirect()->route("front.home");
+            return redirect()->route("front.index");
         }
 
         $view = "front.page";
@@ -64,7 +64,7 @@ class FrontController extends Controller
             "pageDescription" => $page->description ?? "",
             "pageFollow" => $page->follow,
             "pageCover" => m_page_cover_thumb($page, [800, 600]),
-            "pageUrl" => route("front.home"),
+            "pageUrl" => route("front.index"),
         ]);
     }
 }

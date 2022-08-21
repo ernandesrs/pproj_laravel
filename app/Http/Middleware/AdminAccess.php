@@ -22,7 +22,7 @@ class AdminAccess
             return redirect()->route("auth.login");
 
         if ($user->level !== User::LEVEL_9)
-            return redirect()->route("front.home");
+            return redirect()->route("front.index");
 
         return $next($request);
     }
