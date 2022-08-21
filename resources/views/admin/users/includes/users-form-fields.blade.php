@@ -25,19 +25,9 @@
 
     <div class="col-6 col-md-3 col-lg-6 col-xl-3">
         <div class="form-group">
-            <label for="level">Tipo de usuário:</label>
-            @php
-                $levels = m_user_levels();
-            @endphp
-            <select class="form-control" name="level" id="level"
-                {{ $user ?? null ? ($user->id == auth()->user()->id ? 'disabled' : null) : null }}>
-                @foreach ($levels as $level)
-                    <option value="{{ $level }}"
-                        {{ input_value($user ?? null, 'level') == $level ? 'selected' : null }}>
-                        {{ ucfirst(__('terms.user_level.' . $level)) }}
-                    </option>
-                @endforeach
-            </select>
+            <label for="username">Usuário:</label>
+            <input class="form-control" type="text" name="username" id="username"
+                value="{{ input_value($user ?? null, 'username') }}">
         </div>
     </div>
 
@@ -62,7 +52,8 @@
         <div class="form-group">
             <label for="photo">Foto:</label>
             <div class="custom-file">
-                <input type="file" class="custom-file-input" name="photo" id="photo" lang="{{ config("app.locale") }}">
+                <input type="file" class="custom-file-input" name="photo" id="photo"
+                    lang="{{ config('app.locale') }}">
                 <label class="custom-file-label" for="photo">Escolher arquivo</label>
             </div>
         </div>

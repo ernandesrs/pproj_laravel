@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Message\Message;
+use App\Helpers\Thumb;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UserRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
@@ -22,8 +24,8 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        return view("admin.users.users-list", [
-            "pageTitle" => "Listagem de membros",
+        return view("admin.users.index", [
+            "pageTitle" => "Usuários",
             "users" => $this->filter($request)
         ]);
     }
@@ -70,66 +72,54 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view("admin.users.users-novo", [
+        return view("admin.users.new", [
             "pageTitle" => "Novo usuário"
         ]);
     }
 
     /**
-     * @param Request $request
+     * @param UserRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(UserRequest $request): JsonResponse
     {
-        $validator = $this->userValidate($request);
-
-        if ($errors = $validator->errors()->messages()) {
-            return response()->json([
-                "success" => false,
-                "message" => (new Message())->warning("Erro ao validar os dados informados")->float()->render(),
-                "errors" => array_map(function ($item) {
-                    return $item[0];
-                }, $errors)
-            ]);
-        }
+        $validated = $request->validated();
 
         $user = new User();
-
-        $validated = $validator->validated();
 
         // PHOTO UPLOAD
         if ($validated["photo"] ?? null) {
             $photo = $validated["photo"];
-            $path = $photo->store("public/avatars");
-
+            $path = $photo->store("avatars", "public");
             $user->photo = $path;
         }
 
         $user->name = $validated["first_name"] . " " . $validated["last_name"];
         $user->first_name = $validated["first_name"];
         $user->last_name = $validated["last_name"];
-        $user->email = $validated["email"];
-        $user->level = $validated["level"] !== User::LEVEL_9 ? $validated["level"] : User::LEVEL_1;
+        $user->username = $validated["username"];
         $user->gender = $validated["gender"];
+        $user->level = User::LEVEL_1;
+        $user->email = $validated["email"];
         $user->password = Hash::make($validated["password"]);
 
         if (!$user->save()) {
-            if ($path)
-                Storage::delete($path);
+            if ($user->photo)
+                Storage::delete("public/{$user->photo}");
 
             return response()->json([
                 "success" => false,
-                "message" => (new Message())->warning("Houve um erro ao registrar usuário.")->float()->render()
+                "message" => message()->warning("Houve um erro ao registrar usuário.")->float()->render()
             ]);
         }
 
         // SEND VERIFICATION E-MAIL
         event(new Registered($user));
 
-        (new Message())->success("Um novo usuário foi registrado com sucesso!")->float()->flash();
+        message()->success("Um novo usuário foi registrado! Uma mensagem de verificação foi enviada para o e-mail informado.")->float()->flash();
         return response()->json([
             "success" => true,
-            "redirect" => route("admin.users.index")
+            "redirect" => route("admin.users.edit", ["user" => $user->id])
         ]);
     }
 
@@ -139,71 +129,56 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
-        return view("admin.users.users-edit", [
+        return view("admin.users.edit", [
             "pageTitle" => "Editar usuário",
             "user" => $user
         ]);
     }
 
     /**
-     * @param Request $request
+     * @param UserRequest $request
      * @param User $user
      * @return JsonResponse
      */
-    public function update(Request $request, User $user): JsonResponse
+    public function update(UserRequest $request, User $user): JsonResponse
     {
-        $validator = $this->userValidate($request, $user);
-
-        if ($errors = $validator->errors()->messages()) {
-            return response()->json([
-                "success" => false,
-                "message" => (new Message())->warning("Erro ao validar os dados informados")->float()->render(),
-                "errors" => array_map(function ($item) {
-                    return $item[0];
-                }, $errors)
-            ]);
-        }
-
-        $validated = $validator->validated();
+        $validated = $request->validated();
 
         // PHOTO UPLOAD
         if ($validated["photo"] ?? null) {
             $photo = $validated["photo"];
-            $newPhotoPath = $photo->store("public/avatars");
+            $path = $photo->store("avatars", "public");
 
             // REMOÇÃO DE FOTO ANTIGA
             if ($user->photo) {
-                Thumbnail::src(Storage::path($user->photo))->delete();
-                Storage::delete($user->photo);
+                Thumb::clear($user->photo);
+                Storage::delete("public/{$user->photo}");
             }
 
-            $user->photo = $newPhotoPath;
+            $user->photo = $path;
         }
 
         $user->name = $validated["first_name"] . " " . $validated["last_name"];
         $user->first_name = $validated["first_name"];
         $user->last_name = $validated["last_name"];
+        $user->username = $validated["username"];
         $user->gender = $validated["gender"];
-
-        // VALIDA E ATUALIZA NÍVEL APENAS SE
-        if ($user->id != auth()->user()->id)
-            $user->level = $validated["level"] != User::LEVEL_9 ? $validated["level"] : User::LEVEL_1;
 
         // ATUALIZAR SENHA SE
         if ($validated["password"] ?? null)
             $user->password = Hash::make($validated["password"]);
 
         if (!$user->save()) {
-            if ($newPhotoPath)
-                Storage::delete($newPhotoPath);
+            if ($user->photo)
+                Storage::delete("public/{$user->photo}");
 
             return response()->json([
                 "success" => false,
-                "message" => (new Message())->warning("Houve um erro ao registrar usuário.")->float()->render()
+                "message" => message()->warning("Houve um erro ao registrar usuário.")->float()->render()
             ]);
         }
 
-        (new Message())->success("O usuário foi atualizado com sucesso!")->float()->flash();
+        message()->success("Os dados do usuário foram atualizados com sucesso!")->float()->flash();
         return response()->json([
             "success" => true,
             "reload" => true
@@ -218,14 +193,14 @@ class UserController extends Controller
     public function photoRemove(Request $request, User $user): JsonResponse
     {
         if ($user->photo) {
-            Thumbnail::src(Storage::path($user->photo))->delete();
-            Storage::delete($user->photo);
+            Thumb::clear($user->photo);
+            Storage::delete("public/{$user->photo}");
         }
 
         $user->photo = null;
         $user->save();
 
-        (new Message())->success("Foto removida com sucesso.")->float()->flash();
+        message()->success("A foto do usuário foi removida com sucesso.")->float()->flash();
         return response()->json([
             "success" => true,
             "reload" => true,
@@ -241,55 +216,21 @@ class UserController extends Controller
         if ($user->id === auth()->user()->id) {
             return response()->json([
                 "success" => false,
-                "message" => (new Message())->warning("Você não pode excluir sua própria conta!")->fixed()->render()
+                "message" => message()->warning("Você não pode excluir sua própria conta!")->fixed()->render()
             ]);
         }
 
         if ($user->photo) {
-            Thumbnail::src(Storage::path($user->photo))->delete();
-            Storage::delete($user->photo);
+            Thumb::clear($user->photo);
+            Storage::delete("public/{$user->photo}");
         }
 
         $user->delete();
 
-        (new Message())->success("O usuário foi excluído com sucesso!")->float()->flash();
+        message()->success("O usuário foi excluído com sucesso!")->float()->flash();
         return response()->json([
             "success" => true,
-            "reload" => true
+            "redirect" => route("admin.users.index")
         ]);
-    }
-
-    /**
-     * @param Request $request
-     * @param User|null $user if this is a update
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    private function userValidate(Request $request, ?User $user = null): \Illuminate\Contracts\Validation\Validator
-    {
-        $only = ["first_name", "last_name", "level", "gender", "photo", "password", "password_confirmation"];
-        $rules = [
-            "first_name" => ["required"],
-            "last_name" => ["required"],
-            "level" => ["numeric", Rule::in(User::LEVELS)],
-            "gender" => ["required", Rule::in(User::GENDERS)],
-            "photo" => ["mimes:jpg,png", "max:2048"]
-        ];
-
-        if (!$user) {
-            $only = array_merge($only, ["email"]);
-            $rules += [
-                "email" => ["required", "unique:App\Models\User"],
-                "password" => ["required", "confirmed", "min:6", "max:18"],
-                "password_confirmation" => ["required"],
-            ];
-        }
-
-        if ($user && !empty($request->get("password"))) {
-            $rules += [
-                "password" => ["required", "min:6", "max:18", "confirmed"],
-            ];
-        }
-
-        return Validator::make($request->only($only), $rules);
     }
 }
