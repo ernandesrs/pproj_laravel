@@ -8,9 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -28,9 +29,20 @@ class RegisterController extends Controller
      */
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        $validator = Validator::make($request->only(["first_name", "last_name", "email", "g-recaptcha-response", "password", "password_confirmation"]), [
-            "first_name" => ["required"],
-            "last_name" => ["required"],
+        $validator = Validator::make($request->only([
+            "first_name",
+            "last_name",
+            "username",
+            "gender",
+            "email",
+            "g-recaptcha-response",
+            "password",
+            "password_confirmation"
+        ]), [
+            "first_name" => ["required", "max:25"],
+            "last_name" => ["required", "max:75"],
+            "gender" => ["required", Rule::in(User::GENDERS)],
+            "username" => ["required", "unique:App\Models\User,username", "max:25"],
             "email" => ["required", "unique:App\Models\User"],
             "password" => ["required", "confirmed"],
             "password_confirmation" => ["required"],
@@ -69,6 +81,8 @@ class RegisterController extends Controller
         $user->name = $validated->first_name . " " . $validated->last_name;
         $user->first_name = $validated->first_name;
         $user->last_name = $validated->last_name;
+        $user->username = $validated->username;
+        $user->gender = $validated->gender;
         $user->email = $validated->email;
         $user->password = Hash::make($validated->password);
 
@@ -82,10 +96,12 @@ class RegisterController extends Controller
         // SEND VERIFICATION E-MAIL
         event(new Registered($user));
 
-        (new Message())->success("Sua conta foi registrada com sucesso!")->time(10)->flash();
+        // AUTOLOGIN
+        Auth::loginUsingId($user->id);
+
         return response()->json([
             "success" => true,
-            "redirect" => route("auth.login")
+            "redirect" => route("verification.notice")
         ]);
     }
 }

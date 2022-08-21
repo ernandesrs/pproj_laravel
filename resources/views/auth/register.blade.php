@@ -22,17 +22,30 @@
                         </div>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-6">
                         <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input class="form-control" type="text" name="email" id="email">
+                            <label for="username">Usuário:</label>
+                            <input class="form-control" type="text" name="username" id="username">
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="gender">Gênero:</label>
+                            <select class="form-control" name="gender" id="gender">
+                                @foreach (\App\Models\User::GENDERS as $gender)
+                                    <option value="{{ $gender }}">
+                                        {{ ucfirst(__('terms.user_gender.' . $gender)) }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
                     <div class="col-12">
                         <div class="form-group">
-                            <label for="phone">Telefone:</label>
-                            <input class="form-control" type="text" name="phone" id="phone">
+                            <label for="email">Email:</label>
+                            <input class="form-control" type="text" name="email" id="email">
                         </div>
                     </div>
 
