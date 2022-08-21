@@ -16,6 +16,7 @@ mix
     /**
      * js
      */
+
     // js global
     .scripts([
         "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
@@ -25,7 +26,7 @@ mix
         "node_modules/jquery-ui-dist/jquery-ui.js"
     ], "public/assets/js/jquery.min.js")
     .scripts(["node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"], "public/assets/js/jquery-mask.min.js")
-    .scripts(['resources/js/plugins/form-submit.js', 'resources/js/scripts.js'], 'public/assets/js/scripts.min.js')
+    .scripts(['resources/js/functions.js', 'resources/js/scripts.js'], 'public/assets/js/scripts.min.js')
 
     // js admin
     .scripts(["resources/js/admin/scripts.js"], "public/assets/js/admin/scripts.js")
@@ -62,7 +63,3 @@ mix
      */
     .css("node_modules/boxicons/css/boxicons.css", "public/assets/css/boxicons.min.css")
     .css("node_modules/bootstrap-icons/font/bootstrap-icons.css", "public/assets/css/bootstrap-icons.min.css");
-
-
-    // js("resources/js/app.js", "public/js")
-    // .postCss("resources/css/app.css", "public/css", []);
