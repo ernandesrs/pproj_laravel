@@ -9,12 +9,12 @@ class Page extends Model
 {
     use HasFactory;
 
-    public const CONTENT_TYPE_TEXT = "text";
-    public const CONTENT_TYPE_VIEW = "view";
+    public const CONTENT_TYPE_TEXT = 1;
+    public const CONTENT_TYPE_VIEW = 2;
 
-    public const STATUS_DRAFT = "draft";
-    public const STATUS_SCHEDULED = "scheduled";
-    public const STATUS_PUBLISHED = "published";
+    public const STATUS_DRAFT = 1;
+    public const STATUS_SCHEDULED = 2;
+    public const STATUS_PUBLISHED = 3;
 
     public const PROTECTION_NONE = 1;
     public const PROTECTION_AUTHOR = 2;
