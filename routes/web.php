@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\AppStarter;
 use App\Http\Controllers\Auth\ForgotController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -51,12 +52,12 @@ Route::post('/reset-password', [ResetController::class, "updatePassword"])->midd
  * FRONT ROUTES
  *
  */
-Route::get("/", [FrontController::class, "index"])->name("front.home");
-Route::get("/home", function () {
-    return redirect()->route("front.home");
-});
+Route::get("/", [FrontController::class, "index"])->name("front.index");
 Route::get("/termos-e-condicoes", [FrontController::class, "termsAndConditions"])->name("front.termsAndConditions");
 Route::get("/p/{slug}", [FrontController::class, "dinamicPage"])->name("front.dinamicPage");
+if (env("APP_ENV") == "local") {
+    Route::get("/builder/builder", [AppStarter::class, "index"]);
+}
 
 /**
  *
@@ -68,7 +69,7 @@ Route::group([
     'middleware' => 'member',
 ], function () {
 
-    Route::get("/", [MemberController::class, "home"])->name("member.home");
+    Route::get("/", [MemberController::class, "index"])->name("member.index");
     Route::get("/example-1", [MemberController::class, "example"])->name("member.example");
     Route::get("/example-2", [MemberController::class, "exampleTwo"])->name("member.exampleTwo");
 
@@ -86,10 +87,10 @@ Route::group([
     'middleware' => 'admin'
 ], function () {
 
-    Route::get("/", [AdminController::class, "home"])->name("admin.home");
+    Route::get("/", [AdminController::class, "index"])->name("admin.index");
 
     // USUÁRIOS
-    Route::get("/usuarios/lista", [AdminUserController::class, "index"])->name("admin.users.index");
+    Route::get("/usuarios", [AdminUserController::class, "index"])->name("admin.users.index");
     Route::get("/usuario/novo", [AdminUserController::class, "create"])->name("admin.users.create");
     Route::post("/usuario/salvar", [AdminUserController::class, "store"])->name("admin.users.store");
     Route::get("/usuario/ver/{user}", [AdminUserController::class, "show"])->name("admin.users.show");
@@ -99,7 +100,7 @@ Route::group([
     Route::post("/usuario/excluir/{user}", [AdminUserController::class, "destroy"])->name("admin.users.destroy");
 
     // PÁGINAS
-    Route::get("/paginas/list", [AdminPageController::class, "index"])->name("admin.pages.index");
+    Route::get("/paginas", [AdminPageController::class, "index"])->name("admin.pages.index");
     Route::get("/pagina/novo", [AdminPageController::class, "create"])->name("admin.pages.create");
     Route::post("/pagina/salvar", [AdminPageController::class, "store"])->name("admin.pages.store");
     Route::get("/pagina/editar/{page}", [AdminPageController::class, "edit"])->name("admin.pages.edit");
