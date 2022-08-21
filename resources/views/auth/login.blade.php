@@ -18,8 +18,8 @@
                     <input class="form-control" type="password" name="password" id="password">
                 </div>
 
-                <div class="form-group">
-                    <div class="g-recaptcha" data-sitekey="{{ env('APP_GOOGLE_RECAPTCHAV2_SITE_KEY') }}"></div>
+                <div class="form-group d-flex justify-content-center">
+                    {!! GRecaptcha::render() !!}
                 </div>
 
                 <div class="form-group d-flex align-items-center">
@@ -34,5 +34,5 @@
 @endsection
 
 @section('scripts')
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    {!! GRecaptcha::script() !!}
 @endsection

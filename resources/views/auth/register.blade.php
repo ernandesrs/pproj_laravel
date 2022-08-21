@@ -53,8 +53,8 @@
                     </div>
 
                     <div class="col-12">
-                        <div class="form-group">
-                            <div class="g-recaptcha" data-sitekey="{{ env('APP_GOOGLE_RECAPTCHAV2_SITE_KEY') }}"></div>
+                        <div class="form-group d-flex justify-content-center">
+                            {!! GRecaptcha::render() !!}
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,8 @@
 @endsection
 
 @section('scripts')
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    {!! GRecaptcha::render() !!}
+
     <script src="{{ asset('assets/js/jquery-mask.min.js') }}"></script>
     <script>
         $('#phone').mask('+00 (00) 0 0000-0000');
