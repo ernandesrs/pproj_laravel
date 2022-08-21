@@ -21,11 +21,13 @@ class MemberAccess
         if (!$user)
             return redirect()->route("auth.login");
 
-        if ($request->user()->level < User::LEVEL_5)
-            return redirect()->route("front.index");
-
         if (!$request->user()->email_verified_at)
             return redirect()->route("verification.notice");
+
+        if (!in_array($user->level, [User::LEVEL_5])) {
+            message()->default("Você não possui permissão para acessar esta área.")->flash();
+            return redirect()->route("front.index");
+        }
 
         return $next($request);
     }
