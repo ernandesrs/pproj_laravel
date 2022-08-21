@@ -9,13 +9,25 @@ class GoogleRecaptcha
     private const GOOGLE_RECAPTCHA_URL_VERIFY = "https://www.google.com/recaptcha/api/siteverify";
 
     /**
-     * Verifica o uso do Google Recapcha e renderiza o html com a chave pública
+     * Verifica o uso do Google Recapcha e retorna o html com a chave pública
      * @return string
      */
-    public static function gRecaptchaRender(): string
+    public static function render(): string
     {
-        if (self::gRecaptcha())
+        if (self::active())
             return "<div class='g-recaptcha' data-sitekey='" . env('APP_GOOGLE_RECAPTCHAV2_SITE_KEY') . "'></div>";
+
+        return "";
+    }
+
+    /**
+     * Verifica o uso do Google Recapcha e retorna o html com script
+     * @return string
+     */
+    public static function script(): string
+    {
+        if (self::active())
+            return "<script src='https://www.google.com/recaptcha/api.js?hl=" . app()->getLocale() . "'></script>";
 
         return "";
     }
@@ -25,7 +37,7 @@ class GoogleRecaptcha
      * @param array|string $param
      * @return boolean
      */
-    public static function gRecaptchaVerify($param): bool
+    public static function verify($param): bool
     {
         $token = is_array($param) ? $param["g-recaptcha-response"] ?? null : $param;
 
@@ -40,10 +52,10 @@ class GoogleRecaptcha
     }
 
     /**
-     * Retorna true ou false se a aplicação está usando Google recaptcha
+     * Retorna true ou false se a aplicação está usando Google Recaptcha
      * @return boolean
      */
-    public static function gRecaptcha(): bool
+    public static function active(): bool
     {
         return env("APP_USE_RECAPTCHA");
     }
