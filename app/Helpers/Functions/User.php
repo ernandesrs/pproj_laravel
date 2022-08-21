@@ -23,11 +23,11 @@ function m_user_photo_thumb(User $user, $size = "normal"): string
     $height = $dimensions[1];
 
     if ($user->photo && file_exists(Storage::path($user->photo)))
-        return thumb(Storage::path($user->photo), $width, $height);
+        $path = Storage::path($user->photo);
+    else
+        $path = resource_path("img/default-user-light.png");
 
-    $hash = md5(strtolower(trim($user->email)));
-
-    return "https://www.gravatar.com/avatar/{$hash}?s={$width}&d=robohash";
+    return thumb($path, $width, $height);
 }
 
 /**
