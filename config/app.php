@@ -236,7 +236,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'GRecaptcha' => App\Helpers\GRecaptcha::class
+        'GRecaptcha' => App\Helpers\GRecaptcha::class,
+        'Template' => App\Helpers\Template::class,
     ],
 
 ];

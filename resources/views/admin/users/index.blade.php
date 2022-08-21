@@ -63,16 +63,16 @@ foreach ($keys as $key => $value) {
                                 href="{{ route('admin.users.edit', ['user' => $user->id]) }}"></a>
 
                             @include('includes.button-confirmation', [
-                                'btnAction' => route('admin.users.destroy', ['user' => $user->id]),
-                                'btnClass' => 'btn-sm btn-outline-danger',
-                                'btnIcon' => icon_class('trash'),
-                                'btnType' => 'danger',
-                                'btnMessage' =>
-                                    'Você está excluindo <strong>"' .
-                                    $user->email .
-                                    '"</strong> permanentemente e isso não pode ser desfeito, confirme para continuar.',
-                                'btnText' => '',
+                                'button' => Template::button_link_confirmation(
+                                    'danger',
+                                    'btn btn-sm btn-danger',
+                                    "Você está excluindo o usuário <strong>{$user->name}</strong> permanentemente e isso não pode ser desfeito!",
+                                    route('admin.users.destroy', ['user' => $user->id]),
+                                    icon_class('trash'),
+                                    null
+                                ),
                             ])
+
                         </td>
                     </tr>
                 @endforeach
