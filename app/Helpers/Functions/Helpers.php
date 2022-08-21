@@ -24,7 +24,7 @@ function input_value($data, $key)
  */
 function icon_class(string $name): string
 {
-    return "icon " . config("app-icons." . $name);
+    return "icon " . config("icons." . $name);
 }
 
 /**

@@ -81,9 +81,12 @@ return [
     |
     */
 
-    'locale' => 'pt_BR',
+    'multilang' => env("APP_MULTILANG"),
 
-    'locales' => ['pt_BR'],
+    'locale' => env("APP_DEFAULT_LOCALE"),
+
+    'locales' => explode(",", env("APP_LOCALES")),
+
 
     /*
     |--------------------------------------------------------------------------

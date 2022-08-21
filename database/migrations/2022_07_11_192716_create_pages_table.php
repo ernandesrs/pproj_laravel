@@ -17,16 +17,17 @@ class CreatePagesTable extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
 
-            $table->string("title")->fulltext()->nullable(false);
-            $table->string("description")->fulltext()->nullable(false);
+            $table->string("title", 100)->nullable(false);
+            $table->string("description", 160)->nullable(false);
             $table->string("cover")->nullable();
-            $table->string("lang", 5)->nullable(false)->default(config("app.locale"));
-            $table->string("content_type")->nullable(false)->default("text");
-            $table->string("content")->nullable(true);
-            $table->integer("protection")->nullable(false)->default(Page::PROTECTION_AUTHOR);
+            $table->string("lang", 5)->nullable(false)->default(config("app.locale"))->comment("Idioma. Ex.: pt, pt_BR, en, en_US");
+            $table->integer("content_type")->nullable(false)->default(1);
+            $table->text("content")->nullable(true);
             $table->boolean("follow")->nullable(false)->default(true);
+            $table->integer("protection")->nullable(false)->default(Page::PROTECTION_AUTHOR);
+            $table->fullText(["title", "description"]);
 
-            $table->string("status")->nullable(false)->default("draft");
+            $table->integer("status")->nullable(false)->default(1);
             $table->timestamp("published_at")->nullable(true);
             $table->timestamp("scheduled_to")->nullable(true);
 
