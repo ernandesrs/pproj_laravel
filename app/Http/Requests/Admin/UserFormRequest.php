@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Requests\Member;
+namespace App\Http\Requests\Admin;
 
-use App\Http\Requests\Mtrait;
+use App\Http\Requests\MyFormRequestTrait;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ProfileUpdate extends FormRequest
+class UserFormRequest extends FormRequest
 {
-    use Mtrait;
+    use MyFormRequestTrait;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -31,14 +31,19 @@ class ProfileUpdate extends FormRequest
         $rules = [
             "first_name" => ["required", "max:25"],
             "last_name" => ["required", "max:75"],
-            "username" => ["required", "unique:users,username," . $this->user()->id, "max:25"],
+            "username" => ["required", "max:25"],
+            "email" => ["required", "email", "unique:users,email"],
             "gender" => ["required", Rule::in(User::GENDERS)],
             "photo" => ["nullable", "mimes:jpg,png", "max:2048"],
-            "password" => ["required", "min:6", "max:18", "confirmed"]
+            "password" => ["required", "min:6", "max:12", "confirmed"]
         ];
 
-        if (empty($this->password))
-            unset($rules["password"]);
+        if ($this->user) {
+            $rules["email"] = ["required", "email", "unique:users,email," . $this->user->id];
+
+            if (empty($this->password))
+                unset($rules["password"]);
+        }
 
         return $rules;
     }

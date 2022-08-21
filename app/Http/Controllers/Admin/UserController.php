@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Message\Message;
 use App\Helpers\Thumb;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\UserRequest;
+use App\Http\Requests\Admin\UserFormRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
@@ -13,9 +12,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Rolandstarke\Thumbnail\Facades\Thumbnail;
 
 class UserController extends Controller
 {
@@ -78,10 +74,10 @@ class UserController extends Controller
     }
 
     /**
-     * @param UserRequest $request
+     * @param UserFormRequest $request
      * @return JsonResponse
      */
-    public function store(UserRequest $request): JsonResponse
+    public function store(UserFormRequest $request): JsonResponse
     {
         $validated = $request->validated();
 
@@ -136,11 +132,11 @@ class UserController extends Controller
     }
 
     /**
-     * @param UserRequest $request
+     * @param UserFormRequest $request
      * @param User $user
      * @return JsonResponse
      */
-    public function update(UserRequest $request, User $user): JsonResponse
+    public function update(UserFormRequest $request, User $user): JsonResponse
     {
         $validated = $request->validated();
 

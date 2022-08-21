@@ -5,13 +5,12 @@ namespace App\Http\Controllers\Member;
 use App\Helpers\Message\Message;
 use App\Helpers\Thumb;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Member\ProfileUpdate;
+use App\Http\Requests\Member\ProfileFormRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Rolandstarke\Thumbnail\Facades\Thumbnail;
 
 class MemberController extends Controller
 {
@@ -37,10 +36,10 @@ class MemberController extends Controller
     }
 
     /**
-     * @param ProfileUpdate $request
+     * @param ProfileFormRequest $request
      * @return JsonResponse
      */
-    public function profileUpdate(ProfileUpdate $request): JsonResponse
+    public function profileUpdate(ProfileFormRequest $request): JsonResponse
     {
         $validated = $request->validated();
 

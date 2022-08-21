@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-trait Mtrait
+trait MyFormRequestTrait
 {
     /**
      * Configure the validator instance.
