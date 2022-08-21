@@ -164,6 +164,9 @@ function removeAlert(alert) {
             $(this).remove();
         });
     }
+
+    if (timeoutHandler)
+        clearTimeout(timeoutHandler);
 }
 
 /**
