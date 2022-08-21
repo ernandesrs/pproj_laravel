@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\Http;
 
-class GoogleRecaptcha
+class GRecaptcha
 {
     private const GOOGLE_RECAPTCHA_URL_VERIFY = "https://www.google.com/recaptcha/api/siteverify";
 

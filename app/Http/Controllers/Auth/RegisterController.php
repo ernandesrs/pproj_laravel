@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\GRecaptcha;
 use App\Helpers\Message\Message;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -33,7 +34,7 @@ class RegisterController extends Controller
             "email" => ["required", "unique:App\Models\User"],
             "password" => ["required", "confirmed"],
             "password_confirmation" => ["required"],
-            "g-recaptcha-response" => ["required"]
+            "g-recaptcha-response" => [GRecaptcha::active() ? "required" : "nullable"]
         ]);
 
         if ($errors = $validator->errors()->messages()) {
@@ -49,17 +50,17 @@ class RegisterController extends Controller
         $validated = $validator->validated();
 
         // RECAPTCHA
-        $response = Http::get("https://www.google.com/recaptcha/api/siteverify", [
-            'secret' => env("APP_GOOGLE_RECAPTCHAV2_PRIVATE_KEY"),
-            'response' => $validated["g-recaptcha-response"]
-        ]);
+        if (GRecaptcha::active()) {
 
-        if ($response->json()["success"] == false) {
-            return response()->json([
-                "success" => false,
-                "errors" => ["g-recaptcha-response" => "Falha no desafio"],
-                "message" => message()->warning("Falha ao validar desafio do recaptcha")->time(10)->render()
-            ]);
+            if (!GRecaptcha::verify($validated)) {
+                return response()->json([
+                    "success" => false,
+                    "errors" => ["g-recaptcha-response" => "Falha no desafio"],
+                    "message" => message()->warning("Falha ao validar desafio do recaptcha")->render()
+                ]);
+            }
+
+            unset($validated["g-recaptcha-response"]);
         }
 
         $validated = (object) $validated;

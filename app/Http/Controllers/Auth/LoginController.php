@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\GRecaptcha;
 use App\Helpers\Message\Message;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -28,11 +29,11 @@ class LoginController extends Controller
         $validator = Validator::make($request->only(["email", "password", "g-recaptcha-response"]), [
             "email" => ["required", "email"],
             "password" => ["required"],
-            // "g-recaptcha-response" => ["required"];
+            "g-recaptcha-response" => [GRecaptcha::active() ? "required" : "nullable"]
         ], [
             "email.required" => "Informe um email válido",
             "password.required" => "Informe sua senha",
-            // "g-recaptcha-response.required" => "Desafio obrigatório"
+            "g-recaptcha-response.required" => "Desafio obrigatório"
         ]);
 
         if ($errors = $validator->errors()->messages()) {
@@ -48,19 +49,17 @@ class LoginController extends Controller
         $validated = $validator->validated();
 
         // RECAPTCHA
-        $response = Http::get("https://www.google.com/recaptcha/api/siteverify", [
-            'secret' => env("APP_GOOGLE_RECAPTCHAV2_PRIVATE_KEY"),
-            'response' => $validated["g-recaptcha-response"]
-        ]);
+        if (GRecaptcha::active()) {
 
-        unset($validated["g-recaptcha-response"]);
+            if (!GRecaptcha::verify($validated)) {
+                return response()->json([
+                    "success" => false,
+                    "errors" => ["g-recaptcha-response" => "Falha no desafio"],
+                    "message" => message()->warning("Falha ao validar desafio do recaptcha")->render()
+                ]);
+            }
 
-        if ($response->json()["success"] == false) {
-            return response()->json([
-                "success" => false,
-                "errors" => ["g-recaptcha-response" => "Falha no desafio"],
-                "message" => message()->warning("Falha ao validar desafio do recaptcha")->time(10)->render()
-            ]);
+            unset($validated["g-recaptcha-response"]);
         }
 
         if (Auth::attempt($validated)) {
