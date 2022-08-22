@@ -34,13 +34,5 @@ return [
             "target" => "_blank",
             "activeIn" => [],
         ],
-        [
-            "icon" => icon_class("logout"),
-            "text" => "Logout",
-            "title" => "",
-            "route" => "auth.logout",
-            "target" => "_self",
-            "activeIn" => [],
-        ],
     ],
 ];

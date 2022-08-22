@@ -58,14 +58,6 @@ return [
             "route" => "front.index",
             "target" => "_blank",
             "activeIn" => [],
-        ],
-        [
-            "icon" => "bi bi-box-arrow-left",
-            "text" => "Logout",
-            "title" => "",
-            "route" => "auth.logout",
-            "target" => "_self",
-            "activeIn" => [],
-        ],
+        ]
     ],
 ];

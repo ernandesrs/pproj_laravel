@@ -1,7 +1,7 @@
 body {
     display: grid;
     grid-template-areas:
-        "header header"
+        "topbar topbar"
         "main main"
         "footer footer";
     grid-template-columns: auto auto;
@@ -19,32 +19,16 @@ body {
     }
 }
 
-.header {
-    grid-area: header;
-    background-color: $light-light;
-    width: 100%;
-    height: $header-height;
-    position: fixed;
-    right: 0;
-    z-index: 997;
-
-    .logo {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: $dark-light;
-    }
-}
-
 .sidebar {
     grid-area: sidebar;
     display: none;
     background-color: $light-dark;
     width: 100%;
     max-width: $sidebar-width;
-    height: calc(100vh - ($header-height / 4));
+    height: calc(100vh - ($header-height / 6));
     overflow-y: auto;
     position: fixed;
-    top: calc($header-height / 8);
+    top: calc($header-height / 12);
     z-index: 998;
     border-right: 1px solid rgb($dark-light, 0.125);
 
@@ -52,21 +36,74 @@ body {
         display: block;
     }
 
-    .nav {
-        .nav-link {
-            border-radius: $border-radius * 5;
-            margin-bottom: 2px;
+    .header {
+        display: flex;
+        align-items: center;
+        min-height: $header-height;
 
-            &:hover {
-                background-color: $white;
-            }
+        .logo {
+            font-size: 1rem;
+            font-weight: 700;
+            color: $dark-light;
+        }
+    }
 
-            &.active {
-                background-color: $primary;
-                color: $light-dark;
+    .sidebar-elems {
+        min-height: calc(100vh - ($header-height + ($header-height / 6)));
+
+        .sidebar-elem {
+            padding-bottom: $spacer;
+
+            &.sidebar-elem-navigation {
+                .nav {
+                    .nav-link {
+                        border-radius: $border-radius;
+                        border-left: 2px solid transparent;
+
+                        &:hover,
+                        &.active {
+                            background-color: $primary;
+                            color: $light-dark;
+                            border-left-color: rgb($primary, 1);
+                        }
+                    }
+
+                    .subnav {
+                        margin-left: $spacer;
+
+                        .nav-link {
+                            background-color: transparent;
+                            border-left: 2px solid rgb($primary, 1);
+                            border-radius: 0;
+
+                            &:hover {
+                                border-left: 2px solid rgb($primary-dark, 1);
+                                color: $primary-dark;
+                            }
+
+                            &.active {
+                                border-radius: $border-radius;
+                                background-color: $primary-dark;
+                                color: $light-dark;
+                            }
+                        }
+                    }
+                }
+
             }
         }
     }
+}
+
+.topbar {
+    grid-area: topbar;
+    background-color: $light-light;
+    width: 100%;
+    min-height: $header-height;
+    position: fixed;
+    right: 0;
+    z-index: 997;
+    border-bottom: 1px solid rgb($dark-light, 0.06125);
 }
 
 .main {

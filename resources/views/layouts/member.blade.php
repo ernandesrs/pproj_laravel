@@ -16,14 +16,82 @@
 
 <body>
 
-    {{-- header --}}
-    <header class="header d-flex align-items-center">
+    {{-- sidebar --}}
+    <aside class="sidebar accordion" id="sidebar">
+        <header class="header">
+            <div class="container-fluid">
+                <h1 class="mb-0 logo">
+                    {{ strtoupper(config('app.name')) }}<span class="text-muted">ADMIN</span>
+                </h1>
+            </div>
+        </header>
+
+        <div class="container-fluid d-flex flex-column sidebar-elems">
+            @php
+                $items = config('panel-member')['sidebar'];
+                $croute = Route::currentRouteName();
+            @endphp
+
+            {{-- navigation --}}
+            <div class="sidebar-elem sidebar-elem-navigation">
+                <nav class="nav flex-column">
+                    @foreach ($items as $key => $item)
+                        @if ($item['items'] ?? null)
+                            @php
+                                $active = in_array($croute, $item['activeIn']) ? 'active' : null;
+                            @endphp
+                            <a class="nav-link {{ $active }}" href="#" data-toggle="collapse"
+                                data-target="#item{{ $key }}">
+                                <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
+                            </a>
+                            <div class="subnav collapse {{ $active ? 'show' : null }}" id="item{{ $key }}"
+                                data-parent="#sidebar">
+                                @foreach ($item['items'] as $i)
+                                    @if ($i['visibleIn'] ?? null)
+                                        @if (in_array(Route::currentRouteName(), $i['visibleIn'] ?? []))
+                                            <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
+                                                href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
+                                                target="{{ $item['target'] }}">
+                                                <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
+                                            </a>
+                                        @endif
+                                    @else
+                                        <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
+                                            href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
+                                            target="{{ $item['target'] }}">
+                                            <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
+                                        </a>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @else
+                            <a class="nav-link {{ in_array($croute, $item['activeIn']) ? 'active' : null }}"
+                                href="{{ $item['route'] ?? null ? route($item['route']) : null }}"
+                                target="{{ $item['target'] }}">
+                                <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
+                            </a>
+                        @endif
+                    @endforeach
+                </nav>
+            </div>
+
+            {{-- navigation logout --}}
+            <div class="sidebar-elem sidebar-eleme-navigation mt-auto">
+                <ul class="nav">
+                    <a class="nav-link text-danger {{ icon_class('logout') }}" href="{{ route('auth.logout') }}">
+                        Logout
+                    </a>
+                </ul>
+            </div>
+
+        </div>
+    </aside>
+
+    {{-- topbar --}}
+    <section class="topbar d-flex align-items-center">
         <div class="container-fluid">
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center left">
-                    <h1 class="mb-0 d-none d-lg-block logo">
-                        {{ strtoupper(config('app.name')) }}<span class="text-muted">MEMBRO</span>
-                    </h1>
                     <button class="ml-auto d-lg-none {{ icon_class('list') }} btn-menu-toggler jsBtnMenuToggler"
                         data-active-icon="{{ icon_class('list') }}" data-alt-icon="{{ icon_class('x') }}"></button>
                 </div>
@@ -35,64 +103,14 @@
                 </nav>
             </div>
         </div>
-    </header>
-
-    {{-- sidebar --}}
-    <aside class="sidebar accordion" id="sidebar">
-        <div class="container-fluid d-flex flex-column py-3">
-            @php
-                $items = config('panel-member')['sidebar'];
-                $croute = Route::currentRouteName();
-            @endphp
-
-            <nav class="nav flex-column">
-                @foreach ($items as $key => $item)
-                    @if ($item['items'] ?? null)
-                        @php
-                            $active = in_array($croute, $item['activeIn']) ? 'active' : null;
-                        @endphp
-                        <a class="nav-link {{ $active }}" href="#" data-toggle="collapse"
-                            data-target="#item{{ $key }}">
-                            <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
-                        </a>
-                        <div class="subnav collapse {{ $active ? 'show' : null }}" id="item{{ $key }}"
-                            data-parent="#sidebar">
-                            @foreach ($item['items'] as $i)
-                                @if ($i['visibleIn'] ?? null)
-                                    @if (in_array(Route::currentRouteName(), $i['visibleIn'] ?? []))
-                                        <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
-                                            href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
-                                            target="{{ $item['target'] }}">
-                                            <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
-                                        </a>
-                                    @endif
-                                @else
-                                    <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
-                                        href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
-                                        target="{{ $item['target'] }}">
-                                        <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
-                                    </a>
-                                @endif
-                            @endforeach
-                        </div>
-                    @else
-                        <a class="nav-link {{ in_array($croute, $item['activeIn']) ? 'active' : null }}"
-                            href="{{ $item['route'] ?? null ? route($item['route']) : null }}"
-                            target="{{ $item['target'] }}">
-                            <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
-                        </a>
-                    @endif
-                @endforeach
-            </nav>
-        </div>
-    </aside>
+    </section>
 
     {{-- main --}}
     <main class="main">
         <div class="container-fluid">
             @include('includes.message')
 
-            <div class="row justify-content-start align-items-center py-3">
+            <div class="row justify-content-start align-items-center py-4">
                 {{-- MAIN TITLE --}}
                 <div class="col-12 col-md-4 col-xl-7">
                     <div class="d-flex align-items-center">
