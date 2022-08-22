@@ -10477,10 +10477,10 @@ body .btn-menu-toggler {
   background-color: rgb(240, 240, 240);
   width: 100%;
   max-width: 250px;
-  height: 100vh;
+  height: calc(100vh - 15px);
   overflow-y: auto;
   position: fixed;
-  top: 0;
+  top: 7.5px;
   z-index: 998;
   border-right: 1px solid rgba(53, 53, 53, 0.125);
 }
@@ -10522,5 +10522,7 @@ body .btn-menu-toggler {
   }
   .sidebar {
     display: block;
+    top: unset;
+    height: 100vh;
   }
 }
