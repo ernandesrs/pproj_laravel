@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Helpers\Seo;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Contracts\View\View;
@@ -15,30 +16,16 @@ class FrontController extends Controller
      */
     public function index(): View
     {
-        $page = Page::findBySlug("home", config("app.locale"));
+        $page = Page::findBySlug("inicio", config("app.locale"));
 
         return view($page->content->view_path ?? "front.index", [
-            "pageTitle" => $page->title ?? "Home",
-            "pageDescription" => $page->description ?? "",
-            "pageFollow" => $page->follow ?? true,
-            "pageCover" => ($page ?? null) ? m_page_cover_thumb($page, [800, 600]) : null,
-            "pageUrl" => route("front.index"),
-        ]);
-    }
-
-    /**
-     * @return View
-     */
-    public function termsAndConditions(): View
-    {
-        $page = Page::findBySlug("termos-e-condicoes", config("app.locale"));
-
-        return view($page->content->view_path ?? "front.terms-and-conditions", [
-            "pageTitle" => $page->title ?? "Terms & Conditions",
-            "pageDescription" => $page->description ?? "",
-            "pageFollow" => $page->follow ?? true,
-            "pageCover" => ($page ?? null) ? m_page_cover_thumb($page, [800, 600]) : null,
-            "pageUrl" => route("front.index"),
+            "seo" => Seo::set(
+                $page->title,
+                $page->description,
+                route("front.index"),
+                m_page_cover_thumb($page, [800, 600]),
+                $page->follow
+            )
         ]);
     }
 
@@ -49,22 +36,29 @@ class FrontController extends Controller
     public function dinamicPage(string $slug)
     {
         $page = Page::findBySlug($slug, config("app.locale"));
-        if (!$page || $page->status != Page::STATUS_PUBLISHED) {
-            message()->default("Página não encontrada!", "Erro!")->time(10)->flash();
+
+        if (!$page) {
+            message()->danger("Não existe uma página para este endereço: <strong>{$slug}</strong>", "Página não encontrada")->flash();
             return redirect()->route("front.index");
         }
 
-        $view = "front.page";
-        if ($page->content_type == Page::CONTENT_TYPE_VIEW)
-            $view = $page->content->view_path;
+        $slugs = $page->slugs();
 
-        // IMPLEMENTAR
+        if ($page->content_type == Page::CONTENT_TYPE_VIEW) {
+            $content = $page->content;
+            $view = $content->view_path;
+        } else
+            $view = "front.dinamic-page";
+
         return view($view, [
-            "pageTitle" => $page->title ?? "Page",
-            "pageDescription" => $page->description ?? "",
-            "pageFollow" => $page->follow,
-            "pageCover" => m_page_cover_thumb($page, [800, 600]),
-            "pageUrl" => route("front.index"),
+            "seo" => Seo::set(
+                $page->title,
+                $page->description,
+                route("front.dinamicPage", ["slug" => $slugs->slug($page->lang)]),
+                m_page_cover_thumb($page, [800, 600]),
+                $page->follow
+            ),
+            "page" => $page
         ]);
     }
 }

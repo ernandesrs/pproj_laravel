@@ -53,7 +53,6 @@ Route::post('/reset-password', [ResetController::class, "updatePassword"])->midd
  *
  */
 Route::get("/", [FrontController::class, "index"])->name("front.index");
-Route::get("/termos-e-condicoes", [FrontController::class, "termsAndConditions"])->name("front.termsAndConditions");
 Route::get("/p/{slug}", [FrontController::class, "dinamicPage"])->name("front.dinamicPage");
 if (env("APP_ENV") == "local") {
     Route::get("/builder/builder", [AppStarter::class, "index"]);
