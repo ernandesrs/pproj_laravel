@@ -42,8 +42,9 @@ foreach ($keys as $key => $value) {
                     <tr>
                         <td class="align-middle">
                             <div class="d-flex align-items-center">
-                                <img class="img-fluid img-thumbnail mr-2 d-none d-sm-block" src="{{ m_page_cover_thumb($page, 'small') }}"
-                                    alt="{{ $page->name }}" style="width: 125px; height: 75px;">
+                                <img class="img-fluid img-thumbnail mr-2 d-none d-sm-block"
+                                    src="{{ m_page_cover_thumb($page, 'small') }}" alt="{{ $page->name }}"
+                                    style="width: 125px; height: 75px;">
                                 <div class="d-flex flex-column">
                                     <span>
                                         <a href="{{ route('front.dinamicPage', ['slug' => $slug]) }}" target="_blank">
@@ -100,10 +101,10 @@ foreach ($keys as $key => $value) {
                 @endforeach
             </tbody>
         </table>
-
-        <div class="d-flex justify-content-end align-items-center py-2">
-            {{ $pages->onEachSide(2)->links() }}
-        </div>
+    </div>
+    <hr>
+    <div class="d-flex justify-content-center">
+        {{ $pages->onEachSide(2)->links() }}
     </div>
 @endsection
 

@@ -77,9 +77,10 @@ foreach ($keys as $key => $value) {
             </tbody>
         </table>
 
-        <div class="d-flex justify-content-end align-items-center py-2">
-            {{ $users->onEachSide(2)->links() }}
-        </div>
+    </div>
+    <hr>
+    <div class="d-flex justify-content-center">
+        {{ $users->onEachSide(2)->links() }}
     </div>
 @endsection
 
