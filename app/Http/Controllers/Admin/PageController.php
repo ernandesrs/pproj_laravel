@@ -22,8 +22,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        return view("admin.pages.pages-list", [
-            "pageTitle" => "Listando páginas",
+        return view("admin.pages.index", [
+            "title" => "Listando páginas",
             "pages" => Page::whereNotNull("id")->orderBy("protection", "DESC")->orderBy("created_at", "DESC")->paginate(12)->withQueryString()
         ]);
     }
@@ -35,8 +35,8 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view("admin.pages.pages-new", [
-            "pageTitle" => "Nova página"
+        return view("admin.pages.new", [
+            "title" => "Nova página"
         ]);
     }
 
@@ -109,8 +109,8 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        return view("admin.pages.pages-edit", [
-            "pageTitle" => "Editar página",
+        return view("admin.pages.edit", [
+            "title" => "Editar página",
             "page" => $page
         ]);
     }

@@ -20,7 +20,7 @@ class MemberController extends Controller
     public function index(): View
     {
         return view("member.index", [
-            "pageTitle" => "Dashboard"
+            "title" => "Dashboard"
         ]);
     }
 
@@ -30,7 +30,7 @@ class MemberController extends Controller
     public function profile(): View
     {
         return view("member.profile", [
-            "pageTitle" => "Meu perfil",
+            "title" => "Meu perfil",
             "profile" => auth()->user()
         ]);
     }

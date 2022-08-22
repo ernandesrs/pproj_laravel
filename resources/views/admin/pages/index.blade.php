@@ -6,19 +6,16 @@ foreach ($keys as $key => $value) {
 @endphp
 
 @extends('layouts.admin', [
-    'mainBar' => [
-        'title' => $pageTitle,
-        'filterFormAction' => route('admin.pages.index'),
-        'filterFormFields' => [
-            [
-                'name' => 'status',
-                'label' => 'Status',
-                'type' => 'select',
-                'options' => [
-                    'published' => 'Publicado',
-                    'draft' => 'Rascunho',
-                    'scheduled' => 'Agendado',
-                ],
+    'filterFormAction' => route('admin.pages.index'),
+    'filterFormFields' => [
+        [
+            'name' => 'status',
+            'label' => 'Status',
+            'type' => 'select',
+            'options' => [
+                'published' => 'Publicado',
+                'draft' => 'Rascunho',
+                'scheduled' => 'Agendado',
             ],
         ],
     ],
@@ -35,10 +32,10 @@ foreach ($keys as $key => $value) {
                     @php
                         /** @var \App\Models\User $author */
                         $author = $page->author();
-
+                        
                         /** @var \App\Models\Slug $slugs */
                         $slugs = $page->slugs();
-
+                        
                         $slug = $slugs->slug($page->lang);
                     @endphp
                     <tr>

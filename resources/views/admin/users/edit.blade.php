@@ -1,5 +1,4 @@
 @extends('layouts.admin', [
-    'title' => $pageTitle,
     'buttons' => [Template::buttonLink('btn btn-primary', route('admin.users.index'), null, icon_class('arrowLeft'), 'Voltar'), Template::buttonLink('btn btn-outline-success', route('admin.users.create'), null, icon_class('plusLg'), 'Novo usuário')],
 ])
 

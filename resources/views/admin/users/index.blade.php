@@ -6,7 +6,6 @@ foreach ($keys as $key => $value) {
 @endphp
 
 @extends('layouts.admin', [
-    'title' => $pageTitle,
     'filterFormAction' => route('admin.users.index'),
     'filterFormFields' => [
         [

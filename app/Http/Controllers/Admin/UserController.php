@@ -21,7 +21,7 @@ class UserController extends Controller
     public function index(Request $request): View
     {
         return view("admin.users.index", [
-            "pageTitle" => "Usuários",
+            "title" => "Usuários",
             "users" => $this->filter($request)
         ]);
     }
@@ -69,7 +69,7 @@ class UserController extends Controller
     public function create(): View
     {
         return view("admin.users.new", [
-            "pageTitle" => "Novo usuário"
+            "title" => "Novo usuário"
         ]);
     }
 
@@ -126,7 +126,7 @@ class UserController extends Controller
     public function edit(User $user): View
     {
         return view("admin.users.edit", [
-            "pageTitle" => "Editar usuário",
+            "title" => "Editar usuário",
             "user" => $user
         ]);
     }

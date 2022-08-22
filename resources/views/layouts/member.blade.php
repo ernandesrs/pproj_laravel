@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name') }} Membro - {{ $pageTitle }}</title>
+    <title>{{ config('app.name') }} > Membro - {{ $title }}</title>
 
     <link rel="stylesheet" href="{{ asset('assets/css/member/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-icons.min.css') }}">
