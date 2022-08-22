@@ -1,7 +1,6 @@
 @extends('layouts.admin', [
-    'mainBar' => [
-        'title' => $pageTitle,
-    ],
+    'title' => $pageTitle,
+    'buttons' => [Template::buttonLink('btn btn-primary', route('admin.users.index'), null, icon_class('arrowLeft'), 'Voltar')],
 ])
 
 @section('content')
@@ -14,9 +13,8 @@
 
                     @include('admin.users.includes.users-form-fields')
 
-                    <button class="btn btn-primary {{ icon_class('checkLg') }}"
-                        data-active-icon="{{ icon_class('checkLg') }}" data-alt-icon="{{ icon_class('loading') }}"
-                        type="submit">
+                    <button class="btn btn-primary {{ icon_class('checkLg') }}" data-active-icon="{{ icon_class('checkLg') }}"
+                        data-alt-icon="{{ icon_class('loading') }}" type="submit">
                         Registrar
                     </button>
                 </form>

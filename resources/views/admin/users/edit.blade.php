@@ -1,7 +1,6 @@
 @extends('layouts.admin', [
-    'mainBar' => [
-        'title' => $pageTitle,
-    ],
+    'title' => $pageTitle,
+    'buttons' => [Template::buttonLink('btn btn-primary', route('admin.users.index'), null, icon_class('arrowLeft'), 'Voltar'), Template::buttonLink('btn btn-outline-success', route('admin.users.create'), null, icon_class('plusLg'), 'Novo usuário')],
 ])
 
 @section('content')
@@ -12,7 +11,7 @@
             <div class="py-2">
                 @if ($user->photo)
                     @include('includes.button-confirmation', [
-                        'button' => Template::button_confirmation(
+                        'button' => Template::buttonConfirmation(
                             'danger',
                             'btn btn-sm btn-outline-danger',
                             'Você está excluindo a foto deste usuário e isso não pode ser desfeito!',

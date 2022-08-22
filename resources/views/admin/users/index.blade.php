@@ -6,27 +6,26 @@ foreach ($keys as $key => $value) {
 @endphp
 
 @extends('layouts.admin', [
-    'mainBar' => [
-        'title' => $pageTitle,
-        'filterFormAction' => route('admin.users.index'),
-        'filterFormFields' => [
-            [
-                'name' => 'status',
-                'label' => 'Status',
-                'type' => 'select',
-                'options' => [
-                    'verified' => 'Verificado',
-                    'unverified' => 'Não verificado',
-                ],
-            ],
-            [
-                'name' => 'level',
-                'label' => 'Nível',
-                'type' => 'select',
-                'options' => $keys,
+    'title' => $pageTitle,
+    'filterFormAction' => route('admin.users.index'),
+    'filterFormFields' => [
+        [
+            'name' => 'status',
+            'label' => 'Status',
+            'type' => 'select',
+            'options' => [
+                'verified' => 'Verificado',
+                'unverified' => 'Não verificado',
             ],
         ],
+        [
+            'name' => 'level',
+            'label' => 'Nível',
+            'type' => 'select',
+            'options' => $keys,
+        ],
     ],
+    'buttons' => [Template::buttonLink('btn btn-outline-success', route('admin.users.create'), null, icon_class('plusLg'), 'Novo usuário')],
 ])
 
 @section('content')
@@ -63,7 +62,7 @@ foreach ($keys as $key => $value) {
                                 href="{{ route('admin.users.edit', ['user' => $user->id]) }}"></a>
 
                             @include('includes.button-confirmation', [
-                                'button' => Template::button_confirmation(
+                                'button' => Template::buttonConfirmation(
                                     'danger',
                                     'btn btn-sm btn-danger',
                                     "Você está excluindo o usuário <strong>{$user->name}</strong> permanentemente e isso não pode ser desfeito!",
