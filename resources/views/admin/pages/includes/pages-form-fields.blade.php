@@ -76,9 +76,9 @@
                 </div>
             </div>
 
-            {{-- view path if exists --}}
+            {{-- view path --}}
             <div
-                class="col-12 {{ $page ?? null ? ($page->content_type !== \App\Models\Page::CONTENT_TYPE_VIEW ? 'd-none' : null) : 'd-none' }} jsViewPathField">
+                class="col-12 {{ $page ?? null ? ($page->content_type != \App\Models\Page::CONTENT_TYPE_VIEW ? 'd-none' : null) : 'd-none' }} jsViewPathField">
                 <div class="form-group">
                     <label for="view_path">Caminho para a página customizada:</label>
                     @php
@@ -87,6 +87,15 @@
                     <input class="form-control" type="text" name="view_path" id="view_path"
                         value="{{ $content && ($content->view_path ?? null) ? $content->view_path : null }}"
                         {{ input_value($page ?? null, 'protection') == \App\Models\Page::PROTECTION_SYSTEM ? 'disabled' : null }}>
+                </div>
+            </div>
+
+            {{-- text --}}
+            <div
+                class="col-12 {{ $page ?? null ? ($page->content_type != \App\Models\Page::CONTENT_TYPE_TEXT ? 'd-none' : null) : null }} jsTextField">
+                <div class="form-group">
+                    <label for="content">Conteúdo:</label>
+                    <textarea id="summernoteContent" name="content">{{ input_value($page ?? null, 'content') }}</textarea>
                 </div>
             </div>
         </div>
@@ -147,26 +156,58 @@
     </div>
 </div>
 
+@section('styles')
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+@endsection
+
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script>
+        /*
+         * ALTERNA CAMPO DE CONTEÚDO DE ACORDO COM O TIPO DE CONTEÚDO ESCOLHIDO
+         */
         $("#content_type").on("change", function() {
             if ($(this).val() == {{ \App\Models\Page::CONTENT_TYPE_VIEW }}) {
                 $(".jsViewPathField").removeClass("d-none").hide().show("blind");
+                $(".jsTextField").hide("blind", function() {
+                    $(this).addClass("d-none");
+                });
             } else if (!$(".jsViewPathField").hasClass("d-none")) {
+                $(".jsTextField").removeClass("d-none").hide().show("blind");
                 $(".jsViewPathField").hide("blind", function() {
                     $(this).addClass("d-none");
                 });
             }
         });
 
+        /*
+         * MOSTRA/OCULTA CAMPO DE DATA 
+         */
         $("#status").on("change", function() {
-            if ($(this).val() == {{ \App\Models\Page::STATUS_SCHEDULED }}) {
-                $(".jsScheduleField").removeClass("d-none").hide().show("blind");
-            } else if (!$(".jsScheduleField").hasClass("d-none")) {
-                $(".jsScheduleField").hide("blind", function() {
+            let select = $(this);
+            let option = select.val();
+
+            if (option == {{ \App\Models\Page::STATUS_SCHEDULED }}) {
+                $("#scheduled_to").parent().parent().removeClass("d-none").hide().show("blind", function() {
+                    select.parents().eq(5).find("button[type=submit]").text("Agendar página");
+                });
+            } else {
+                $("#scheduled_to").parent().parent().hide("blind", function() {
                     $(this).addClass("d-none");
+                    select.parents().eq(5).find("button[type=submit]").text("Salvar página");
                 });
             }
+        });
+
+        /**
+         * SUMMERNOTE
+         */
+        $(document).ready(function() {
+            $('#summernoteContent').summernote({
+                lang: 'pt-BR',
+                minHeight: 275,
+                maxHeight: 475,
+            });
         });
     </script>
 @endsection

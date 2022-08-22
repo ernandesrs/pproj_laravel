@@ -32,11 +32,6 @@ class PageFormRequest extends FormRequest
             $this->merge([
                 "lang" => config("app.locale")
             ]);
-
-        if (empty($this->content))
-            $this->merge([
-                "content" => ""
-            ]);
     }
 
     /**
