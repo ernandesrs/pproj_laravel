@@ -51,6 +51,23 @@ class Page extends Model
         return $page;
     }
 
+
+    /**
+     * @param array $validatedData
+     * @return string
+     */
+    public function getContent(array $validatedData): string
+    {
+        if ($validatedData["content_type"] == self::CONTENT_TYPE_VIEW) {
+            $content = [
+                "view_path" => $validatedData["view_path"]
+            ];
+            return json_encode($content);
+        }
+
+        return $validatedData["content"];
+    }
+
     /**
      * @return Slug|null
      */

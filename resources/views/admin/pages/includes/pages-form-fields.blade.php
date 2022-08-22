@@ -147,28 +147,23 @@
 @section('scripts')
     <script>
         $("#content_type").on("change", function() {
-
-            if ($(this).val() == "view") {
+            if ($(this).val() == {{ \App\Models\Page::CONTENT_TYPE_VIEW }}) {
                 $(".jsViewPathField").removeClass("d-none").hide().show("blind");
             } else if (!$(".jsViewPathField").hasClass("d-none")) {
                 $(".jsViewPathField").hide("blind", function() {
                     $(this).addClass("d-none");
                 });
             }
-
         });
 
-
         $("#status").on("change", function() {
-
-            if ($(this).val() == "scheduled") {
+            if ($(this).val() == {{ \App\Models\Page::STATUS_SCHEDULED }}) {
                 $(".jsScheduleField").removeClass("d-none").hide().show("blind");
             } else if (!$(".jsScheduleField").hasClass("d-none")) {
                 $(".jsScheduleField").hide("blind", function() {
                     $(this).addClass("d-none");
                 });
             }
-
         });
     </script>
 @endsection

@@ -92,15 +92,13 @@ foreach ($keys as $key => $value) {
                                 href="{{ route('admin.pages.edit', ['page' => $page->id]) }}"></a>
 
                             @include('includes.button-confirmation', [
-                                'btnAction' => route('admin.pages.destroy', ['page' => $page->id]),
-                                'btnClass' => 'btn-sm btn-outline-danger',
-                                'btnIcon' => icon_class('trash'),
-                                'btnType' => 'danger',
-                                'btnMessage' =>
-                                    'Você está excluindo <strong>"' .
-                                    $page->title .
-                                    '"</strong> permanentemente e isso não pode ser desfeito, confirme para continuar.',
-                                'btnText' => '',
+                                'button' => Template::buttonConfirmation(
+                                    'danger',
+                                    'btn btn-sm btn-danger',
+                                    "Você está excluindo a página <strong>{$page->title}</strong> e isso não pode ser desfeito.",
+                                    route('admin.pages.destroy', ['page' => $page->id]),
+                                    icon_class('trash')
+                                ),
                             ])
                         </td>
                     </tr>

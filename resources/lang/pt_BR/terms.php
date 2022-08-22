@@ -13,13 +13,13 @@ return [
     ],
 
     "page_content_types" => [
-        'text' => 'texto',
-        'view' => 'página customizada',
+        '1' => 'texto',
+        '2' => 'página customizada',
     ],
     "page_status" => [
-        'draft' => 'rascunho',
-        'published' => 'publicado',
-        'scheduled' => 'agendado',
+        '1' => 'rascunho',
+        '2' => 'agendado',
+        '3' => 'publicado',
     ],
     "page_protections" => [
         1 => "nenhuma",

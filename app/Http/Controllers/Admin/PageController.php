@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Thumb;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\PageFormRequest;
 use App\Models\Page;
 use App\Models\Slug;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Rolandstarke\Thumbnail\Facades\Thumbnail;
-use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -23,7 +19,7 @@ class PageController extends Controller
     public function index()
     {
         return view("admin.pages.index", [
-            "title" => "Listando páginas",
+            "title" => "Páginas",
             "pages" => Page::whereNotNull("id")->orderBy("protection", "DESC")->orderBy("created_at", "DESC")->paginate(12)->withQueryString()
         ]);
     }
@@ -43,31 +39,17 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  PageFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PageFormRequest $request)
     {
-        $validator = $this->validatePage($request);
-
-        if ($errors = $validator->errors()->messages()) {
-            return response()->json([
-                "success" => false,
-                "message" => message()->warning("Erro ao validar dados, verifique e tente de novo.")->float()->render(),
-                "errors" => $errors
-            ]);
-        }
-
         // DADOS VALIDADOS
-        $validated = $validator->validated();
-
-        // DADOS DA PÁGINA
-        $page = (new Page())->set($validated, $request->user());
+        $validated = $request->validated();
 
         // DADOS DO SLUG
         $slug = new Slug();
-        $slug = $slug->set($page->title, $page->lang);
-
+        $slug = $slug->set($validated["title"], $validated["lang"]);
         if (!$slug->save()) {
             return response()->json([
                 "success" => false,
@@ -76,28 +58,46 @@ class PageController extends Controller
             ]);
         }
 
-        $page->slug = $slug->id;
+        // DADOS DA PÁGINA
+        $page = new Page();
+        $page->slug_id = $slug->id;
+        $page->author_id = $request->user()->id;
+        $page->title = $validated["title"];
+        $page->description = $validated["description"];
+        $page->lang = $validated["lang"];
+        $page->content_type = $validated["content_type"];
+        $page->status = $validated["status"];
+
+        if ($page->content_type == Page::CONTENT_TYPE_VIEW)
+            $page->content = json_encode([
+                "view_path" => $validated["view_path"]
+            ]);
+        else
+            $page->content = $validated["content"];
+
+        if ($page->status == Page::STATUS_SCHEDULED)
+            $page->scheduled_to = date("Y-m-d H:i:s", strtotime($validated["scheduled_to"]));
+        elseif ($page->status == Page::STATUS_PUBLISHED)
+            $page->published_at = date("Y-m-d H:i:s");
 
         // UPLOAD DE CAPA
         if ($cover = $validated["cover"] ?? null)
-            $page->cover = $cover->store("public/pages/covers");
+            $page->cover = $cover->store("pages/covers", "public");
 
         if (!$page->save()) {
-
             $slug->delete();
-            Storage::delete($page->cover);
+            Storage::delete("public/{$page->cover}");
 
             return response()->json([
                 "success" => false,
-                "message" => message()->warning("Erro ao criar slug para o título informado.")->float()->render(),
-                "errors" => ["title" => "Tente outro título"]
+                "message" => message()->warning("Erro ao criar a página. Um log foi registrado.")->float()->render(),
             ]);
         }
 
         message()->success("Nova página cadastrada com sucesso!")->float()->flash();
         return response()->json([
             "success" => true,
-            "redirect" => route("admin.pages.index")
+            "redirect" => route("admin.pages.edit", ["page" => $page->id])
         ]);
     }
 
@@ -118,49 +118,64 @@ class PageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  PageFormRequest  $request
      * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Page $page)
+    public function update(PageFormRequest $request, Page $page)
     {
-        $validator = $this->validatePage($request, $page);
-
-        if ($errors = $validator->errors()->messages()) {
-            return response()->json([
-                "success" => false,
-                "message" => message()->warning("Erro ao validar dados, verifique e tente de novo.")->float()->render(),
-                "errors" => $errors
-            ]);
-        }
-
         // DADOS VALIDADOS
-        $validated = $validator->validated();
+        $validated = $request->validated();
 
-        // INSERE DADOS VALIDADOS
-        $page->set($validated);
+        // DADOS DA PÁGINA
+        $page->title = $validated["title"];
+        $page->description = $validated["description"];
+        $page->lang = $validated["lang"];
+        $page->follow = $validated["follow"] ?? null ? true : false;
 
-        // SLUGS
         if ($page->protection != Page::PROTECTION_SYSTEM) {
-            $slugs = $page->slugs();
-            $slugs->set(Str::slug($page->title), $page->lang);
+            $page->content_type = $validated["content_type"];
+            $page->content = $page->getContent($validated);
+            $page->status = $validated["status"];
+
+            if ($page->status == Page::STATUS_SCHEDULED) {
+                if ($page->getOriginal("status") != Page::STATUS_SCHEDULED)
+                    $page->scheduled_to = date("Y-m-d H:i:s", strtotime($validated["scheduled_to"]));
+
+                $page->published_at = null;
+            } else if ($page->status == Page::STATUS_PUBLISHED) {
+                if ($page->getOriginal("status") != Page::STATUS_PUBLISHED)
+                    $page->published_at = date("Y-m-d H:i:s");
+                $page->scheduled_to = null;
+            } else {
+                $page->published_at = null;
+                $page->scheduled_to = null;
+            }
+
+            /** @var Slug $slugs */
+            $slugs = $page->slugs()->first();
+            $slugs->set($validated["title"], $page->lang);
             $slugs->save();
+        } else {
+            if ($page->content_type == Page::CONTENT_TYPE_TEXT)
+                $page->content = $page->getContent([
+                    "content_type" => $page->content_type,
+                    "content" => $validated["content"],
+                ]);
         }
 
         // UPLOAD DE CAPA
         if ($cover = $validated["cover"] ?? null) {
             if ($page->cover) {
-                Thumbnail::src(Storage::path($page->cover))->delete();
-                Storage::delete($page->cover);
+                Thumb::clear($page->cover);
+                Storage::delete("public/{$page->cover}");
             }
 
-            $page->cover = $cover->store("public/pages/covers");
+            $page->cover = $cover->store("pages/covers", "public");
         }
 
         if (!$page->save()) {
-
-            Storage::delete($page->cover);
-
+            Storage::delete("public/{$page->cover}");
             return response()->json([
                 "success" => false,
                 "message" => message()->warning("Erro ao validar dados, verifique e tente de novo.")->float()->render()
@@ -193,8 +208,8 @@ class PageController extends Controller
         $slugs = $page->slugs();
 
         if ($page->cover) {
-            Thumbnail::src(Storage::path($page->cover))->delete();
-            Storage::delete($page->cover);
+            Thumb::clear($page->cover);
+            Storage::delete("public/{$page->cover}");
         }
 
         $page->delete();
@@ -205,48 +220,7 @@ class PageController extends Controller
         message()->success("A página foi excluída com sucesso!")->float()->flash();
         return response()->json([
             "success" => true,
-            "reload" => true
+            "redirect" => route("admin.pages.index")
         ]);
-    }
-
-    /**
-     * @param Request $request
-     * @param Page|null $page
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    public function validatePage(Request $request, ?Page $page = null): \Illuminate\Contracts\Validation\Validator
-    {
-        $only = ["title", "description", "cover", "lang", "content_type", "content", "follow", "view_path", "status", "scheduled_to"];
-        $rules = [
-            "title" => ["required", "max:255"]
-        ];
-
-        if ($page)
-            $rules["title"] = array_merge($rules["title"], [Rule::unique('pages')->ignore($page->id)]);
-        else
-            $rules["title"] += array_merge($rules["title"], ["unique:pages,title"]);
-
-        $rules += [
-            "description" => ["required", "max:255"],
-            "cover" => ["mimes:jpg,png,webp", "max:2048", Rule::dimensions()->minWidth(800)->minHeight(600)],
-            "lang" => [Rule::in(config("app.locales"))],
-            "content_type" => ["required", Rule::in(Page::CONTENT_TYPES)],
-            "content" => [],
-            "follow" => ["string"],
-            "view_path" => ["required_if:content_type," . Page::CONTENT_TYPE_VIEW],
-            "status" => ["required", Rule::in(Page::STATUS)],
-            "scheduled_to" => ["required_if:status," . Page::STATUS_SCHEDULED],
-        ];
-
-        if ($page && $page->protection == Page::PROTECTION_SYSTEM) {
-            unset(
-                $only["content_type"],
-                $only["status"],
-                $rules["content_type"],
-                $rules["status"]
-            );
-        }
-
-        return Validator::make($request->only($only), $rules);
     }
 }
