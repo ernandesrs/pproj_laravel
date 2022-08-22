@@ -42,7 +42,7 @@ foreach ($keys as $key => $value) {
                     <tr>
                         <td class="align-middle">
                             <div class="d-flex align-items-center">
-                                <img class="img-fluid img-thumbnail mr-2" src="{{ m_page_cover_thumb($page, 'small') }}"
+                                <img class="img-fluid img-thumbnail mr-2 d-none d-sm-block" src="{{ m_page_cover_thumb($page, 'small') }}"
                                     alt="{{ $page->name }}" style="width: 125px; height: 75px;">
                                 <div class="d-flex flex-column">
                                     <span>

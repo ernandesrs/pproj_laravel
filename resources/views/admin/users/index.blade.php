@@ -35,7 +35,7 @@ foreach ($keys as $key => $value) {
                     <tr>
                         <td class="align-middle">
                             <div class="d-flex">
-                                <img class="img-fluid img-thumbnail rounded-circle mr-2"
+                                <img class="img-fluid img-thumbnail rounded-circle mr-2 d-none d-sm-block"
                                     src="{{ m_user_photo_thumb($user, 'small') }}" alt="{{ $user->name }}"
                                     style="width: 75px; height: 75px;">
                                 <div class="d-flex flex-column">
