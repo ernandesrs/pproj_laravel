@@ -31,7 +31,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view("admin.pages.new", [
+        return view("admin.pages.edit", [
             "title" => "Nova página"
         ]);
     }

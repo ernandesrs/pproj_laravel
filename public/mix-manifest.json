@@ -8,6 +8,7 @@
     "/assets/js/boostrap.min.js": "/assets/js/boostrap.min.js",
     "/assets/js/jquery.min.js": "/assets/js/jquery.min.js",
     "/assets/js/jquery-mask.min.js": "/assets/js/jquery-mask.min.js",
+    "/assets/js/summernote.script.min.js": "/assets/js/summernote.script.min.js",
     "/assets/js/scripts.min.js": "/assets/js/scripts.min.js",
     "/assets/js/admin/scripts.js": "/assets/js/admin/scripts.js",
     "/assets/js/member/scripts.js": "/assets/js/member/scripts.js",

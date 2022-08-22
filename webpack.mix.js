@@ -26,6 +26,7 @@ mix
         "node_modules/jquery-ui-dist/jquery-ui.js"
     ], "public/assets/js/jquery.min.js")
     .scripts(["node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"], "public/assets/js/jquery-mask.min.js")
+    .scripts(["resources/js/summernote.script.js"], "public/assets/js/summernote.script.min.js")
     .scripts(['resources/js/functions.js', 'resources/js/scripts.js'], 'public/assets/js/scripts.min.js')
 
     // js admin
