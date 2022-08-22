@@ -126,11 +126,11 @@ class AppStarter extends Controller
          * comment terms page create
          */
 
-        if (Slug::where(config("app.locale"), "politica-de-comentarios")->count())
+        if (Slug::where(config("app.locale"), "politicas-de-comentarios")->count())
             echo "comment terms page exists<br>";
         else {
             $commentTermsSlug = new Slug();
-            $commentTermsSlug->set("politica-de-comentarios", config("app.locale"));
+            $commentTermsSlug->set("politicas-de-comentarios", config("app.locale"));
             $commentTermsSlug->save();
 
             $commentTerms = new Page();
