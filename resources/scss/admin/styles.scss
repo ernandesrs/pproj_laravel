@@ -1,4 +1,4 @@
-@import "./variables";
+@import "./../panel/variables";
 
 @import "./../../../node_modules/bootstrap/scss/bootstrap";
 
@@ -6,6 +6,6 @@
 
 @import "./../alert";
 
-@import "./body";
+@import "./../panel/body";
 
-@import "./responsive";
+@import "./../panel/responsive";

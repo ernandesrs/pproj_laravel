@@ -1,0 +1,66 @@
+body {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "main main"
+        "footer footer";
+    grid-template-columns: auto auto;
+    grid-template-rows: $header-height auto $footer-height;
+    background-color: $light-light;
+    width: 100%;
+    height: 100vh;
+
+    .btn-menu-toggler {
+        background-color: transparent;
+        height: $header-height;
+        border: 0;
+
+        font-size: 1.6rem;
+    }
+}
+
+.header {
+    grid-area: header;
+    background-color: $light-light;
+    width: 100%;
+    height: $header-height;
+    position: fixed;
+    right: 0;
+    z-index: 997;
+
+    .logo {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: $dark-light;
+    }
+}
+
+.sidebar {
+    grid-area: sidebar;
+    display: none;
+    background-color: $light-dark;
+    width: 100%;
+    max-width: $sidebar-width;
+    height: calc(100vh);
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    z-index: 998;
+    border-right: 1px solid rgb($dark-light, 0.125);
+
+    &.sidebar-visible {
+        display: block;
+    }
+}
+
+.main {
+    grid-area: main;
+    background-color: $light-light;
+}
+
+.footer {
+    grid-area: footer;
+    display: flex;
+    align-items: center;
+    background-color: $light-light;
+}

@@ -10378,6 +10378,21 @@ h3 {
   }
 }
 
+.mbackdrop {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(42, 42, 42, 0.75);
+  position: absolute;
+  z-index: 998;
+  top: 0;
+  left: 0;
+}
+.mbackdrop .fixed {
+  position: fixed;
+}
+.mbackdrop .light {
+  background-color: rgba(241, 241, 241, 0.75);
+}
 .mbackdrop.loading {
   -webkit-animation-name: bakdropLoadAnimation;
           animation-name: bakdropLoadAnimation;
@@ -10426,165 +10441,75 @@ h3 {
 }
 
 body {
-  background: rgb(252, 252, 252);
-  background: linear-gradient(265deg, rgb(252, 252, 252) 24%, rgb(241, 241, 241) 51%);
-  background-repeat: repeat;
+  display: grid;
+  grid-template-areas: "header header" "main main" "footer footer";
+  grid-template-columns: auto auto;
+  grid-template-rows: 60px auto 35px;
+  background-color: rgb(252, 252, 252);
+  width: 100%;
   height: 100vh;
-  overflow-x: hidden;
-  font-family: "Roboto", sans-serif;
 }
-body h1,
-body .h1 {
+body .btn-menu-toggler {
+  background-color: transparent;
+  height: 60px;
+  border: 0;
   font-size: 1.6rem;
-}
-body h2,
-body .h2 {
-  font-size: 1.4rem;
-}
-body h3,
-body .h3 {
-  font-size: 1.2rem;
-}
-body h4,
-body .h4 {
-  font-size: 1.1rem;
-}
-body h5,
-body .h5 {
-  font-size: 1rem;
 }
 
 .header {
-  height: 60px;
-}
-.header .left .logo {
-  font-size: 1.2rem;
-}
-.header .btn-menu-toggler {
-  background-color: transparent;
-  font-size: 2rem;
-  border: 0;
-}
-
-.wrapp {
-  min-height: calc(100vh - 60px);
-  overflow-y: auto;
-}
-.wrapp .sidebar,
-.wrapp .main {
-  margin-top: 0.6666666667rem;
-}
-.wrapp .sidebar {
+  grid-area: header;
   background-color: rgb(252, 252, 252);
   width: 100%;
-  max-width: 250px;
-  min-height: calc(100vh - (120px + 0.5rem));
-  border-radius: 1rem;
-  box-shadow: 0 0 24px -2px rgba(53, 53, 53, 0.25);
+  height: 60px;
+  position: fixed;
+  right: 0;
+  z-index: 997;
 }
-.wrapp .sidebar .nav .nav-link {
-  display: flex;
-  align-items: center;
-  font-size: 1rem;
-  margin-bottom: 2px;
-}
-.wrapp .sidebar .nav .nav-link .icon {
-  font-size: 1.5rem;
-  line-height: 0;
-  margin-right: 0.4rem;
-}
-.wrapp .sidebar .nav .nav-link.active {
-  border-left: 2px solid #1e9ed0;
-}
-.wrapp .sidebar .nav .subnav {
-  padding-left: 1rem;
-}
-.wrapp .sidebar .nav .subnav .nav-link {
-  font-size: 1rem;
-}
-.wrapp .main .cards-list .cards-list-item .icon {
-  font-size: 2.5rem;
-}
-.wrapp .main .cards-list .cards-list-item .card-item-content {
-  margin-left: 14px;
-}
-.wrapp .main .section-user-edit .avatar {
-  width: 175px;
-  height: 175px;
-}
-.wrapp .main .section-user-edit .profile-info {
-  margin-top: -50px;
+.header .logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgb(53, 53, 53);
 }
 
-@media (min-width: 768px) {
-  body h1,
-body .h1 {
-    font-size: 1.8rem;
-  }
-  body h2,
-body .h2 {
-    font-size: 1.6rem;
-  }
-  body h3,
-body .h3 {
-    font-size: 1.4rem;
-  }
-  body h4,
-body .h4 {
-    font-size: 1.2rem;
-  }
-  body h5,
-body .h5 {
-    font-size: 1.1rem;
-  }
+.sidebar {
+  grid-area: sidebar;
+  display: none;
+  background-color: rgb(240, 240, 240);
+  width: 100%;
+  max-width: 250px;
+  height: 100vh;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  z-index: 998;
+  border-right: 1px solid rgba(53, 53, 53, 0.125);
 }
+.sidebar.sidebar-visible {
+  display: block;
+}
+
+.main {
+  grid-area: main;
+  background-color: rgb(252, 252, 252);
+}
+
+.footer {
+  grid-area: footer;
+  display: flex;
+  align-items: center;
+  background-color: rgb(252, 252, 252);
+}
+
 @media (min-width: 992px) {
-  body h1,
-body .h1 {
-    font-size: 2rem;
+  body {
+    grid-template-areas: "sidebar header" "sidebar main" "sidebar footer";
+    grid-template-columns: 250px auto;
+    grid-template-rows: 60px auto 35px;
   }
-  body h2,
-body .h2 {
-    font-size: 1.8rem;
+  .header {
+    max-width: calc(100% - 250px);
   }
-  body h3,
-body .h3 {
-    font-size: 1.6rem;
-  }
-  body h4,
-body .h4 {
-    font-size: 1.4rem;
-  }
-  body h5,
-body .h5 {
-    font-size: 1.2rem;
-  }
-  .header .left {
-    width: 250px;
-  }
-  .header .btn-menu-toggler {
-    margin-right: -25px;
-  }
-}
-@media (min-width: 1200px) {
-  body h1,
-body .h1 {
-    font-size: 2.2rem;
-  }
-  body h2,
-body .h2 {
-    font-size: 2rem;
-  }
-  body h3,
-body .h3 {
-    font-size: 1.8rem;
-  }
-  body h4,
-body .h4 {
-    font-size: 1.6rem;
-  }
-  body h5,
-body .h5 {
-    font-size: 1.4rem;
+  .sidebar {
+    display: block;
   }
 }

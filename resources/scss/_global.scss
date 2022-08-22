@@ -2,8 +2,6 @@ $custom-file-text: (
     en: "Browse",
     es: "Elegir",
     pt-BR: "Escolher",
-    pt_BR: "Escolher",
-    pt-br: "Escolher",
 );
 
 
@@ -23,6 +21,22 @@ $custom-file-text: (
 }
 
 .mbackdrop {
+    width: 100%;
+    height: 100%;
+    background-color: rgb($dark, 0.75);
+    position: absolute;
+    z-index: 998;
+    top: 0;
+    left: 0;
+
+    .fixed {
+        position: fixed;
+    }
+
+    .light {
+        background-color: rgb($light, 0.75);
+    }
+
     &.loading {
         animation-name: bakdropLoadAnimation;
         animation-duration: 1.5s;

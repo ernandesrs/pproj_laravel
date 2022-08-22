@@ -14,6 +14,7 @@ return [
             "icon" => "bi bi-diagram-3-fill",
             "text" => "Example",
             "title" => "",
+            "target" => "_self",
             "activeIn" => ['member.example', 'member.exampleTwo'],
             "items" => [
                 [

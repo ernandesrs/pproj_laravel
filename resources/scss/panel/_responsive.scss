@@ -1,0 +1,29 @@
+// Dispositivos small (telefones em modo paisagem, com 576px ou mais)
+@media (min-width: 576px) {}
+
+// Dispositivos médios (tablets com 768px ou mais)
+@media (min-width: 768px) {
+}
+
+// Dispositivos large (desktops com 992px ou mais)
+@media (min-width: 992px) {
+    body {
+        grid-template-areas:
+            "sidebar header"
+            "sidebar main"
+            "sidebar footer";
+        grid-template-columns: $sidebar-width auto;
+        grid-template-rows: $header-height auto $footer-height;
+    }
+
+    .header {
+        max-width: calc(100% - $sidebar-width);
+    }
+
+    .sidebar {
+        display: block;
+    }
+}
+
+// Dispositivos extra large (desktops grandes com 1200px ou mais)
+@media (min-width: 1200px) {}

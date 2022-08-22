@@ -1,15 +1,38 @@
 $(function () {
 
-    $(".btn-menu-toggler").on("click", function (e) {
+    $(document).on("click", ".jsBtnMenuToggler", function (e) {
         e.preventDefault();
+        let button = $(this);
         let sidebar = $("#sidebar");
 
-        if (sidebar.hasClass("d-none")) {
-            sidebar.removeClass("d-none");
-            altIcon($(this));
+        if (sidebar.hasClass("sidebar-visible")) {
+            button.remove();
+
+            sidebar.hide("slide", 125, function () {
+                sidebar.removeClass("sidebar-visible").attr("style", "");
+            });
+
+            $(document).find("#sidebarBkdrop").hide("fade", 250, function () {
+                $(this).remove();
+            });
         } else {
-            sidebar.addClass("d-none");
-            altIcon($(this));
+            let buttonClone = button.clone();
+
+            sidebar.show("slide", 250, function () {
+                $(this).addClass("sidebar-visible").attr("style", "");
+
+                $("body").prepend(buttonClone.css({
+                    "position": "fixed",
+                    "z-index": 999,
+                    "left": sidebar.width(),
+                    "top": "0",
+                    "color": "#fcfcfc"
+                }));
+
+                altIcon(buttonClone);
+            });
+
+            $("body").prepend($(`<div class="mbackdrop fixed" id="sidebarBkdrop"></div>`).hide().show("fade", 250));
         }
 
     });
@@ -18,15 +41,5 @@ $(function () {
         e.preventDefault();
         altIcon($(this));
     });
-
-    function altIcon(buttonObj) {
-        let aci = buttonObj.attr("data-active-icon");
-        let ali = buttonObj.attr("data-alt-icon");
-
-        buttonObj.attr("data-active-icon", ali)
-            .attr("data-alt-icon", aci)
-            .removeClass(aci)
-            .addClass(ali);
-    }
 
 });
