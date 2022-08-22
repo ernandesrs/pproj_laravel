@@ -44,7 +44,7 @@ class Page extends Model
         $slug = Slug::where($lang, $slug)->first();
         if (!$slug) return null;
 
-        $page = Page::where("slug", $slug->id)->where("lang", $lang)->first();
+        $page = Page::where("slug_id", $slug->id)->where("lang", $lang)->first();
         if ($page->content_type == self::CONTENT_TYPE_VIEW)
             $page->content = json_decode($page->content);
 
@@ -52,57 +52,11 @@ class Page extends Model
     }
 
     /**
-     * @param array $validated
-     * @param User|null $user
-     * @return Page
-     */
-    public function set(array $validated, ?User $user = null): Page
-    {
-        if ($user) $this->author = $user->id;
-
-        $this->title = $validated["title"];
-        $this->description = $validated["description"];
-        $this->lang = $validated["lang"] ?? config("app.locale");
-        $this->content_type = $validated["content_type"] ?? $this->content_type;
-
-        if ($this->content_type == Page::CONTENT_TYPE_VIEW) {
-            $content = (array) json_decode($this->content);
-            if (!$content)
-                $content = ["view_path" => null];
-
-            $content["view_path"] = $validated["view_path"] ?? $content["view_path"];
-
-            $this->content = json_encode($content);
-        } else
-            $this->content = $validated["content"] ?? $this->content;
-
-        if ($validated["follow"] ?? null)
-            $this->follow = true;
-        else
-            $this->follow = false;
-
-        $this->status = $validated["status"] ?? $this->status;
-
-        if ($this->status == Page::STATUS_SCHEDULED) {
-            $this->published_at = null;
-            $this->scheduled_to = date("Y-m-d H:i:s");
-        } elseif ($this->status == Page::STATUS_PUBLISHED) {
-            $this->published_at = date("Y-m-d H:i:s");
-            $this->scheduled_to = null;
-        } else {
-            $this->published_at = null;
-            $this->scheduled_to = null;
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Slug|null
      */
     public function slugs(): ?Slug
     {
-        return $this->hasOne(Slug::class, "id", "slug")->get()->first();
+        return $this->hasOne(Slug::class, "id", "slug_id")->get()->first();
     }
 
     /**
@@ -110,6 +64,6 @@ class Page extends Model
      */
     public function author(): ?User
     {
-        return $this->hasOne(User::class, "id", "author")->get()->first();
+        return $this->hasOne(User::class, "id", "author_id")->get()->first();
     }
 }
