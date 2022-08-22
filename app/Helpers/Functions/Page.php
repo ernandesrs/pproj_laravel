@@ -22,12 +22,12 @@ function m_page_cover_thumb(Page $page, $size = "normal"): string
     $width = $dimensions[0];
     $height = $dimensions[1];
 
-    if ($page->cover && file_exists(Storage::path($page->cover)))
-        return thumb(Storage::path($page->cover), $width, $height);
+    if ($page->cover && file_exists(Storage::path("public/{$page->cover}")))
+        $path = Storage::path("public/{$page->cover}");
+    else
+        $path = resource_path("img/default-image.png");
 
-    $hash = md5(strtolower(trim($page->email)));
-
-    return "https://www.gravatar.com/avatar/{$hash}?s={$width}&d=robohash";
+    return thumb($path, $width, $height);
 }
 
 /**
