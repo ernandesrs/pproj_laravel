@@ -24,6 +24,7 @@ class UserFactory extends Factory
             'last_name' => $last,
             'name' => $first . " " . $last,
             'level' => User::LEVEL_1,
+            'username' => $first . "_" . uniqid(),
             'gender' => $gender,
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => [now(), null][rand(0, 1)],
