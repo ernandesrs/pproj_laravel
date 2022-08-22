@@ -10487,6 +10487,17 @@ body .btn-menu-toggler {
 .sidebar.sidebar-visible {
   display: block;
 }
+.sidebar .nav .nav-link {
+  border-radius: 1.25rem;
+  margin-bottom: 2px;
+}
+.sidebar .nav .nav-link:hover {
+  background-color: #fff;
+}
+.sidebar .nav .nav-link.active {
+  background-color: #1e9ed0;
+  color: rgb(240, 240, 240);
+}
 
 .main {
   grid-area: main;

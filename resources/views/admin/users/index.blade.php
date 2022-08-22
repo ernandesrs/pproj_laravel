@@ -57,7 +57,7 @@ foreach ($keys as $key => $value) {
                             </div>
                         </td>
                         <td class="align-middle text-right">
-                            <a class="btn btn-sm btn-info {{ icon_class('pencilSquare') }}"
+                            <a class="btn btn-sm btn-primary {{ icon_class('pencilSquare') }}"
                                 href="{{ route('admin.users.edit', ['user' => $user->id]) }}"></a>
 
                             @include('includes.button-confirmation', [

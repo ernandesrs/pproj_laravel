@@ -51,6 +51,22 @@ body {
     &.sidebar-visible {
         display: block;
     }
+
+    .nav {
+        .nav-link {
+            border-radius: $border-radius * 5;
+            margin-bottom: 2px;
+
+            &:hover{
+                background-color: $white;
+            }
+
+            &.active {
+                background-color: $primary;
+                color: $light-dark;
+            }
+        }
+    }
 }
 
 .main {
