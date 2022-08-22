@@ -1,4 +1,6 @@
-@extends('layouts.admin')
+@extends('layouts.admin', [
+    'buttons' => [Template::buttonLink('btn btn-primary', route('admin.pages.index'), null, icon_class('arrowLeft'), 'Voltar')],
+])
 
 @section('content')
     <div class="row justify-content-center py-4">

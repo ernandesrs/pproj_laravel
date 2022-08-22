@@ -1,4 +1,6 @@
-@extends('layouts.admin')
+@extends('layouts.admin', [
+    'buttons' => [Template::buttonLink('btn btn-primary', route('admin.pages.index'), null, icon_class('arrowLeft'), 'Voltar'), Template::buttonLink('btn btn-outline-success', route('admin.pages.create'), null, icon_class('plusLg'), 'Nova página')],
+])
 
 @section('content')
     <div class="row justify-content-center py-4 section-page-edit">

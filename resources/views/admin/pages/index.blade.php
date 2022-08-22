@@ -19,6 +19,7 @@ foreach ($keys as $key => $value) {
             ],
         ],
     ],
+    'buttons' => [Template::buttonLink('btn btn-outline-success', route('admin.pages.create'), null, icon_class('plusLg'), 'Nova página')],
 ])
 
 @section('content')
