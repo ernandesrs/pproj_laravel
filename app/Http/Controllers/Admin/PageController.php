@@ -7,21 +7,51 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PageFormRequest;
 use App\Models\Page;
 use App\Models\Slug;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
+    /** @var int */
+    private $limit = 12;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return view("admin.pages.index", [
             "title" => "Páginas",
-            "pages" => Page::whereNotNull("id")->orderBy("protection", "DESC")->orderBy("created_at", "DESC")->paginate(12)->withQueryString()
+            "pages" => $this->filter($request)
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return []
+     */
+    private function filter(Request $request)
+    {
+        $filtered = [
+            "filter" => filter_var($request->get("filter"), FILTER_VALIDATE_BOOLEAN),
+            "search" => filter_var($request->get("search")),
+            "status" => filter_var($request->get("status")),
+        ];
+
+        /** @var Page $pages */
+        $pages = Page::whereNotNull("id")->orderBy("created_at", "DESC");
+
+        if ($filtered["filter"]) {
+            if ($filtered["search"])
+                $pages->whereRaw("MATCH(title,description) AGAINST('{$filtered["search"]}')");
+
+            if ($filtered["status"] && in_array($filtered["status"], Page::STATUS))
+                $pages->where("status", $filtered["status"]);
+        }
+
+        return $pages->paginate($this->limit)->withQueryString();
     }
 
     /**

@@ -13,9 +13,9 @@ foreach ($keys as $key => $value) {
             'label' => 'Status',
             'type' => 'select',
             'options' => [
-                'published' => 'Publicado',
-                'draft' => 'Rascunho',
-                'scheduled' => 'Agendado',
+                \App\Models\Page::STATUS_DRAFT => ucfirst(__('terms.page_status.' . \App\Models\Page::STATUS_DRAFT)),
+                \App\Models\Page::STATUS_SCHEDULED => ucfirst(__('terms.page_status.' . \App\Models\Page::STATUS_SCHEDULED)),
+                \App\Models\Page::STATUS_PUBLISHED => ucfirst(__('terms.page_status.' . \App\Models\Page::STATUS_PUBLISHED)),
             ],
         ],
     ],
