@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests\Member;
 
-use App\Http\Requests\MyFormRequestTrait;
+use App\Http\Requests\TraitMyFormRequest;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class ProfileFormRequest extends FormRequest
 {
-    use MyFormRequestTrait;
+    use TraitMyFormRequest;
 
     /**
      * Determine if the user is authorized to make this request.

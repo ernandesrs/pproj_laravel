@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Http\Requests\MyFormRequestTrait;
+use App\Http\Requests\TraitMyFormRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ImageFormRequest extends FormRequest
 {
-    use MyFormRequestTrait;
+    use TraitMyFormRequest;
 
     /**
      * Determine if the user is authorized to make this request.
