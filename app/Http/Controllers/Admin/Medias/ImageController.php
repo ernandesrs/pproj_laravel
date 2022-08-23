@@ -26,7 +26,7 @@ class ImageController extends Controller
      */
     public function index(Request $request)
     {
-        $images = Image::whereNotNull("id");
+        $images = Image::whereNotNull("id")->orderBy("created_at", "DESC");
 
         if ($request->isXmlHttpRequest()) {
             $images = $images->paginate(6);

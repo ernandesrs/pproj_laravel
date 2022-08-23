@@ -27,8 +27,7 @@
                                 <div class="card card-body border-0 px-2 py-2">
                                     <form class="d-flex jsFormSubmit" action="" method="GET">
                                         @csrf
-                                        <input class="form-control" type="search" name="search"
-                                            id="search">
+                                        <input class="form-control" type="search" name="search" id="search">
                                         <button class="btn bg-transparent {{ icon_class('filter') }}"></button>
                                     </form>
                                 </div>
@@ -54,8 +53,8 @@
                                 </div>
                                 <div class="row justify-content-center modal-list"></div>
                             </div>
-
-                            <div class="modal-image-pagination"></div>
+                            <hr>
+                            <div class="modal-image-pagination d-flex justify-content-center"></div>
                         </div>
                     </div>
 

@@ -63,16 +63,8 @@ $(function () {
                 return;
             }
 
-            modalImageTools.find(".modal-image-list .modal-list .loading-images").remove();
-            $.each(response.images.data, function (index, value) {
-                let clone = modalImageTools.find(".model .modal-image-list-item").clone().hide();
+            listImages(response);
 
-                clone.find(".img-fluid").attr("src", value.thumb).attr("alt", value.name);
-
-                modalImageTools.find(".modal-image-list .modal-list").append(clone.show("fade"));
-            });
-
-            modalImageTools.find(".modal-image-pagination").html(response.pagination);
             modalImageTools.find(".modal-image-upload").find("button[type=submit]").text("Salvar imagem");
             modalImageTools.find(".modal-image-upload").find(".jsFormSubmit")
                 .removeClass("jsFormSubmit")
@@ -89,6 +81,17 @@ $(function () {
     });
 
     /**
+     * Monitora clique nos links de navegação
+     */
+    modalImageTools.find(".modal-image-pagination").on("click", ".page-link", function (e) {
+        e.preventDefault();
+
+        ajaxRequest($(this).attr("href"), null, function (response) {
+            listImages(response);
+        }, null, null, null, 'GET');
+    });
+
+    /**
      * Monitora submissão do formulário de upload de imagem do modal ImageTools
      */
     modalImageTools.on("submit", ".jsImageToolsImageUploadFormSubmit", function (e) {
@@ -98,5 +101,22 @@ $(function () {
         }, null);
 
     });
+
+    /**
+     * @param {*} response
+     */
+    function listImages(response) {
+        modalImageTools.find(".modal-image-list .modal-list").html("");
+
+        $.each(response.images.data, function (index, value) {
+            let clone = modalImageTools.find(".model .modal-image-list-item").clone().hide();
+
+            clone.find(".img-fluid").attr("src", value.thumb).attr("alt", value.name);
+
+            modalImageTools.find(".modal-image-list .modal-list").append(clone.show("fade"));
+        });
+
+        modalImageTools.find(".modal-image-pagination").html(response.pagination);
+    }
 
 });
