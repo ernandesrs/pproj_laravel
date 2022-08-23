@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Medias;
 
+use App\Helpers\Thumb;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ImageFormRequest;
 use App\Models\Medias\Image;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -98,11 +99,20 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Image $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Image $image)
     {
-        //
+        Thumb::clear($image->path);
+        Storage::delete("public/{$image->path}");
+
+        $image->delete();
+
+        message()->success("A imagem foi excluida com sucesso!")->float()->flash();
+        return response()->json([
+            "success" => true,
+            "reload" => true,
+        ]);
     }
 }
