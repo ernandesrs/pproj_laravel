@@ -3,11 +3,19 @@
 namespace App\Http\Controllers\Admin\Medias;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ImageFormRequest;
 use App\Models\Medias\Image;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
+    /**
+     * Caminho da imagem a partir de storage/app/public/
+     *
+     * @var string
+     */
+    private $imagesPath = "medias/images";
+
     /**
      * Display a listing of the resource.
      *
@@ -22,24 +30,29 @@ class ImageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  ImageFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ImageFormRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $image = new Image();
+        $image->name = $validated["name"] ?? $validated["file"]->getClientOriginalName();
+        $image->tags = $validated["tags"] ?? null;
+        $image->extension = $validated["file"]->getClientOriginalExtension();
+        $image->size = $validated["file"]->getSize();
+        $image->path = $validated["file"]->store($this->imagesPath, "public");
+
+        $image->save();
+
+        message()->success("Upload de nova imagem efetuada com sucesso!")->float()->flash();
+        return response()->json([
+            "success" => true,
+            "reload" => true,
+        ]);
     }
 
     /**

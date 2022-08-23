@@ -1,6 +1,6 @@
 @extends('layouts.admin', [
     'filterFormAction' => route('admin.medias.images.index'),
-    'buttons' => [Template::button('btn btn-outline-success', route('admin.medias.images.store'), 'jsOpenImageUploadModal', icon_class('plusLg'), 'Nova')],
+    'buttons' => [Template::button('btn btn-outline-success', route('admin.medias.images.store'), 'jsOpenImageUploadModal', icon_class('plusLg'), 'Novo upload')],
 ])
 
 @section('content')
@@ -8,7 +8,7 @@
         @if ($images->count())
             @foreach ($images as $image)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="card card-body border-0 shadow">
+                    <div class="card card-body border-0">
                         <div class="">
                             <img class="img-fluid img-thumbnail"
                                 src="{{ thumb(Storage::path('public/' . $image->path), 350, 225) }}" alt="{{ $image->name }}"
@@ -44,7 +44,7 @@
                                         ),
                                     ])
                                     @include('includes.button-confirmation', [
-                                        'button' => Template::button(
+                                        'button' => Template::buttonConfirmation(
                                             'danger',
                                             'btn btn-sm btn-danger',
                                             'Você está excluindo esta imagem definitivamente mesmo que ela esteja sendo utilizada e isso não pode ser desfeito.',
@@ -79,7 +79,30 @@
 @endsection
 
 @section('modals')
+    @include('admin.medias.includes.modal-image')
 @endsection
 
 @section('scripts')
+    <script>
+        let modalImageUpload = $("#jsImageModal");
+
+        $(".jsOpenImageUploadModal").on("click", function(e) {
+            let button = $(this);
+
+            modalImageUpload.find(".modal-title").html("Upload de nova imagem");
+            modalImageUpload.find("form").attr("action", button.attr("data-action"));
+            modalImageUpload.find("button[type=submit]").text("Salvar imagem");
+
+            modalImageUpload.modal();
+
+        });
+
+        modalImageUpload.on("hidden.bs.modal", function() {
+
+            modalImageUpload.find(".modal-title").html("");
+            modalImageUpload.find("form").attr("action", "");
+            modalImageUpload.find("button[type=submit]").text("");
+
+        });
+    </script>
 @endsection
