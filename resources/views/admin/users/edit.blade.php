@@ -21,6 +21,12 @@
                     ])
                     <hr>
                 @endif
+                <p class="mb-1">
+                    <span
+                        class="badge badge-secondary {{ icon_class($user->level == \App\Models\User::LEVEL_9 ? 'shieldFill' : 'userFill') }}">
+                        {{ ucfirst(__('terms.user_level.' . $user->level)) }}
+                    </span>
+                </p>
                 <small>
                     <p class="mb-0">
                         Registrado em: {{ $user->created_at->format('d/m/Y H:i') }}
@@ -32,6 +38,39 @@
                             Aguardando verificação
                         @endif
                     </p>
+                    <hr>
+                    <div>
+                        @if ($user->level > \App\Models\User::LEVEL_1)
+                            @include('includes.button-confirmation', [
+                                'button' => Template::buttonConfirmation(
+                                    'danger',
+                                    'btn btn-sm btn-outline-danger',
+                                    'Você está rebaixando <strong>' .
+                                        $user->name .
+                                        '</strong> em um nível e isso o removerá todas permissões do nível de usuário atual.',
+                                    route('admin.users.demote', ['user' => $user->id]),
+                                    icon_class('userMinus'),
+                                    'Rebaixar'
+                                ),
+                            ])
+                            <span class="mx-1"></span>
+                        @endif
+
+                        @if ($user->level < \App\Models\User::LEVEL_9)
+                            @include('includes.button-confirmation', [
+                                'button' => Template::buttonConfirmation(
+                                    'success',
+                                    'btn btn-sm btn-outline-success',
+                                    'Você está promovendo <strong>' .
+                                        $user->name .
+                                        '</strong> para o próximo nível e isso o consede todas permissões deste nível de usuário.',
+                                    route('admin.users.promote', ['user' => $user->id]),
+                                    icon_class('userPlus'),
+                                    'Promover'
+                                ),
+                            ])
+                        @endif
+                    </div>
                 </small>
             </div>
         </div>

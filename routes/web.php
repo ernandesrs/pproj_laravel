@@ -97,6 +97,8 @@ Route::group([
     Route::post("/usuario/atualizar/{user}", [AdminUserController::class, "update"])->name("admin.users.update");
     Route::post("/usuario/excluir-foto/{user}", [AdminUserController::class, "photoRemove"])->name("admin.users.photoRemove");
     Route::post("/usuario/excluir/{user}", [AdminUserController::class, "destroy"])->name("admin.users.destroy");
+    Route::post("/usuario/promover/{user}", [AdminUserController::class, "promote"])->name("admin.users.promote");
+    Route::post("/usuario/rebaixar/{user}", [AdminUserController::class, "demote"])->name("admin.users.demote");
 
     // PÁGINAS
     Route::get("/paginas", [AdminPageController::class, "index"])->name("admin.pages.index");

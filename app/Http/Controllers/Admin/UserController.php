@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -227,6 +228,76 @@ class UserController extends Controller
         return response()->json([
             "success" => true,
             "redirect" => route("admin.users.index")
+        ]);
+    }
+
+    /**
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function promote(User $user): JsonResponse
+    {
+        $logged = Auth::user();
+
+        if ($logged->id == $user->id || $logged->level < $user->level) {
+            return response()->json([
+                "success" => false,
+                "message" => message()->warning("Você não possui esse tipo de permissão sobre este usuário.")->render()
+            ]);
+        }
+
+        if ($user->level == User::LEVEL_9) {
+            return response()->json([
+                "success" => false,
+                "message" => message()->default("Nível máximo de usuário atingido.")->render()
+            ]);
+        }
+
+        if ($user->level == User::LEVEL_1)
+            $user->level = User::LEVEL_5;
+        elseif ($user->level == User::LEVEL_5)
+            $user->level = User::LEVEL_9;
+
+        $user->save();
+
+        return response()->json([
+            "success" => true,
+            "reload" => true
+        ]);
+    }
+
+    /**
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function demote(User $user): JsonResponse
+    {
+        $logged = Auth::user();
+
+        if ($logged->id == $user->id || $logged->level < $user->level) {
+            return response()->json([
+                "success" => false,
+                "message" => message()->warning("Você não possui esse tipo de permissão sobre este usuário.")->render()
+            ]);
+        }
+
+        if ($user->level == User::LEVEL_1) {
+            return response()->json([
+                "success" => false,
+                "message" => message()->default("Nível mínimo de usuário atingido.")->render()
+            ]);
+        }
+
+        if ($user->level == User::LEVEL_9)
+            $user->level = User::LEVEL_5;
+        elseif ($user->level == User::LEVEL_5)
+            $user->level = User::LEVEL_1;
+
+        $user->save();
+
+        return response()->json([
+            "success" => true,
+            "reload" => true
         ]);
     }
 }
