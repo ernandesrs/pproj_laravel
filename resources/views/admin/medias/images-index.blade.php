@@ -1,6 +1,6 @@
 @extends('layouts.admin', [
     'filterFormAction' => route('admin.medias.images.index'),
-    'buttons' => [Template::button('btn btn-outline-success', route('admin.medias.images.store'), 'jsOpenImageUploadModal', icon_class('plusLg'), 'Novo upload')],
+    'buttons' => [Template::button('btn btn-outline-success', route('admin.medias.images.store'), 'jsOpenImageUploadModal', icon_class('plusLg'), 'Novo upload'), Template::button('btn btn-outline-success', route('admin.medias.images.index'), 'jsOpenImageToolsModal', icon_class('image'), '')],
 ])
 
 @section('content')
@@ -80,6 +80,7 @@
 
 @section('modals')
     @include('admin.medias.includes.modal-image')
+    @include('admin.medias.includes.modal-image-tools')
     @include('includes.modal-confirmation')
 @endsection
 
@@ -129,8 +130,8 @@
 
             modalImageUpload.find(".modal-title").html("");
             modalImageUpload.find("form").attr("action", "");
-                modalImageUpload.find("#name").val("");
-                modalImageUpload.find("#tags").val("");
+            modalImageUpload.find("#name").val("");
+            modalImageUpload.find("#tags").val("");
             modalImageUpload.find("#file").parents().eq(2).removeClass("d-none");
             modalImageUpload.find("button[type=submit]").text("");
 

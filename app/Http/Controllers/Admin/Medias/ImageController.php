@@ -6,6 +6,9 @@ use App\Helpers\Thumb;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ImageFormRequest;
 use App\Models\Medias\Image;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
@@ -18,15 +21,30 @@ class ImageController extends Controller
     private $imagesPath = "medias/images";
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse|View
      */
-    public function index()
+    public function index(Request $request)
     {
+        $images = Image::whereNotNull("id");
+
+        if ($request->isXmlHttpRequest()) {
+            $images = $images->paginate(6);
+
+            foreach ($images as $image) {
+                $image->thumb = thumb(Storage::path("public/{$image->path}"), 200, 125);
+            }
+
+            return response()->json([
+                "success" => true,
+                "images" => $images,
+                "pagination" => $images->links()->render()
+            ]);
+        }
+
         return view("admin.medias.images-index", [
             "title" => "Imagens",
-            "images" => Image::whereNotNull("id")->paginate(9)->withQueryString()
+            "images" => $images->paginate(12)->withQueryString()
         ]);
     }
 
