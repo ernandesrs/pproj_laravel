@@ -80,12 +80,16 @@
 
 @section('modals')
     @include('admin.medias.includes.modal-image')
+    @include('includes.modal-confirmation')
 @endsection
 
 @section('scripts')
     <script>
         let modalImageUpload = $("#jsImageModal");
 
+        /**
+         * Abre modal para upload de nova imagem
+         */
         $(".jsOpenImageUploadModal").on("click", function(e) {
             let button = $(this);
 
@@ -97,10 +101,37 @@
 
         });
 
+        /**
+         * Abre modal para editar imagem
+         */
+        $(".jsOpenImageEditModal").on("click", function(e) {
+            let button = $(this);
+
+            ajaxRequest(button.attr("data-action"), null, function(response) {
+
+                modalImageUpload.find(".modal-title").html("Editar dados da imagem");
+                modalImageUpload.find("form").attr("action", response.action);
+                modalImageUpload.find("#name").val(response.image.name);
+                modalImageUpload.find("#tags").val(response.image.tags);
+                modalImageUpload.find("#file").parents().eq(2).addClass("d-none");
+                modalImageUpload.find("button[type=submit]").text("Atualizar imagem");
+
+                modalImageUpload.modal();
+
+            });
+
+        });
+
+        /**
+         * Reseta os dados do modal
+         */
         modalImageUpload.on("hidden.bs.modal", function() {
 
             modalImageUpload.find(".modal-title").html("");
             modalImageUpload.find("form").attr("action", "");
+                modalImageUpload.find("#name").val("");
+                modalImageUpload.find("#tags").val("");
+            modalImageUpload.find("#file").parents().eq(2).removeClass("d-none");
             modalImageUpload.find("button[type=submit]").text("");
 
         });

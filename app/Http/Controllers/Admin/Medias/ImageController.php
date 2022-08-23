@@ -58,12 +58,19 @@ class ImageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Image $image
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Image $image)
     {
-        //
+        return response()->json([
+            "success" => true,
+            "image" => [
+                "name" => $image->name,
+                "tags" => $image->tags
+            ],
+            "action" => route("admin.medias.images.update", ["image" => $image->id])
+        ]);
     }
 
     /**

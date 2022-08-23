@@ -105,11 +105,11 @@ function ajaxRequest(url, data = null, success = null, before = null, complete =
         },
 
         complete: function (response) {
-            complete(response);
+            complete ? complete(response) : null;
         },
 
         error: function (response) {
-            error(response);
+            complete ? error(response) : null;
         }
     });
 }
