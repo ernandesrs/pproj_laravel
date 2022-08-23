@@ -20,6 +20,8 @@ return [
 
     'collection' => 'bi bi-collection',
     'collectionFill' => 'bi bi-collection-fill',
+    'collectionPlay' => 'bi bi-collection-play',
+    'collectionPlayFill' => 'bi bi-collection-play-fill',
 
     'filter' => 'bi bi-filter',
 
@@ -33,6 +35,9 @@ return [
 
     'heart' => 'bi bi-heart',
     'heartFill' => 'bi bi-heart-fill',
+
+    'images' => 'bi bi-images',
+    'image' => 'bi bi-card-image',
 
     'list' => 'bi bi-list',
     'listCheck' => 'bi bi-list-check',
@@ -54,6 +59,9 @@ return [
     'pagePlus' => 'bi bi-file-earmark-plus',
     'pageText' => 'bi bi-file-text',
     'pencilSquare' => 'bi bi-pencil-square',
+
+    'play' => 'bi bi-play-btn',
+    'playFill' => 'bi bi-play-btn-fill',
 
     'plusLg' => 'bi bi-plus-lg',
 
@@ -81,6 +89,8 @@ return [
     'userX' => 'bi bi-person-x',
     'userMinus' => 'bi bi-person-dash',
     'userInfo' => 'bi bi-person-lines',
+
+    'viewList' => 'bi bi-view-list',
 
     'x' => 'bi bi-x',
     'xLg' => 'bi bi-x-lg',

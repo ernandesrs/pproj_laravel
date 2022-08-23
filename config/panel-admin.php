@@ -19,6 +19,31 @@ return [
             "target" => "_self",
         ],
         [
+            "icon" => icon_class("collection"),
+            "text" => "Mídias",
+            "title" => "",
+            "target" => "_self",
+            "activeIn" => ["admin.medias.images.index"],
+            "items" => [
+                [
+                    "icon" => icon_class("images"),
+                    "text" => "Imagens",
+                    "title" => "",
+                    "route" => "admin.medias.images.index",
+                    "target" => "_self",
+                    "activeIn" => ["admin.medias.images.index"],
+                ],
+                [
+                    "icon" => icon_class("collectionPlay"),
+                    "text" => "Vídeos",
+                    "title" => "",
+                    "route" => "",
+                    "target" => "_self",
+                    "activeIn" => [""],
+                ]
+            ],
+        ],
+        [
             "icon" => icon_class("grid1x2"),
             "text" => "Gerenciar " . config("app.name"),
             "title" => "",
@@ -26,7 +51,7 @@ return [
             "activeIn" => ["admin.pages.index", "admin.pages.create", "admin.pages.edit"],
             "items" => [
                 [
-                    "icon" => icon_class("collection"),
+                    "icon" => icon_class("viewList"),
                     "text" => "Seções",
                     "title" => "",
                     "route" => "",

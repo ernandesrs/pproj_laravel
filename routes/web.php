@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\Medias\ImageController as AdminImageController;
 use App\Http\Controllers\AppStarter;
 use App\Http\Controllers\Auth\ForgotController;
 use App\Http\Controllers\Auth\LoginController;
@@ -99,6 +100,13 @@ Route::group([
     Route::post("/usuario/excluir/{user}", [AdminUserController::class, "destroy"])->name("admin.users.destroy");
     Route::post("/usuario/promover/{user}", [AdminUserController::class, "promote"])->name("admin.users.promote");
     Route::post("/usuario/rebaixar/{user}", [AdminUserController::class, "demote"])->name("admin.users.demote");
+
+    // MEDIAS: IMAGES
+    Route::get("/midias/imagens", [AdminImageController::class, "index"])->name("admin.medias.images.index");
+    Route::post("/midias/imagem/salvar", [AdminImageController::class, "store"])->name("admin.medias.images.store");
+    Route::post("/midias/imagem/ver/{image}", [AdminImageController::class, "show"])->name("admin.medias.images.show");
+    Route::post("/midias/imagem/atualizar/{image}", [AdminImageController::class, "update"])->name("admin.medias.images.update");
+    Route::post("/midias/imagem/excluir/{image}", [AdminImageController::class, "destroy"])->name("admin.medias.images.destroy");
 
     // PÁGINAS
     Route::get("/paginas", [AdminPageController::class, "index"])->name("admin.pages.index");
