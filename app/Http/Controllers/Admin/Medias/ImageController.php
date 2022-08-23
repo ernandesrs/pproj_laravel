@@ -74,26 +74,25 @@ class ImageController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  ImageFormRequest  $request
+     * @param  Image $image
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ImageFormRequest $request, Image $image)
     {
-        //
+        $validated = $request->validated();
+
+        $image->name = $validated["name"];
+        $image->tags = $validated["tags"];
+        $image->save();
+
+        message()->success("Informações da imagem foram atualziadas com sucesso!")->float()->flash();
+        return response()->json([
+            "success" => true,
+            "reload" => true,
+        ]);
     }
 
     /**

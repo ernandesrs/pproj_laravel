@@ -28,11 +28,14 @@ class ImageFormRequest extends FormRequest
     {
         $rules = [
             "name" => ["nullable", "max:125"],
-            "tags" => ["nullable", "max:100"]
+            "tags" => ["nullable", "max:100"],
+            "file" => ["required", "max:5000", "mimes:png,jpg,webp"],
         ];
 
-        if (!$this->image)
-            $rules += ["file" => ["required", "max:5000", "mimes:png,jpg,webp"]];
+        if ($this->image) {
+            $rules["name"] = ["required", "max:125"];
+            unset($rules["file"]);
+        }
 
         return $rules;
     }
