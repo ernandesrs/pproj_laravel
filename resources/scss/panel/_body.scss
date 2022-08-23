@@ -59,6 +59,7 @@ body {
                     .nav-link {
                         border-radius: $border-radius;
                         border-left: 2px solid transparent;
+                        margin-bottom: 2px;
 
                         &:hover,
                         &.active {
@@ -73,7 +74,7 @@ body {
 
                         .nav-link {
                             background-color: transparent;
-                            border-left: 2px solid rgb($primary, 1);
+                            border-left: 2px solid rgb($primary, 0.125);
                             border-radius: 0;
 
                             &:hover {
@@ -82,9 +83,9 @@ body {
                             }
 
                             &.active {
-                                border-radius: $border-radius;
-                                background-color: $primary-dark;
-                                color: $light-dark;
+                                background-color: transparent;
+                                color: $primary;
+                                border-left: 2px solid rgb($primary, 0.75);
                             }
                         }
                     }

@@ -18,10 +18,18 @@ return [
     'checkCircle' => 'bi bi-check-circle',
     'checkCircleFill' => 'bi bi-check-circle-fill',
 
+    'collection' => 'bi bi-collection',
+    'collectionFill' => 'bi bi-collection-fill',
+
     'filter' => 'bi bi-filter',
+
+    'folder' => 'bi bi-folder',
+    'folderFill' => 'bi bi-folder-fill',
 
     'grid' => 'bi bi-grid',
     'gridFill' => 'bi bi-grid-fill',
+    'grid1x2Fill' => 'bi bi-grid-1x2-fill',
+    'grid1x2' => 'bi bi-grid-1x2',
 
     'heart' => 'bi bi-heart',
     'heartFill' => 'bi bi-heart-fill',
@@ -54,6 +62,9 @@ return [
 
     'trash' => 'bi bi-trash',
     'trashFill' => 'bi bi-trash-fill',
+
+    'tags' => 'bi bi-tags-fill',
+    'tagsFill' => 'bi bi-tags',
 
     'userFill' => 'bi bi-person-fill',
     'usersFill' => 'bi bi-people-fill',

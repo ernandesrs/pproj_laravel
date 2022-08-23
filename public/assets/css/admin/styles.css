@@ -10491,6 +10491,7 @@ body .btn-menu-toggler {
 .sidebar .sidebar-elems .sidebar-elem.sidebar-elem-navigation .nav .nav-link {
   border-radius: 0.25rem;
   border-left: 2px solid transparent;
+  margin-bottom: 2px;
 }
 .sidebar .sidebar-elems .sidebar-elem.sidebar-elem-navigation .nav .nav-link:hover, .sidebar .sidebar-elems .sidebar-elem.sidebar-elem-navigation .nav .nav-link.active {
   background-color: #1e9ed0;
@@ -10502,7 +10503,7 @@ body .btn-menu-toggler {
 }
 .sidebar .sidebar-elems .sidebar-elem.sidebar-elem-navigation .nav .subnav .nav-link {
   background-color: transparent;
-  border-left: 2px solid #1e9ed0;
+  border-left: 2px solid rgba(30, 158, 208, 0.125);
   border-radius: 0;
 }
 .sidebar .sidebar-elems .sidebar-elem.sidebar-elem-navigation .nav .subnav .nav-link:hover {
@@ -10510,9 +10511,9 @@ body .btn-menu-toggler {
   color: #0b85b6;
 }
 .sidebar .sidebar-elems .sidebar-elem.sidebar-elem-navigation .nav .subnav .nav-link.active {
-  border-radius: 0.25rem;
-  background-color: #0b85b6;
-  color: rgb(240, 240, 240);
+  background-color: transparent;
+  color: #1e9ed0;
+  border-left: 2px solid rgba(30, 158, 208, 0.75);
 }
 
 .topbar {
