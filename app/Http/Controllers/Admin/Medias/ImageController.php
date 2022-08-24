@@ -33,6 +33,7 @@ class ImageController extends Controller
 
             foreach ($images as $image) {
                 $image->thumb = thumb(Storage::path("public/{$image->path}"), 200, 125);
+                $image->url = Storage::url($image->path);
             }
 
             return response()->json([

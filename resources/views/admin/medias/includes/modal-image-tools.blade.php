@@ -38,6 +38,13 @@
                                 <div class="model d-none">
                                     <div class="col-6 col-lg-4 col-xl-4 modal-image-list-item">
                                         <div class="card card-body border-0 d-flex align-items-center flex-column">
+
+                                            {{-- data filds --}}
+                                            <input type="hidden" name="image_id" id="image_id">
+                                            <input type="hidden" name="image_name" id="image_name">
+                                            <input type="hidden" name="image_url" id="image_url">
+                                            <input type="hidden" name="image_thumb" id="image_thumb">
+
                                             <img class="img-fluid img-thumbnail" src="" alt="">
                                             <div class="mb-2"></div>
                                             @include('includes.button', [

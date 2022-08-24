@@ -71,11 +71,11 @@ $(function () {
                 .addClass("jsImageToolsImageUploadFormSubmit")
                 .attr("action", button.attr("data-action"));
 
-            modalImageTools.modal();
             // END: SUCCESS FUNCTION
         }, function () {
             // beforeSend
             insertTextOnImageList("Carregando...");
+            modalImageTools.modal();
         }, null, null, 'GET');
 
     });
@@ -127,6 +127,10 @@ $(function () {
             let clone = modalImageTools.find(".model .modal-image-list-item").clone().hide();
 
             clone.find(".img-fluid").attr("src", value.thumb).attr("alt", value.name);
+            clone.find("#image_id").val(value.id);
+            clone.find("#image_name").val(value.name);
+            clone.find("#image_url").val(value.url);
+            clone.find("#image_thumb").val(value.thumb);
 
             modalImageTools.find(".modal-image-list .modal-list").append(clone.show("fade"));
         });
