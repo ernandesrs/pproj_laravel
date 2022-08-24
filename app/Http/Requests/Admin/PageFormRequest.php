@@ -44,7 +44,7 @@ class PageFormRequest extends FormRequest
         $rules = [
             "title" => ["required", "unique:pages,title", "max:100"],
             "description" => ["required", "max:160"],
-            "cover" => ["mimes:jpg,png,webp", "max:2048", Rule::dimensions()->minWidth(800)->minHeight(600)],
+            "cover" => ["nullable", "integer"],
             "lang" => [Rule::in(config("app.locales"))],
             "content_type" => ["required", Rule::in(Page::CONTENT_TYPES)],
             "content" => ["nullable"],

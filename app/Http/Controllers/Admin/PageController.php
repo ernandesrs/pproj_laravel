@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Thumb;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PageFormRequest;
+use App\Models\Medias\Image;
 use App\Models\Page;
 use App\Models\Slug;
 use Illuminate\Http\Request;
@@ -111,8 +112,11 @@ class PageController extends Controller
             $page->published_at = date("Y-m-d H:i:s");
 
         // UPLOAD DE CAPA
-        if ($cover = $validated["cover"] ?? null)
-            $page->cover = $cover->store("pages/covers", "public");
+        if ($cover = $validated["cover"] ?? null) {
+            $image = Image::where("id", $cover)->first();
+            if ($image)
+                $page->cover = $image->path;
+        }
 
         if (!$page->save()) {
             $slug->delete();
@@ -196,12 +200,9 @@ class PageController extends Controller
 
         // UPLOAD DE CAPA
         if ($cover = $validated["cover"] ?? null) {
-            if ($page->cover) {
-                Thumb::clear($page->cover);
-                Storage::delete("public/{$page->cover}");
-            }
-
-            $page->cover = $cover->store("pages/covers", "public");
+            $image = Image::where("id", $cover)->first();
+            if ($image)
+                $page->cover = $image->path;
         }
 
         if (!$page->save()) {
@@ -236,11 +237,6 @@ class PageController extends Controller
         }
 
         $slugs = $page->slugs();
-
-        if ($page->cover) {
-            Thumb::clear($page->cover);
-            Storage::delete("public/{$page->cover}");
-        }
 
         $page->delete();
 
