@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Thumb;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PageFormRequest;
 use App\Models\Medias\Image;
@@ -42,7 +41,7 @@ class PageController extends Controller
         ];
 
         /** @var Page $pages */
-        $pages = Page::whereNotNull("id")->orderBy("created_at", "DESC");
+        $pages = Page::whereNotNull("id")->orderBy("protection", "DESC")->orderBy("created_at", "DESC");
 
         if ($filtered["filter"]) {
             if ($filtered["search"])
