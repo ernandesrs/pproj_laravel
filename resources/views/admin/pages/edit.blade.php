@@ -131,13 +131,16 @@ if ($page ?? null) {
 
                                 {{-- cover upload --}}
                                 <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="cover">Capa:</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="cover" id="cover"
-                                                lang="{{ config('app.locale') }}">
-                                            <label class="custom-file-label" for="cover">Escolher capa</label>
-                                        </div>
+                                    <div class="form-group text-center">
+                                        @include('includes.button', [
+                                            'button' => Template::button(
+                                                'btn btn-outline-success',
+                                                route('admin.medias.images.index'),
+                                                'jsOpenImageToolsModal',
+                                                icon_class('image'),
+                                                'Inserir capa'
+                                            ),
+                                        ])
                                     </div>
                                 </div>
 
@@ -193,6 +196,10 @@ if ($page ?? null) {
 
 @section('styles')
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+@endsection
+
+@section('modals')
+    @include('admin.medias.includes.modal-image-tools')
 @endsection
 
 @section('scripts')
