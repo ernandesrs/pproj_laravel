@@ -25,8 +25,9 @@
                             <hr>
                             <div class="modal-image-search">
                                 <div class="card card-body border-0 px-2 py-2">
-                                    <form class="d-flex jsFormSubmit" action="" method="GET">
+                                    <form class="d-flex jsImageToolsSearchFormSubmit" action="{{route("admin.medias.images.index")}}" method="POST">
                                         @csrf
+                                        <input type="hidden" name="filter" id="filter" value="1">
                                         <input class="form-control" type="search" name="search" id="search">
                                         <button class="btn bg-transparent {{ icon_class('filter') }}"></button>
                                     </form>

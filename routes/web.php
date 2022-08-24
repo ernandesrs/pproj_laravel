@@ -103,6 +103,7 @@ Route::group([
 
     // MEDIAS: IMAGES
     Route::get("/midias/imagens", [AdminImageController::class, "index"])->name("admin.medias.images.index");
+    Route::post("/midias/imagens", [AdminImageController::class, "index"])->name("admin.medias.images.index");
     Route::post("/midias/imagem/salvar", [AdminImageController::class, "store"])->name("admin.medias.images.store");
     Route::post("/midias/imagem/ver/{image}", [AdminImageController::class, "show"])->name("admin.medias.images.show");
     Route::post("/midias/imagem/atualizar/{image}", [AdminImageController::class, "update"])->name("admin.medias.images.update");

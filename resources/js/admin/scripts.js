@@ -59,7 +59,7 @@ $(function () {
         ajaxRequest(button.attr("data-action"), null, function (response) {
             // START: SUCCESS FUNCTION
             if (response.images.total == 0) {
-                modalImageTools.find(".modal-image-list .modal-list .loading-images").text("Não há nenhuma imagem");
+                insertTextOnImageList("Não há nenhuma imagem");
                 return;
             }
 
@@ -75,7 +75,7 @@ $(function () {
             // END: SUCCESS FUNCTION
         }, function () {
             // beforeSend
-            modalImageTools.find(".modal-image-list").find(".modal-list").html(`<div class="col-12 text-center py-3 loading-images">Carregando...</div>`);
+            insertTextOnImageList("Carregando...");
         }, null, null, 'GET');
 
     });
@@ -92,12 +92,27 @@ $(function () {
     });
 
     /**
+     * Monitora submissão do formulário de busca
+     */
+    modalImageTools.on("submit", ".jsImageToolsSearchFormSubmit", function (e) {
+        formSubmit($(this), e, function (response) {
+            if (response.images.data.length == 0) {
+                insertTextOnImageList("Sem resultados para sua busca");
+                modalImageTools.find(".modal-image-pagination").html(response.pagination);
+                return;
+            }
+
+            listImages(response);
+        }, null);
+
+    });
+
+    /**
      * Monitora submissão do formulário de upload de imagem do modal ImageTools
      */
     modalImageTools.on("submit", ".jsImageToolsImageUploadFormSubmit", function (e) {
-
         formSubmit($(this), e, function (response) {
-
+            console.log("image uploaded");
         }, null);
 
     });
@@ -119,4 +134,17 @@ $(function () {
         modalImageTools.find(".modal-image-pagination").html(response.pagination);
     }
 
+    /**
+     * @param {String} text 
+     */
+    function insertTextOnImageList(text) {
+        let textArea = modalImageTools.find(".modal-image-list-text");
+
+        if (textArea.length == 0) {
+            modalImageTools.find(".modal-image-list .modal-list").html(`<div class="col-12 text-center py-3 modal-image-list-text"></div>`);
+            textArea = modalImageTools.find(".modal-image-list-text");
+        }
+
+        textArea.html(text);
+    }
 });

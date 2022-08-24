@@ -26,7 +26,7 @@ class ImageController extends Controller
      */
     public function index(Request $request)
     {
-        $images = Image::whereNotNull("id")->orderBy("created_at", "DESC");
+        $images = $this->filter($request);
 
         if ($request->isXmlHttpRequest()) {
             $images = $images->paginate(6);
@@ -46,6 +46,28 @@ class ImageController extends Controller
             "title" => "Imagens",
             "images" => $images->paginate(12)->withQueryString()
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function filter(Request $request): \Illuminate\Database\Eloquent\Builder
+    {
+        $validated = [
+            "filter" => filter_var($request->get("filter", false), FILTER_VALIDATE_BOOL),
+            "search" => filter_var($request->get("search", ""), FILTER_DEFAULT)
+        ];
+
+        $images = Image::whereNotNull("id")->orderBy("created_at", "DESC");
+
+        if ($validated["filter"]) {
+            if ($validated["search"]) {
+                $images->whereRaw("MATCH(name,tags) AGAINST('{$validated["search"]}')");
+            }
+        }
+
+        return $images;
     }
 
     /**
