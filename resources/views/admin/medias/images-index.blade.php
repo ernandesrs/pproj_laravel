@@ -80,7 +80,6 @@
 
 @section('modals')
     @include('admin.medias.includes.modal-image')
-    @include('admin.medias.includes.modal-image-tools')
     @include('includes.modal-confirmation')
 @endsection
 
