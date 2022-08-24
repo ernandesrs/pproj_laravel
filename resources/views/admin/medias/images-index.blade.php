@@ -1,6 +1,6 @@
 @extends('layouts.admin', [
     'filterFormAction' => route('admin.medias.images.index'),
-    'buttons' => [Template::button('btn btn-outline-success', route('admin.medias.images.store'), 'jsOpenImageUploadModal', icon_class('plusLg'), 'Novo upload'), Template::button('btn btn-outline-success', route('admin.medias.images.index'), 'jsOpenImageToolsModal', icon_class('image'), '')],
+    'buttons' => [Template::button('btn btn-outline-success', route('admin.medias.images.store'), 'jsOpenImageUploadModal', icon_class('plusLg'), 'Novo upload')],
 ])
 
 @section('content')
