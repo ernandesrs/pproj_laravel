@@ -116,7 +116,7 @@ if ($page ?? null) {
 
                                 {{-- cover preview --}}
                                 <div class="col-12 d-flex justify-content-center mb-3">
-                                    <div class="d-flex justify-content-center align-items-center"
+                                    <div class="d-flex justify-content-center align-items-center cover-preview"
                                         style="width:200px;height:100px;">
                                         @if ($page ?? null)
                                             <img class="img-fluid img-thumbnail"
@@ -132,6 +132,7 @@ if ($page ?? null) {
                                 {{-- cover upload --}}
                                 <div class="col-12">
                                     <div class="form-group text-center">
+                                        <input type="hidden" name="cover" id="cover" value="0">
                                         @include('includes.button', [
                                             'button' => Template::button(
                                                 'btn btn-outline-success',
@@ -241,6 +242,21 @@ if ($page ?? null) {
                     select.parents().eq(5).find("button[type=submit]").text("Salvar página");
                 });
             }
+        });
+
+        /**
+         * COVER INSERT
+         */
+        $(document).on("click", ".jsInsertImageFromImageToolsModal", function() {
+            let button = $(this);
+            let container = $(button.parent());
+
+            $("#cover").val(container.find("#image_id").val());
+            $(".cover-preview").html($(
+                `<img class="img-fluid img-thumbnail" src="${container.find("#image_thumb").val()}" alt="${container.find("#image_name").val()}">`
+            ).hide().show("fade"));
+
+            $("#jsImageToolsModal").modal("hide");
         });
     </script>
 @endsection

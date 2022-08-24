@@ -32,7 +32,7 @@ class ImageController extends Controller
             $images = $images->paginate(6);
 
             foreach ($images as $image) {
-                $image->thumb = thumb(Storage::path("public/{$image->path}"), 200, 125);
+                $image->thumb = thumb(Storage::path("public/{$image->path}"), 200, 100);
                 $image->url = Storage::url($image->path);
             }
 
@@ -93,7 +93,7 @@ class ImageController extends Controller
 
         $message = message()->success("<small>Upload de nova imagem efetuada com sucesso!</small>");
         if (!$redirect) {
-            $image->thumb = thumb(Storage::path("public/{$image->path}"), 200, 125);
+            $image->thumb = thumb(Storage::path("public/{$image->path}"), 200, 100);
             $image->url = Storage::url($image->path);
 
             return response()->json([

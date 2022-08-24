@@ -11,7 +11,7 @@
                     <div class="card card-body border-0">
                         <div class="">
                             <img class="img-fluid img-thumbnail"
-                                src="{{ thumb(Storage::path('public/' . $image->path), 350, 225) }}" alt="{{ $image->name }}"
+                                src="{{ thumb(Storage::path('public/' . $image->path), 200, 100) }}" alt="{{ $image->name }}"
                                 data-toggle="tooltip" title="Tags: {{ $image->tags }}" data-placement="bottom">
                         </div>
                         <div class="pt-2 text-center">
