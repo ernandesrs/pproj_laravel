@@ -13,7 +13,9 @@
                             </h2>
                             <hr>
                             <div class="card card-body border-0 px-2 py-2 modal-image-upload">
-                                @include('admin.medias.includes.form-fields-image-upload')
+                                @include('admin.medias.includes.form-fields-image-upload', [
+                                    'action' => route('admin.medias.images.store', ['redirect' => false]),
+                                ])
                             </div>
                         </div>
 
@@ -25,7 +27,8 @@
                             <hr>
                             <div class="modal-image-search">
                                 <div class="card card-body border-0 px-2 py-2">
-                                    <form class="d-flex jsImageToolsSearchFormSubmit" action="{{route("admin.medias.images.index")}}" method="POST">
+                                    <form class="d-flex jsImageToolsSearchFormSubmit"
+                                        action="{{ route('admin.medias.images.index') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="filter" id="filter" value="1">
                                         <input class="form-control" type="search" name="search" id="search">

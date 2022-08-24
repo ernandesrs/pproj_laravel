@@ -79,6 +79,7 @@ class ImageController extends Controller
      */
     public function store(ImageFormRequest $request)
     {
+        $redirect = filter_input(INPUT_GET, "redirect", FILTER_VALIDATE_BOOL) ?? true;
         $validated = $request->validated();
 
         $image = new Image();
@@ -90,10 +91,22 @@ class ImageController extends Controller
 
         $image->save();
 
-        message()->success("Upload de nova imagem efetuada com sucesso!")->float()->flash();
+        $message = message()->success("<small>Upload de nova imagem efetuada com sucesso!</small>");
+        if (!$redirect) {
+            $image->thumb = thumb(Storage::path("public/{$image->path}"), 200, 125);
+            $image->url = Storage::url($image->path);
+
+            return response()->json([
+                "success" => true,
+                "message" => $message->time(12)->fixed()->render(),
+                "image" => $image
+            ]);
+        }
+
+        $message->float()->flash();
         return response()->json([
             "success" => true,
-            "reload" => true,
+            "redirect" => route("admin.medias.images.index"),
         ]);
     }
 

@@ -68,8 +68,7 @@ $(function () {
             modalImageTools.find(".modal-image-upload").find("button[type=submit]").text("Salvar imagem");
             modalImageTools.find(".modal-image-upload").find(".jsFormSubmit")
                 .removeClass("jsFormSubmit")
-                .addClass("jsImageToolsImageUploadFormSubmit")
-                .attr("action", button.attr("data-action"));
+                .addClass("jsImageToolsImageUploadFormSubmit");
 
             // END: SUCCESS FUNCTION
         }, function () {
@@ -112,7 +111,24 @@ $(function () {
      */
     modalImageTools.on("submit", ".jsImageToolsImageUploadFormSubmit", function (e) {
         formSubmit($(this), e, function (response) {
-            console.log("image uploaded");
+            let listImages = modalImageTools.find(".modal-image-list .modal-list");
+
+            /**
+             * verificar se há lista está cheia, se tiver, remover a últma imagem e adicionar a nova, se não, apenas adicinar a nova imagem
+             */
+            if (listImages.find(".modal-image-list-item").length == 6) {
+                // remove a última
+                listImages.find(".modal-image-list-item:last").hide("fade", function () {
+                    $(this).remove();
+                });
+            }
+
+            // adicionar a nova
+            let clone = modalImageTools.find(".model .modal-image-list-item").clone().hide();
+
+            fillImageListItem(clone, response.image);
+
+            modalImageTools.find(".modal-image-list .modal-list").prepend(clone.show("fade"));
         }, null);
 
     });
@@ -126,16 +142,24 @@ $(function () {
         $.each(response.images.data, function (index, value) {
             let clone = modalImageTools.find(".model .modal-image-list-item").clone().hide();
 
-            clone.find(".img-fluid").attr("src", value.thumb).attr("alt", value.name);
-            clone.find("#image_id").val(value.id);
-            clone.find("#image_name").val(value.name);
-            clone.find("#image_url").val(value.url);
-            clone.find("#image_thumb").val(value.thumb);
+            fillImageListItem(clone, value);
 
             modalImageTools.find(".modal-image-list .modal-list").append(clone.show("fade"));
         });
 
         modalImageTools.find(".modal-image-pagination").html(response.pagination);
+    }
+
+    /**
+     * @param {JQuery} item 
+     * @param {Object} value 
+     */
+    function fillImageListItem(item, value) {
+        item.find(".img-fluid").attr("src", value.thumb).attr("alt", value.name);
+        item.find("#image_id").val(value.id);
+        item.find("#image_name").val(value.name);
+        item.find("#image_url").val(value.url);
+        item.find("#image_thumb").val(value.thumb);
     }
 
     /**

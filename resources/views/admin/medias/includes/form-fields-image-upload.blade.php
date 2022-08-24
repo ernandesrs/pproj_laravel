@@ -1,4 +1,4 @@
-<form class="jsFormSubmit" action="" method="post">
+<form class="jsFormSubmit" action="{{ $action ?? null }}" method="post">
     <div class="form-row">
         @csrf
 
