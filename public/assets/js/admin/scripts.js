@@ -58,17 +58,18 @@ $(function () {
 
         ajaxRequest(button.attr("data-action"), null, function (response) {
             // START: SUCCESS FUNCTION
+
+            modalImageTools.find(".modal-image-upload").find("button[type=submit]").text("Salvar imagem");
+            modalImageTools.find(".modal-image-upload").find(".jsFormSubmit")
+                .removeClass("jsFormSubmit")
+                .addClass("jsImageToolsImageUploadFormSubmit");
+
             if (response.images.total == 0) {
                 insertTextOnImageList("Não há nenhuma imagem");
                 return;
             }
 
             listImages(response);
-
-            modalImageTools.find(".modal-image-upload").find("button[type=submit]").text("Salvar imagem");
-            modalImageTools.find(".modal-image-upload").find(".jsFormSubmit")
-                .removeClass("jsFormSubmit")
-                .addClass("jsImageToolsImageUploadFormSubmit");
 
             // END: SUCCESS FUNCTION
         }, function () {
