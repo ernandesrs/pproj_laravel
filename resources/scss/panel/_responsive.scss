@@ -23,10 +23,6 @@
         display: block;
         top: unset;
         height: 100vh;
-
-        .sidebar-elems {
-            min-height: calc(100vh - $header-height);
-        }
     }
 }
 

@@ -22,15 +22,16 @@ body {
 .sidebar {
     grid-area: sidebar;
     display: none;
-    background-color: $light-dark;
+
+    background-color: transparent;
     width: 100%;
     max-width: $sidebar-width;
-    height: calc(100vh - ($header-height / 6));
+    height: 100vh;
+    padding: $spacer / 3 $spacer / 4 $spacer / 3 0;
     overflow-y: auto;
     position: fixed;
-    top: calc($header-height / 12);
+    top: 0;
     z-index: 998;
-    border-right: 1px solid rgb($dark-light, 0.125);
 
     &.sidebar-visible {
         display: block;
@@ -48,9 +49,16 @@ body {
         }
     }
 
-    .sidebar-elems {
-        min-height: calc(100vh - ($header-height + ($header-height / 6)));
+    .sidebar-inner {
+        background-color: $light-light;
+        height: 100%;
+        border-radius: 0 $border-radius $border-radius 0;
+        box-shadow: 0 0 6px rgb($dark-light, 0.125);
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
 
+    .sidebar-elems {
         .sidebar-elem {
             padding-bottom: $spacer;
 
@@ -104,7 +112,6 @@ body {
     position: fixed;
     right: 0;
     z-index: 997;
-    border-bottom: 1px solid rgb($dark-light, 0.06125);
 }
 
 .main {

@@ -10459,15 +10459,15 @@ body .btn-menu-toggler {
 .sidebar {
   grid-area: sidebar;
   display: none;
-  background-color: rgb(240, 240, 240);
+  background-color: transparent;
   width: 100%;
   max-width: 250px;
-  height: calc(100vh - 10px);
+  height: 100vh;
+  padding: 0.3333333333rem 0.25rem 0.3333333333rem 0;
   overflow-y: auto;
   position: fixed;
-  top: 5px;
+  top: 0;
   z-index: 998;
-  border-right: 1px solid rgba(53, 53, 53, 0.125);
 }
 .sidebar.sidebar-visible {
   display: block;
@@ -10482,8 +10482,13 @@ body .btn-menu-toggler {
   font-weight: 700;
   color: rgb(53, 53, 53);
 }
-.sidebar .sidebar-elems {
-  min-height: calc(100vh - 70px);
+.sidebar .sidebar-inner {
+  background-color: rgb(252, 252, 252);
+  height: 100%;
+  border-radius: 0 0.25rem 0.25rem 0;
+  box-shadow: 0 0 6px rgba(53, 53, 53, 0.125);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .sidebar .sidebar-elems .sidebar-elem {
   padding-bottom: 1rem;
@@ -10524,7 +10529,6 @@ body .btn-menu-toggler {
   position: fixed;
   right: 0;
   z-index: 997;
-  border-bottom: 1px solid rgba(53, 53, 53, 0.06125);
 }
 
 .main {
@@ -10552,8 +10556,5 @@ body .btn-menu-toggler {
     display: block;
     top: unset;
     height: 100vh;
-  }
-  .sidebar .sidebar-elems {
-    min-height: calc(100vh - 60px);
   }
 }

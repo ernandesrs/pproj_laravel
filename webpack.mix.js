@@ -11,7 +11,7 @@ const mix = require("laravel-mix");
  |
  */
 
-mix
+mix.disableNotifications()
 
     /**
      * js
