@@ -33,14 +33,6 @@ return [
                     "target" => "_self",
                     "activeIn" => ["admin.medias.images.index"],
                 ],
-                [
-                    "icon" => icon_class("collectionPlay"),
-                    "text" => "Vídeos",
-                    "title" => "",
-                    "route" => "",
-                    "target" => "_self",
-                    "activeIn" => [""],
-                ]
             ],
         ],
         [
@@ -65,23 +57,7 @@ return [
                     "route" => "admin.pages.index",
                     "activeIn" => ["admin.pages.index", "admin.pages.create", "admin.pages.edit"],
                     "target" => "_self",
-                ],
-                [
-                    "icon" => icon_class("pageEarmarkText"),
-                    "text" => "Artigos",
-                    "title" => "",
-                    "route" => "",
-                    "activeIn" => [""],
-                    "target" => "_self",
-                ],
-                [
-                    "icon" => icon_class("folder"),
-                    "text" => "Categorias",
-                    "title" => "",
-                    "route" => "",
-                    "activeIn" => [""],
-                    "target" => "_self",
-                ],
+                ]
             ]
         ],
         [
