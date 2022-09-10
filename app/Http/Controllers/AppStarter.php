@@ -52,7 +52,7 @@ class AppStarter extends Controller
      */
     private function mkPages()
     {
-        $user = Auth::user();
+        $user = User::where("level", User::LEVEL_9)->first();
 
         /**
          * home page create

@@ -45,6 +45,8 @@ class Page extends Model
         if (!$slug) return null;
 
         $page = Page::where("slug_id", $slug->id)->where("lang", $lang)->first();
+        if (!$page) return null;
+
         if ($page->content_type == self::CONTENT_TYPE_VIEW)
             $page->content = json_decode($page->content);
 
