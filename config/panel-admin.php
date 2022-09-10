@@ -43,14 +43,6 @@ return [
             "activeIn" => ["admin.pages.index", "admin.pages.create", "admin.pages.edit"],
             "items" => [
                 [
-                    "icon" => icon_class("viewList"),
-                    "text" => "Seções",
-                    "title" => "",
-                    "route" => "",
-                    "activeIn" => [""],
-                    "target" => "_self",
-                ],
-                [
                     "icon" => icon_class("pageEarmark"),
                     "text" => "Páginas",
                     "title" => "",
