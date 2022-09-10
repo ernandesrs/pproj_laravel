@@ -9,7 +9,8 @@ return [
     "user_level" => [
         '1' => 'usuário',
         '5' => 'membro',
-        '9' => 'administrador',
+        '8' => 'administrador',
+        '9' => 'master',
     ],
 
     "page_content_types" => [

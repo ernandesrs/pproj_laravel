@@ -15,6 +15,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     public const LEVEL_1 = 1;
     public const LEVEL_5 = 5;
+    public const LEVEL_8 = 8;
     public const LEVEL_9 = 9;
 
     public const GENDER_MALE = "m";
@@ -26,7 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
      *
      * @var array<int>
      */
-    public const LEVELS = [self::LEVEL_1, self::LEVEL_5, self::LEVEL_9];
+    public const LEVELS = [self::LEVEL_1, self::LEVEL_5, self::LEVEL_8, self::LEVEL_9];
 
     /**
      * Allowed genders

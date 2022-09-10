@@ -246,17 +246,16 @@ class UserController extends Controller
             ]);
         }
 
-        if ($user->level == User::LEVEL_9) {
+        if ($user->level == User::LEVEL_1)
+            $user->level = User::LEVEL_5;
+        elseif ($user->level == User::LEVEL_5)
+            $user->level = User::LEVEL_8;
+        elseif ($user->level == User::LEVEL_8) {
             return response()->json([
                 "success" => false,
                 "message" => message()->default("Nível máximo de usuário atingido.")->render()
             ]);
         }
-
-        if ($user->level == User::LEVEL_1)
-            $user->level = User::LEVEL_5;
-        elseif ($user->level == User::LEVEL_5)
-            $user->level = User::LEVEL_9;
 
         $user->save();
 
@@ -288,7 +287,7 @@ class UserController extends Controller
             ]);
         }
 
-        if ($user->level == User::LEVEL_9)
+        if ($user->level == User::LEVEL_8)
             $user->level = User::LEVEL_5;
         elseif ($user->level == User::LEVEL_5)
             $user->level = User::LEVEL_1;
