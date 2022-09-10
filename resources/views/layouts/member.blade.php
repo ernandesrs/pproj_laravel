@@ -18,72 +18,95 @@
 
     {{-- sidebar --}}
     <aside class="sidebar accordion" id="sidebar">
-        <header class="header">
-            <div class="container-fluid">
-                <h1 class="mb-0 logo">
-                    {{ strtoupper(config('app.name')) }}<span class="text-muted">ADMIN</span>
-                </h1>
-            </div>
-        </header>
+        <div class="sidebar-inner">
+            <div class="d-flex flex-column bg-primary-dark">
+                <div class="container-fluid py-3">
+                    {{-- header --}}
+                    <header class="d-none pb-3">
+                        <h1 class="mb-0 h4 text-uppercase">
+                            <span class="text-light-dark">{{ config('app.name') }}</span> <span
+                                class="text-light font-weight-bold">MEMBER</span>
+                        </h1>
+                    </header>
+                    {{-- /header --}}
 
-        <div class="container-fluid d-flex flex-column sidebar-elems">
-            @php
-                $items = config('panel-member')['sidebar'];
-                $croute = Route::currentRouteName();
-            @endphp
-
-            {{-- navigation --}}
-            <div class="sidebar-elem sidebar-elem-navigation">
-                <nav class="nav flex-column">
-                    @foreach ($items as $key => $item)
-                        @if ($item['items'] ?? null)
-                            @php
-                                $active = in_array($croute, $item['activeIn']) ? 'active' : null;
-                            @endphp
-                            <a class="nav-link {{ $active }}" href="#" data-toggle="collapse"
-                                data-target="#item{{ $key }}">
-                                <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
-                            </a>
-                            <div class="subnav collapse {{ $active ? 'show' : null }}" id="item{{ $key }}"
-                                data-parent="#sidebar">
-                                @foreach ($item['items'] as $i)
-                                    @if ($i['visibleIn'] ?? null)
-                                        @if (in_array(Route::currentRouteName(), $i['visibleIn'] ?? []))
-                                            <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
-                                                href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
-                                                target="{{ $item['target'] }}">
-                                                <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
-                                            </a>
-                                        @endif
-                                    @else
-                                        <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
-                                            href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
-                                            target="{{ $item['target'] }}">
-                                            <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
-                                        </a>
-                                    @endif
-                                @endforeach
-                            </div>
-                        @else
-                            <a class="nav-link {{ in_array($croute, $item['activeIn']) ? 'active' : null }}"
-                                href="{{ $item['route'] ?? null ? route($item['route']) : null }}"
-                                target="{{ $item['target'] }}">
-                                <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
-                            </a>
-                        @endif
-                    @endforeach
-                </nav>
+                    {{-- user profile --}}
+                    @php
+                        $profile = auth()->user();
+                    @endphp
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid rounded-circle img-thumbnail"
+                            src="{{ m_user_photo_thumb($profile, 'small') }}" alt="{{ $profile->first_name }} Photo"
+                            style="width:50px;">
+                        <div class="ml-2 text-light-dark" style="font-weight: 600">
+                            <p class="mb-0">
+                                {{ substr($profile->name, 0, 16) . (strlen($profile->name) > 16 ? '...' : '') }}</p>
+                            <p class="mb-0">
+                                <small>
+                                    <span class="badge badge-secondary">
+                                        {{ ucfirst(__('terms.user_level.' . $profile->level)) }}
+                                    </span>
+                                    <span class="px 1">|</span>
+                                    <a class="text-light" href="#">Perfil</a>
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                    {{-- /user profile --}}
+                </div>
             </div>
 
-            {{-- navigation logout --}}
-            <div class="sidebar-elem sidebar-eleme-navigation mt-auto">
-                <ul class="nav">
-                    <a class="nav-link text-danger {{ icon_class('logout') }}" href="{{ route('auth.logout') }}">
-                        Logout
-                    </a>
-                </ul>
-            </div>
+            <div class="pt-3 sidebar-elems">
+                <div class="container-fluid d-flex flex-column">
+                    @php
+                        $items = config('panel-member')['sidebar'];
+                        $croute = Route::currentRouteName();
+                    @endphp
 
+                    {{-- navigation --}}
+                    <div class="sidebar-elem sidebar-elem-navigation">
+                        <nav class="nav flex-column">
+                            @foreach ($items as $key => $item)
+                                @if ($item['items'] ?? null)
+                                    @php
+                                        $active = in_array($croute, $item['activeIn']) ? 'active' : null;
+                                    @endphp
+                                    <a class="nav-link {{ $active }}" href="#" data-toggle="collapse"
+                                        data-target="#item{{ $key }}">
+                                        <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
+                                    </a>
+                                    <div class="subnav collapse {{ $active ? 'show' : null }}"
+                                        id="item{{ $key }}" data-parent="#sidebar">
+                                        @foreach ($item['items'] as $i)
+                                            @if ($i['visibleIn'] ?? null)
+                                                @if (in_array(Route::currentRouteName(), $i['visibleIn'] ?? []))
+                                                    <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
+                                                        href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
+                                                        target="{{ $item['target'] }}">
+                                                        <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
+                                                    </a>
+                                                @endif
+                                            @else
+                                                <a class="nav-link {{ in_array($croute, $i['activeIn']) ? 'active' : null }}"
+                                                    href="{{ $i['route'] ?? null ? route($i['route']) : null }}"
+                                                    target="{{ $item['target'] }}">
+                                                    <i class="icon {{ $i['icon'] }}"></i> {{ $i['text'] }}
+                                                </a>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <a class="nav-link {{ in_array($croute, $item['activeIn']) ? 'active' : null }}"
+                                        href="{{ $item['route'] ?? null ? route($item['route']) : null }}"
+                                        target="{{ $item['target'] }}">
+                                        <i class="icon {{ $item['icon'] }}"></i> {{ $item['text'] }}
+                                    </a>
+                                @endif
+                            @endforeach
+                        </nav>
+                    </div>
+                </div>
+            </div>
         </div>
     </aside>
 
@@ -172,8 +195,9 @@
                             <div class="mt-2 mt-md-0">
                                 <div class="form-group mb-0 d-flex">
                                     <label class="sr-only" for="search">Buscar por:</label>
-                                    <input class="form-control text-center" type="text" name="search" id="search"
-                                        placeholder="Buscar por..." value="{{ input_value($_GET ?? null, 'search') }}">
+                                    <input class="form-control text-center" type="text" name="search"
+                                        id="search" placeholder="Buscar por..."
+                                        value="{{ input_value($_GET ?? null, 'search') }}">
 
                                     <input type="hidden" name="filter" id="filter" value="1">
 

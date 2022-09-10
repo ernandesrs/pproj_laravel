@@ -67,6 +67,6 @@ return [
             "route" => "front.index",
             "target" => "_blank",
             "activeIn" => [],
-        ],
+        ]
     ],
 ];
