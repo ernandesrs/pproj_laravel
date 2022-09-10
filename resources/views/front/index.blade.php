@@ -2,15 +2,15 @@
 
 @section('content')
     {{-- banner --}}
-    <div class="bg-light-light py-5">
+    <div class="banner py-5">
         <div class="container py-5">
             <div class="row py-md-5">
                 <div class="col-12 col-lg-7 text-center text-lg-left">
                     <div class="pb-3">
-                        <h1 class="h1">
+                        <h1 class="title">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                         </h1>
-                        <p class="h5">
+                        <p class="subtitle">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus distinctio, modi et molestias
                             dignissimos deleniti consequuntur!
                         </p>

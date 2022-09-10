@@ -9274,3 +9274,43 @@ h3 {
   box-shadow: 0 0 18px -2px rgba(0, 0, 0, 0.15);
   z-index: 1000;
 }
+
+.banner .title {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+.banner .subtitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+@media (min-width: 576px) {
+  .banner .title {
+    font-size: 2.2rem;
+  }
+  .banner .subtitle {
+    font-size: 1.2rem;
+  }
+}
+@media (min-width: 768px) {
+  .banner .title {
+    font-size: 2.6rem;
+    font-weight: 700;
+  }
+  .banner .subtitle {
+    font-size: 1.3rem;
+  }
+}
+@media (min-width: 992px) {
+  .banner {
+    min-height: calc(100vh - 65px);
+  }
+}
+@media (min-width: 1200px) {
+  .banner .title {
+    font-size: 3rem;
+  }
+  .banner .subtitle {
+    font-size: 1.4rem;
+  }
+}

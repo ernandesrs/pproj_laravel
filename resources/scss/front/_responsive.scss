@@ -1,0 +1,42 @@
+@media(min-width: 576px) {
+    .banner {
+        .title {
+            font-size: 2.2rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .banner {
+        .title {
+            font-size: 2.6rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .banner {
+        min-height: calc(100vh - 65px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .banner {
+        .title {
+            font-size: 3rem;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+        }
+    }
+}
