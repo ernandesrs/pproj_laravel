@@ -30,7 +30,7 @@
                         @if ($user)
                             <div class="d-flex flex-column justify-content-center align-items-center">
                                 <img class="img-fluid rounded-circle img-thumbnail"
-                                    src="{{ m_user_photo_thumb($user, 'sm') }}" alt="{{ $user->name }}"
+                                    src="{{ Thumb::thumb($user->photo, 'user.small') }}" alt="{{ $user->name }}"
                                     style="width: 75px;">
                                 <div class="text-center font-weight-bold py-2 text-muted h5 mb-0">
                                     {{ $user->name }}

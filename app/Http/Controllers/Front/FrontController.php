@@ -15,7 +15,7 @@ class FrontController extends Controller
      * @return View
      */
     public function index(): View
-    {
+    {   
         $page = Page::findBySlug("inicio", config("app.locale"));
 
         return view($page->content->view_path ?? "front.index", [

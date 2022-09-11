@@ -238,6 +238,7 @@ return [
 
         'GRecaptcha' => App\Helpers\GRecaptcha::class,
         'Template' => App\Helpers\Template::class,
+        'Thumb' => App\Helpers\Thumb::class,
     ],
 
 ];
