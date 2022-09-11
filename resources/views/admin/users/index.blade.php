@@ -28,55 +28,46 @@ foreach ($keys as $key => $value) {
 ])
 
 @section('content')
-    <div class="table-responsive">
-        <table class="table table-hover table-borderless">
-            <tbody>
-                @foreach ($users as $user)
-                    <tr>
-                        <td class="align-middle">
-                            <div class="d-flex">
-                                <img class="img-fluid img-thumbnail rounded-circle mr-2 d-none d-sm-block"
-                                    src="{{ Thumb::thumb($user->photo, 'user.small') }}" alt="{{ $user->name }}"
-                                    style="width: 75px; height: 75px;">
-                                <div class="d-flex flex-column">
-                                    <span>{{ $user->name }}</span>
-                                    <span class="pb-1"><small>{{ $user->email }}</small></span>
-                                    <div class="d-flex">
-                                        <span
-                                            class="badge badge-secondary {{ $user->level == \App\Models\User::LEVEL_9 ? icon_class('shieldFill') : icon_class('userFill') }}"><span
-                                                class="ml-1">{{ ucfirst(__('terms.user_level.' . $user->level)) }}</span></span>
-                                        <span class="mx-1"></span>
-                                        <span
-                                            class="badge badge-{{ $user->email_verified_at ? 'info ' . icon_class('checkCircleFill') : 'light-dark ' . icon_class('xCircleFill') }}">
-                                            <span
-                                                class="ml-1">{{ $user->email_verified_at ? 'Verificado' : 'Não verificado' }}</span>
-                                        </span>
-                                    </div>
-                                </div>
+    <div class="">
+        @foreach ($users as $user)
+            @component('components.panel.list-item',
+                [
+                    'cover' => Thumb::thumb($user->photo, 'user.small'),
+                    'coverStyle' => 'square-rounded',
+                ])
+                @slot('content')
+                    <div class="title">{{ $user->name }}</div>
+                    <div class="description">{{ $user->email }}</div>
+                @endslot
 
-                            </div>
-                        </td>
-                        <td class="align-middle text-right">
-                            <a class="btn btn-sm btn-primary {{ icon_class('pencilSquare') }}"
-                                href="{{ route('admin.users.edit', ['user' => $user->id]) }}"></a>
+                @slot('tags')
+                    <span
+                        class="badge badge-secondary {{ $user->level == \App\Models\User::LEVEL_9 ? icon_class('shieldFill') : icon_class('userFill') }}"><span
+                            class="ml-1">{{ ucfirst(__('terms.user_level.' . $user->level)) }}</span></span>
+                    <span class="mx-1"></span>
+                    <span
+                        class="badge badge-{{ $user->email_verified_at ? 'info ' . icon_class('checkCircleFill') : 'light-dark ' . icon_class('xCircleFill') }}">
+                        <span class="ml-1">{{ $user->email_verified_at ? 'Verificado' : 'Não verificado' }}</span>
+                    </span>
+                @endslot
 
-                            @include('includes.button-confirmation', [
-                                'button' => Template::buttonConfirmation(
-                                    'danger',
-                                    'btn btn-sm btn-danger',
-                                    "Você está excluindo o usuário <strong>{$user->name}</strong> permanentemente e isso não pode ser desfeito!",
-                                    route('admin.users.destroy', ['user' => $user->id]),
-                                    icon_class('trash'),
-                                    null
-                                ),
-                            ])
+                @slot('actions')
+                    <a class="btn btn-sm btn-primary {{ icon_class('pencilSquare') }}"
+                        href="{{ route('admin.users.edit', ['user' => $user->id]) }}"></a>
 
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
+                    @include('includes.button-confirmation', [
+                        'button' => Template::buttonConfirmation(
+                            'danger',
+                            'btn btn-sm btn-danger',
+                            "Você está excluindo o usuário <strong>{$user->name}</strong> permanentemente e isso não pode ser desfeito!",
+                            route('admin.users.destroy', ['user' => $user->id]),
+                            icon_class('trash'),
+                            null
+                        ),
+                    ])
+                @endslot
+            @endcomponent
+        @endforeach
     </div>
     <hr>
     <div class="d-flex justify-content-center">

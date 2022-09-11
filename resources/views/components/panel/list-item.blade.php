@@ -1,12 +1,12 @@
-<div class="list-item d-flex mb-4">
+<div class="list-item d-flex align-items-center pb-3 mb-3">
     @if ($cover ?? null)
-        <div class="item-cover d-none d-md-flex align-items-center p-1">
-            <img class="img-fluid img-thumbnail" src="{{ $cover }}" alt="{{ $title }}">
+        <div class="item-cover {{ $coverStyle ?? null }} d-none d-sm-flex align-items-center">
+            <img class="img-fluid img-thumbnail" src="{{ $cover }}" alt="Cover">
         </div>
     @endif
 
-    <div class="d-flex flex-column flex-md-row align-items-center w-100">
-        <div class="item-content px-2 py-2">
+    <div class="d-flex flex-column flex-sm-row align-items-center w-100">
+        <div class="item-content px-2">
             <div>
                 @if ($content ?? null)
                     {{ $content }}
@@ -28,7 +28,7 @@
             @endif
         </div>
 
-        <div class="ml-md-auto text-center py-2">
+        <div class="ml-sm-auto text-center py-2">
             {{ $actions }}
         </div>
     </div>
@@ -40,15 +40,29 @@
             cursor: default;
             opacity: 0.9;
             transition-duration: .25s;
+            box-shadow: 0 4px 4px -4px #ccc;
         }
 
         .list-item:hover {
             opacity: 1;
             transition-duration: .25s;
+            box-shadow: 0 12px 12px -12px #ccc;
         }
 
         .list-item>.item-cover {
             width: 150px;
+        }
+
+        .list-item>.item-cover.square-rounded {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .list-item>.item-cover.square-rounded>img {
+            border-radius: 50%;
         }
 
         .list-item .item-content {
