@@ -5,22 +5,23 @@
 @section('content')
     <div class="row justify-content-center py-4 section-user-edit">
         <div class="col-8 col-sm-6 col-md-5 col-lg-4 mb-4 mb-md-0 text-center">
-            <img class="avatar img-fluid rounded-circle img-thumbnail" src="{{ Thumb::thumb($user->photo, "user.normal") }}"
-                alt="{{ $user->name }}">
-            <div class="py-2">
+            <div class="d-flex flex-column justify-content-center align-items-center position-relative">
+                <img class="avatar img-fluid rounded-circle img-thumbnail"
+                    src="{{ Thumb::thumb($user->photo, 'user.normal') }}" alt="{{ $user->name }}">
                 @if ($user->photo)
                     @include('includes.button-confirmation', [
                         'button' => Template::buttonConfirmation(
                             'danger',
-                            'btn btn-sm btn-outline-danger',
+                            'btn btn-sm btn-danger position-absolute',
                             'Você está excluindo a foto deste usuário e isso não pode ser desfeito!',
                             route('admin.users.photoRemove', ['user' => $user->id]),
                             icon_class('trash'),
                             'Excluir foto'
                         ),
                     ])
-                    <hr>
                 @endif
+            </div>
+            <div class="py-2">
                 <p class="mb-1">
                     <span
                         class="badge badge-secondary {{ icon_class($user->level == \App\Models\User::LEVEL_9 ? 'shieldFill' : 'userFill') }}">
