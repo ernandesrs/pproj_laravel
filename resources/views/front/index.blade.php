@@ -2,30 +2,59 @@
 
 @section('content')
     {{-- banner --}}
-    <div class="banner py-5">
-        <div class="container py-5">
-            <div class="row py-md-5">
-                <div class="col-12 col-lg-7 text-center text-lg-left">
-                    <div class="pb-3">
-                        <h1 class="title">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                        </h1>
-                        <p class="subtitle">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus distinctio, modi et molestias
-                            dignissimos deleniti consequuntur!
-                        </p>
-                    </div>
-                    <div>
-                        <button class="btn btn-lg btn-primary mb-2 mb-lg-0">
-                            Lorem button
-                        </button>
-                        <button class="btn btn-lg btn-outline-primary mb-2 mb-lg-0">
-                            Button ipsum
-                        </button>
-                    </div>
-                </div>
+    <div class="banner d-flex align-items-center py-5">
+        <div class="container">
+            <div id="homeBanner" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach ($banners as $key => $banner)
+                        @php
+                            $banner = (object) $banner;
+                            $buttons = $banner->content->buttons ?? [];
+                        @endphp
+                        <div class="carousel-item {{ $key == 0 ? 'active' : null }}"
+                            data-interval="{{ $banner->content->duration }}">
+                            <div class="row justify-content-center">
+                                <div
+                                    class="col-10 col-sm-8 col-lg-5 {{ $banner->alignment == 'left' ? 'order-lg-12' : '' }} mb-4 mb-lg-0">
+                                    <img class="img-fluid" src="{{ $banner->content->ilustration }}" alt="">
+                                </div>
 
-                <div class="col-12 col-lg-5"></div>
+                                <div
+                                    class="col-12 col-lg-7 d-flex flex-column justify-content-center text-center text-lg-left">
+                                    <div class="pb-3">
+                                        <h1 class="title">
+                                            {{ $banner->title }}
+                                        </h1>
+                                        <p class="subtitle">
+                                            {{ $banner->subtitle }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        @foreach ($buttons as $button)
+                                            @php
+                                                $button = (object) $button;
+                                            @endphp
+                                            <a class="btn btn-lg {{ $button->style }} mb-2 mb-lg-0"
+                                                href="{{ $button->url }}" target="{{ $button->target }}">
+                                                {{ $button->text }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                @if (count($banners) > 1)
+                    <a class="carousel-control-prev" href="#homeBanner" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="carousel-control-next" href="#homeBanner" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Próximo</span>
+                    </a>
+                @endif
             </div>
         </div>
     </div>
