@@ -9,14 +9,14 @@
                     @foreach ($banners as $key => $banner)
                         @php
                             $banner = (object) $banner;
-                            $buttons = $banner->content->buttons ?? [];
+                            $buttons = $banner->buttons ?? [];
                         @endphp
                         <div class="carousel-item {{ $key == 0 ? 'active' : null }}"
                             data-interval="{{ $banner->content->duration }}">
                             <div class="row justify-content-center">
                                 <div
                                     class="col-10 col-sm-8 col-lg-5 {{ $banner->alignment == 'left' ? 'order-lg-12' : '' }} mb-4 mb-lg-0">
-                                    <img class="img-fluid" src="{{ $banner->content->ilustration }}" alt="">
+                                    <img class="img-fluid" src="{{ $banner->ilustration }}" alt="">
                                 </div>
 
                                 <div
