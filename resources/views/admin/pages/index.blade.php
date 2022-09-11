@@ -23,84 +23,73 @@ foreach ($keys as $key => $value) {
 ])
 
 @section('content')
-    <div class="table-responsive">
-        <table class="table table-hover table-borderless">
-            <tbody>
-                @php
-                    /** @var \App\Models\Page $page */
-                @endphp
-                @foreach ($pages as $page)
-                    @php
-                        /** @var \App\Models\User $author */
-                        $author = $page->author();
-                        
-                        /** @var \App\Models\Slug $slugs */
-                        $slugs = $page->slugs();
-                        
-                        $slug = $slugs->slug($page->lang);
-                    @endphp
-                    <tr>
-                        <td class="align-middle">
-                            <div class="d-flex align-items-center">
-                                <img class="img-fluid img-thumbnail mr-2 d-none d-sm-block"
-                                    src="{{ Thumb::thumb($page->cover, 'cover.small') }}" alt="{{ $page->name }}"
-                                    style="width: 125px; height: 75px;">
-                                <div class="d-flex flex-column">
-                                    <span>
-                                        <a href="{{ route('front.dinamicPage', ['slug' => $slug]) }}" target="_blank">
-                                            {{ $page->title }}
-                                        </a>
-                                    </span>
-                                    <span class="pb-1">
-                                        <small>
-                                            {{ substr($page->description, 0, 75) }}...
-                                        </small>
-                                    </span>
-                                    <div class="d-flex flex-wrap">
-                                        <span class="badge badge-dark-light">
-                                            {{ icon_elem('user') }}
-                                            {{ $author ? substr($author->first_name, 0, 28) : null }}...
-                                        </span>
-                                        <span class="mx-1"></span>
-                                        <span class="badge badge-light-dark" data-toggle="tooltip" data-placement="top"
-                                            title="{{ ucfirst(__('terms.page_status.' . $page->status)) }}">
-                                            @if ($page->scheduled_to)
-                                                {{ icon_elem('calendarEvent') }}
-                                                {{ date('d/m/Y H:i', strtotime($page->scheduled_to)) }}
-                                            @elseif($page->published_at)
-                                                {{ icon_elem('calendarCheck') }}
-                                                {{ date('d/m/Y H:i', strtotime($page->published_at)) }}
-                                            @else
-                                                {{ icon_elem('calendarX') }}
-                                                {{ date('d/m/Y H:i', strtotime($page->created_at)) }}
-                                            @endif
-                                        </span>
-                                        <span class="mx-1"></span>
-                                        <span class="badge badge-light">
-                                            {{ $page->content_type == \App\Models\Page::CONTENT_TYPE_VIEW ? 'Página customizada' : 'Texto' }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle text-right">
-                            <a class="btn btn-sm btn-primary {{ icon_class('pencilSquare') }}"
-                                href="{{ route('admin.pages.edit', ['page' => $page->id]) }}"></a>
+    <div class="">
+        @foreach ($pages as $page)
+            @php
+                /** @var \App\Models\User $author */
+                $author = $page->author();
+                
+                /** @var \App\Models\Slug $slugs */
+                $slugs = $page->slugs();
+                
+                $slug = $slugs->slug($page->lang);
+            @endphp
 
-                            @include('includes.button-confirmation', [
-                                'button' => Template::buttonConfirmation(
-                                    'danger',
-                                    'btn btn-sm btn-danger',
-                                    "Você está excluindo a página <strong>{$page->title}</strong> e isso não pode ser desfeito.",
-                                    route('admin.pages.destroy', ['page' => $page->id]),
-                                    icon_class('trash')
-                                ),
-                            ])
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @component('components.panel.list-item',
+                [
+                    'cover' => Thumb::thumb($page->cover, 'cover.small'),
+                    'title' => $page->title,
+                    'description' => $page->description,
+                    'url' => route('front.dinamicPage', ['slug' => $slug]),
+                ])
+                @slot('tags')
+                    <span class="badge badge-dark-light">
+                        {{ icon_elem('user') }}
+                        {{ $author ? substr($author->first_name, 0, 28) : null }}...
+                    </span>
+                    <span class="mx-1"></span>
+                    <span class="badge badge-light-dark" data-toggle="tooltip" data-placement="top"
+                        title="{{ ucfirst(__('terms.page_status.' . $page->status)) }}">
+                        @if ($page->scheduled_to)
+                            {{ icon_elem('calendarEvent') }}
+                            {{ date('d/m/Y H:i', strtotime($page->scheduled_to)) }}
+                        @elseif($page->published_at)
+                            {{ icon_elem('calendarCheck') }}
+                            {{ date('d/m/Y H:i', strtotime($page->published_at)) }}
+                        @else
+                            {{ icon_elem('calendarX') }}
+                            {{ date('d/m/Y H:i', strtotime($page->created_at)) }}
+                        @endif
+                    </span>
+                    <span class="mx-1"></span>
+                    <span class="badge badge-light">
+                        {{ $page->content_type == \App\Models\Page::CONTENT_TYPE_VIEW ? 'Página customizada' : 'Texto' }}
+                    </span>
+                @endslot
+
+                @slot('actions')
+                    @include('includes.button', [
+                        'button' => Template::buttonLink(
+                            'btn btn-sm btn-primary',
+                            route('admin.pages.edit', ['page' => $page->id]),
+                            null,
+                            icon_class('pencilSquare'),
+                            null
+                        ),
+                    ])
+
+                    @include('includes.button-confirmation', [
+                        'button' => Template::buttonConfirmation(
+                            'danger',
+                            'btn btn-sm btn-danger',
+                            "Você está excluindo a página <strong>{$page->title}</strong> e isso não pode ser desfeito.",
+                            route('admin.pages.destroy', ['page' => $page->id]),
+                            icon_class('trash')
+                        ),
+                    ])
+                @endslot
+            @endcomponent
+        @endforeach
     </div>
     <hr>
     <div class="d-flex justify-content-center">
