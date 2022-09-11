@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Helpers\Seo;
+use App\Helpers\Thumb;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Contracts\View\View;
@@ -15,7 +16,7 @@ class FrontController extends Controller
      * @return View
      */
     public function index(): View
-    {   
+    {
         $page = Page::findBySlug("inicio", config("app.locale"));
 
         return view($page->content->view_path ?? "front.index", [
@@ -23,7 +24,7 @@ class FrontController extends Controller
                 $page->title,
                 $page->description,
                 route("front.index"),
-                m_page_cover_thumb($page, [800, 600]),
+                Thumb::thumb($page->cover, "cover.normal"),
                 $page->follow
             )
         ]);
@@ -58,7 +59,7 @@ class FrontController extends Controller
                 $page->title,
                 $page->description,
                 route("front.dinamicPage", ["slug" => $slugs->slug($page->lang)]),
-                m_page_cover_thumb($page, [800, 600]),
+                Thumb::thumb($page->cover, "cover.normal"),
                 $page->follow
             ),
             "page" => $page

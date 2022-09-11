@@ -35,7 +35,7 @@
                     @endphp
                     <div class="d-flex align-items-center">
                         <img class="img-fluid rounded-circle img-thumbnail"
-                            src="{{ m_user_photo_thumb($profile, 'small') }}" alt="{{ $profile->first_name }} Photo"
+                            src="{{ Thumb::thumb($profile->photo, "user.small") }}" alt="{{ $profile->first_name }} Photo"
                             style="width:50px;">
                         <div class="ml-2 text-light-dark" style="font-weight: 600">
                             <p class="mb-0">

@@ -8,7 +8,7 @@
                     <h2 class="display-4">Olá, {{ $profile->first_name }}!</h2>
                     <p class="lead">Bem vindo ao seu perfil!</p>
                     <img class="avatar img-fluid rounded-circle img-thumbnail"
-                        src="{{ m_user_photo_thumb($profile, 'normal') }}" alt="{{ $profile->name }}">
+                        src="{{ Thumb::thumb($profile->photo, "user.normal") }}" alt="{{ $profile->name }}">
                 </div>
             </div>
 

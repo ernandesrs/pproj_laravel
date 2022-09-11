@@ -10,9 +10,9 @@
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                     <div class="card card-body border-0">
                         <div class="">
-                            <img class="img-fluid img-thumbnail"
-                                src="{{ thumb(Storage::path('public/' . $image->path), 200, 100) }}" alt="{{ $image->name }}"
-                                data-toggle="tooltip" title="Tags: {{ $image->tags }}" data-placement="bottom">
+                            <img class="img-fluid img-thumbnail" src="{{ Thumb::thumb($image->path, 'cover.small') }}"
+                                alt="{{ $image->name }}" data-toggle="tooltip" title="Tags: {{ $image->tags }}"
+                                data-placement="bottom">
                         </div>
                         <div class="pt-2 text-center">
                             <small>

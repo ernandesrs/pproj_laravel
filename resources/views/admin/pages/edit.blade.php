@@ -120,7 +120,7 @@ if ($page ?? null) {
                                         style="width:200px;height:100px;">
                                         @if ($page ?? null)
                                             <img class="img-fluid img-thumbnail"
-                                                src="{{ m_page_cover_thumb($page, [200, 100]) }}">
+                                                src="{{ Thumb::thumb($page->cover, 'cover.small') }}">
                                         @else
                                             <p class="mb-0 text-muted">
                                                 <small>Cover Preview</small>
