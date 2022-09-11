@@ -1,8 +1,6 @@
 <?php
 
 use App\Helpers\Message\Message;
-use App\Helpers\Thumb;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * Obtém valor de $data
@@ -39,18 +37,6 @@ function icon_elem(string $name, ?string $alt = null): string
     $altIcon = $alt ? "data-active-icon='{$activeIcon}' data-alt-icon='" . icon_class($alt) . "'" : null;
     echo "<span class='{$activeIcon}' {$altIcon}></span>";
     return "";
-}
-
-/**
- * @param string|null $path
- * @param integer $width
- * @param integer|null $height
- * @return null|string
- */
-function thumb(?string $path, int $width, ?int $height = null): ?string
-{
-    if (!$path) return null;
-    return Storage::url(Thumb::make($path, $width, $height));
 }
 
 /**
