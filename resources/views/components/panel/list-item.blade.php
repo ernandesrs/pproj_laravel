@@ -1,7 +1,7 @@
 <div class="list-item d-flex mb-4">
     @if ($cover ?? null)
         <div class="item-cover d-none d-md-flex align-items-center p-1">
-            <img class="img-fluid img-thumbnail" src="{{ $cover }}" alt="">
+            <img class="img-fluid img-thumbnail" src="{{ $cover }}" alt="{{ $title }}">
         </div>
     @endif
 
