@@ -78,15 +78,17 @@ foreach ($keys as $key => $value) {
                         ),
                     ])
 
-                    @include('includes.button-confirmation', [
-                        'button' => Template::buttonConfirmation(
-                            'danger',
-                            'btn btn-sm btn-danger',
-                            "Você está excluindo a página <strong>{$page->title}</strong> e isso não pode ser desfeito.",
-                            route('admin.pages.destroy', ['page' => $page->id]),
-                            icon_class('trash')
-                        ),
-                    ])
+                    @if ($page->protection != \App\Models\Page::PROTECTION_SYSTEM)
+                        @include('includes.button-confirmation', [
+                            'button' => Template::buttonConfirmation(
+                                'danger',
+                                'btn btn-sm btn-danger',
+                                "Você está excluindo a página <strong>{$page->title}</strong> e isso não pode ser desfeito.",
+                                route('admin.pages.destroy', ['page' => $page->id]),
+                                icon_class('trash')
+                            ),
+                        ])
+                    @endif
                 @endslot
             @endcomponent
         @endforeach

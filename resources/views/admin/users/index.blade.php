@@ -52,19 +52,27 @@ foreach ($keys as $key => $value) {
                 @endslot
 
                 @slot('actions')
-                    <a class="btn btn-sm btn-primary {{ icon_class('pencilSquare') }}"
-                        href="{{ route('admin.users.edit', ['user' => $user->id]) }}"></a>
+                    @php
+                        $logged = auth()->user();
+                    @endphp
 
-                    @include('includes.button-confirmation', [
-                        'button' => Template::buttonConfirmation(
-                            'danger',
-                            'btn btn-sm btn-danger',
-                            "Você está excluindo o usuário <strong>{$user->name}</strong> permanentemente e isso não pode ser desfeito!",
-                            route('admin.users.destroy', ['user' => $user->id]),
-                            icon_class('trash'),
-                            null
-                        ),
-                    ])
+                    @if ($logged->id == $user->id || $logged->level > $user->level)
+                        <a class="btn btn-sm btn-primary {{ icon_class('pencilSquare') }}"
+                            href="{{ route('admin.users.edit', ['user' => $user->id]) }}"></a>
+                    @endif
+
+                    @if ($logged->id != $user->id && $logged->level > $user->level)
+                        @include('includes.button-confirmation', [
+                            'button' => Template::buttonConfirmation(
+                                'danger',
+                                'btn btn-sm btn-danger',
+                                "Você está excluindo o usuário <strong>{$user->name}</strong> permanentemente e isso não pode ser desfeito!",
+                                route('admin.users.destroy', ['user' => $user->id]),
+                                icon_class('trash'),
+                                null
+                            ),
+                        ])
+                    @endif
                 @endslot
             @endcomponent
         @endforeach

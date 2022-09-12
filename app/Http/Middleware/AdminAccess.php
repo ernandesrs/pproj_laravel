@@ -21,7 +21,7 @@ class AdminAccess
         if (!$user)
             return redirect()->route("auth.login");
 
-        if (!in_array($user->level, [User::LEVEL_9])) {
+        if (!in_array($user->level, [User::LEVEL_8, User::LEVEL_9])) {
             message()->default("Você não possui permissão para acessar esta área.")->flash();
             return redirect()->route("front.index");
         }
