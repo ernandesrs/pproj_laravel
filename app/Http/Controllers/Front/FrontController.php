@@ -27,60 +27,6 @@ class FrontController extends Controller
                 Thumb::thumb($page->cover, "cover.normal"),
                 $page->follow
             ),
-            "banners" => [
-                [
-                    "title" => "Lorem ipsum dolor sit amet consectetur adipisicing ",
-                    "subtitle" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus distinctio, modi et molestias dignissimos deleniti consequuntur!",
-                    "page_id" => 1,
-                    "alignment" => "left",
-                    "type" => "banner",
-                    "ilustration" => asset("assets/img/ilustration_01.png"),
-                    "buttons" => (object) [
-                        [
-                            "text" => "Lorem button",
-                            "style" => "btn-primary",
-                            "url" => "#",
-                            "target" => "_self"
-                        ],
-                        [
-                            "text" => "Button ipsum",
-                            "style" => "btn-outline-primary",
-                            "url" => "https://www.google.com.br",
-                            "target" => "_blank"
-                        ]
-                    ],
-                    "content" => (object) [
-                        "background" => null,
-                        "duration" => 5000,
-                    ]
-                ],
-                [
-                    "title" => "Lorem ipsum dolor sit amet consectetur adipisicing ",
-                    "subtitle" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus distinctio, modi et molestias dignissimos deleniti consequuntur!",
-                    "page_id" => 1,
-                    "alignment" => "right",
-                    "type" => "banner",
-                    "ilustration" => asset("assets/img/ilustration_02.png"),
-                    "buttons" => (object) [
-                        [
-                            "text" => "Lorem button",
-                            "style" => "btn-dark",
-                            "url" => "#",
-                            "target" => "_self"
-                        ],
-                        [
-                            "text" => "Button ipsum",
-                            "style" => "btn-outline-dark",
-                            "url" => "https://www.google.com.br",
-                            "target" => "_blank"
-                        ]
-                    ],
-                    "content" => (object) [
-                        "background" => null,
-                        "duration" => 5000,
-                    ]
-                ]
-            ]
         ]);
     }
 

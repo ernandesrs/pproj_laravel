@@ -1,5 +1,64 @@
 @extends('layouts.front')
 
+@php
+
+$banners = [
+    [
+        'title' => 'Lorem ipsum dolor sit amet consectetur adipisicing ',
+        'subtitle' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus distinctio, modi et molestias dignissimos deleniti consequuntur!',
+        'page_id' => 1,
+        'alignment' => 'left',
+        'type' => 'banner',
+        'ilustration' => asset('assets/img/ilustration_01.png'),
+        'buttons' => (object) [
+            [
+                'text' => 'Lorem button',
+                'style' => 'btn-primary',
+                'url' => '#',
+                'target' => '_self',
+            ],
+            [
+                'text' => 'Button ipsum',
+                'style' => 'btn-outline-primary',
+                'url' => 'https://www.google.com.br',
+                'target' => '_blank',
+            ],
+        ],
+        'content' => (object) [
+            'background' => null,
+            'duration' => 5000,
+        ],
+    ],
+    [
+        'title' => 'Lorem ipsum dolor sit amet consectetur adipisicing ',
+        'subtitle' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus distinctio, modi et molestias dignissimos deleniti consequuntur!',
+        'page_id' => 1,
+        'alignment' => 'right',
+        'type' => 'banner',
+        'ilustration' => asset('assets/img/ilustration_02.png'),
+        'buttons' => (object) [
+            [
+                'text' => 'Lorem button',
+                'style' => 'btn-dark',
+                'url' => '#',
+                'target' => '_self',
+            ],
+            [
+                'text' => 'Button ipsum',
+                'style' => 'btn-outline-dark',
+                'url' => 'https://www.google.com.br',
+                'target' => '_blank',
+            ],
+        ],
+        'content' => (object) [
+            'background' => null,
+            'duration' => 5000,
+        ],
+    ],
+];
+
+@endphp
+
 @section('content')
     {{-- banner --}}
     <div class="banner d-flex align-items-center py-5">
@@ -246,4 +305,20 @@
         </div>
     </div>
     {{-- /prices --}}
+
+    <div class="bg-dark py-5 text-light" id="section3">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-11 col-lg-9 col-xl-7 text-center">
+                    <h2 class="h1">Lorem ipsum dolor sit amet</h2>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam laborum in omnis autem quaerat
+                        nihil assumenda veniam praesentium, repudiandae aliquam?</p>
+                    <a class="btn btn-lg btn-outline-primary h5 mb-0" href="">
+                        <span class="mr-2">Lorem ipsum link</span>
+                        {{ icon_elem('arrowRight') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

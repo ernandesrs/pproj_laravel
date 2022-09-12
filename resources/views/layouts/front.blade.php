@@ -8,6 +8,7 @@
 
     {!! $seo->render() !!}
 
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/front/styles.css') }}">
 
     @yield('styles')
