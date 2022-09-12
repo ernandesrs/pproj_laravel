@@ -71,11 +71,14 @@
         @endif
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-12">
-            {{ $images->links() }}
-        </div>
-    </div>
+    @component('components.navigation',
+        [
+            'model' => $images,
+        ])
+        @slot('text')
+            Imagens
+        @endslot
+    @endcomponent
 @endsection
 
 @section('modals')

@@ -10456,6 +10456,11 @@ body .btn-menu-toggler {
   font-size: 1.6rem;
 }
 
+.pagination {
+  margin: 0;
+  background-color: green;
+}
+
 .sidebar {
   grid-area: sidebar;
   display: none;

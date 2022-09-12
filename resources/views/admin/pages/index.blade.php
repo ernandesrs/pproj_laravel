@@ -91,10 +91,15 @@ foreach ($keys as $key => $value) {
             @endcomponent
         @endforeach
     </div>
-    <hr>
-    <div class="d-flex justify-content-center">
-        {{ $pages->onEachSide(2)->links() }}
-    </div>
+
+    @component('components.navigation',
+        [
+            'model' => $pages,
+        ])
+        @slot('text')
+            Páginas
+        @endslot
+    @endcomponent
 @endsection
 
 @section('modals')

@@ -69,10 +69,15 @@ foreach ($keys as $key => $value) {
             @endcomponent
         @endforeach
     </div>
-    <hr>
-    <div class="d-flex justify-content-center">
-        {{ $users->onEachSide(2)->links() }}
-    </div>
+
+    @component('components.navigation',
+        [
+            'model' => $users,
+        ])
+        @slot('text')
+            Usuários
+        @endslot
+    @endcomponent
 @endsection
 
 @section('modals')
